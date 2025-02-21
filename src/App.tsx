@@ -1,7 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { useEffect } from 'react';
 import { Global } from '@emotion/react';
 import { globalStyles } from './styles/globalStyles';
+import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -23,22 +25,85 @@ const MainContent = styled.main`
   max-width: 1440px;
   margin: 0 auto;
   width: 100%;
+  overflow-x: hidden;
 `;
+
+const PageTransition = styled(motion.div)`
+  width: 100%;
+`;
+
+// スクロール制御用のコンポーネント
+const ScrollToTop = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }, [location]);
+
+  return null;
+};
+
+// ページ遷移のアニメーション設定
+const pageTransitionVariants = {
+  initial: {
+    opacity: 0,
+    y: 20
+  },
+  enter: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.4,
+      ease: 'easeOut'
+    }
+  },
+  exit: {
+    opacity: 0,
+    y: -20,
+    transition: {
+      duration: 0.3,
+      ease: 'easeIn'
+    }
+  }
+};
+
+// ページコンテンツをラップするコンポーネント
+const PageWrapper = ({ children }: { children: React.ReactNode }) => {
+  const location = useLocation();
+  
+  return (
+    <AnimatePresence mode="wait">
+      <PageTransition
+        key={location.pathname}
+        variants={pageTransitionVariants}
+        initial="initial"
+        animate="enter"
+        exit="exit"
+      >
+        {children}
+      </PageTransition>
+    </AnimatePresence>
+  );
+};
 
 function App() {
   return (
     <Router>
       <Global styles={globalStyles} />
       <AppContainer>
+        <ScrollToTop />
         <Navigation />
         <MainContent>
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/tech" element={<TechPage />} />
-            <Route path="/spiritual" element={<SpiritualPage />} />
-            <Route path="/health" element={<HealthPage />} />
-            <Route path="/arts" element={<ArtsPage />} />
-            <Route path="/politics" element={<PoliticsPage />} />
+            <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+            <Route path="/tech" element={<PageWrapper><TechPage /></PageWrapper>} />
+            <Route path="/spiritual" element={<PageWrapper><SpiritualPage /></PageWrapper>} />
+            <Route path="/health" element={<PageWrapper><HealthPage /></PageWrapper>} />
+            <Route path="/arts" element={<PageWrapper><ArtsPage /></PageWrapper>} />
+            <Route path="/politics" element={<PageWrapper><PoliticsPage /></PageWrapper>} />
           </Routes>
         </MainContent>
         <Footer />

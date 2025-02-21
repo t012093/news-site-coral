@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -186,7 +187,7 @@ const Planet = styled(motion.div)`
   box-shadow: 0 0 30px rgba(156, 124, 244, 0.3);
 `;
 
-const Satellite = styled(motion.div)`
+const Satellite = styled(motion(Link))`
   position: absolute;
   width: 60px;
   height: 60px;
@@ -277,30 +278,35 @@ const HomePage = () => {
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           />
           <Satellite
+            to="/tech"
             style={{ top: -80, left: 45 }}
             whileHover={{ y: -5 }}
           >
             Tech
           </Satellite>
           <Satellite
+            to="/health"
             style={{ top: 85, right: -30 }}
             whileHover={{ y: -5 }}
           >
             Health
           </Satellite>
           <Satellite
+            to="/arts"
             style={{ top: 85, left: -30 }}
             whileHover={{ y: -5 }}
           >
             Arts
           </Satellite>
           <Satellite
+            to="/spiritual"
             style={{ bottom: -80, left: 45 }}
             whileHover={{ y: -5 }}
           >
             Spiritual
           </Satellite>
           <Satellite
+            to="/politics"
             style={{ top: 0, right: -60 }}
             whileHover={{ y: -5 }}
           >
