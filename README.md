@@ -1,4 +1,8 @@
-# React + TypeScript + Vite
+# news-site-coral
+
+A news website built with React + TypeScript + Vite
+
+## Development Setup
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -47,4 +51,3 @@ export default tseslint.config({
     ...react.configs['jsx-runtime'].rules,
   },
 })
-```
