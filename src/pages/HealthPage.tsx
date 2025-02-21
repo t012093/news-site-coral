@@ -172,7 +172,7 @@ const HealthPage = () => {
             transition={{ duration: 0.6 }}
           >
             <FeaturedImage
-              src="https://images.unsplash.com/photo-1512686096451-a15c19314d59?auto=format&fit=crop&q=80"
+              src="images/logo.png"
               alt="Mindful Eating"
             />
             <ArticleContent>

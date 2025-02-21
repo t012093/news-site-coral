@@ -339,7 +339,7 @@ const HomePage = () => {
         >
           <ArticleBackground
             style={{
-              backgroundImage: 'url(/images/hebi.png)',
+              backgroundImage: 'url(/images/cat.png)',
             }}
           />
           <ArticleContent>
@@ -363,7 +363,7 @@ const HomePage = () => {
             transition={{ duration: 0.2 }}
           >
             <TrendingImage
-              src="/images/tokyo.png"
+              src="/images/hose.png"
               alt="Health Article"
             />
             <TrendingContent>

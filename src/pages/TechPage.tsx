@@ -192,7 +192,7 @@ const TechPage = () => {
           >
             <FeaturedBackground
               style={{
-                backgroundImage: 'url(/images/city.png)',
+                backgroundImage: 'url(/images/zou.png)',
               }}
             />
             <FeaturedContent>
@@ -214,7 +214,7 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="/images/gumi.png"
+            src="/images/ai.png"
             alt="Robotics"
           />
           <ArticleContent>
@@ -244,7 +244,7 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="/images/hebi.png"
+            src="/images/pixel2.png"
             alt="VR Technology"
           />
           <ArticleContent>
@@ -274,7 +274,7 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="/images/UFO.png"
+            src="/images/back.png"
             alt="Space Technology"
           />
           <ArticleContent>

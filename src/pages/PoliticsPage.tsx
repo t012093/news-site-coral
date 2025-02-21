@@ -231,7 +231,7 @@ const PoliticsPage = () => {
                 transition={{ duration: 0.2 }}
               >
                 <NewsImage
-                  src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&q=80"
+                  src="images/toudai.png"
                   alt="Digital Economy"
                 />
                 <NewsContent>
@@ -250,7 +250,7 @@ const PoliticsPage = () => {
                 transition={{ duration: 0.2 }}
               >
                 <NewsImage
-                  src="https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?auto=format&fit=crop&q=80"
+                  src="images/zou.png"
                   alt="Social Welfare"
                 />
                 <NewsContent>

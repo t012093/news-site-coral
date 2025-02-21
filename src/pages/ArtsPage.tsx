@@ -159,7 +159,7 @@ const ArtsPage = () => {
           transition={{ duration: 0.6 }}
         >
           <ArticleImage
-            src="https://images.unsplash.com/photo-1501084817091-a4f3d1d19e07?auto=format&fit=crop&q=80"
+            src="images/she55.png"
             alt="Digital Art Revolution"
             isLarge
           />
@@ -181,7 +181,7 @@ const ArtsPage = () => {
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <ArticleImage
-            src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80"
+            src="images/hato.png"
             alt="Music Evolution"
           />
           <ArticleContent>
@@ -204,7 +204,7 @@ const ArtsPage = () => {
             transition={{ duration: 0.3 }}
           >
             <ArticleImage
-              src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80"
+              src="images/coral2.png"
               alt="Fashion Trends"
             />
             <ArticleContent>
@@ -223,7 +223,7 @@ const ArtsPage = () => {
             transition={{ duration: 0.3 }}
           >
             <ArticleImage
-              src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80"
+              src="images/chat.png"
               alt="Theater Performance"
             />
             <ArticleContent>
@@ -242,7 +242,7 @@ const ArtsPage = () => {
             transition={{ duration: 0.3 }}
           >
             <ArticleImage
-              src="https://images.unsplash.com/photo-1581881067989-7e3eaf45f4f6?auto=format&fit=crop&q=80"
+              src="images/man9.png"
               alt="Street Art"
             />
             <ArticleContent>

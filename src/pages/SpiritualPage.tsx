@@ -9,7 +9,8 @@ const PageHeader = styled.header`
   text-align: center;
   margin-bottom: 4rem;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3)),
-    url('https://images.unsplash.com/photo-1604881991720-f91add269bed?auto=format&fit=crop&q=80');
+    url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&q=80')
+    center/cover no-repeat;
   background-size: cover;
   background-position: center;
   padding: 6rem 2rem;
@@ -165,7 +166,7 @@ const SpiritualPage = () => {
             transition={{ duration: 0.3 }}
           >
             <ArticleImage
-              src="https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&q=80"
+              src="images/she.png"
               alt="Sacred Mushrooms"
             />
             <ArticleContent>

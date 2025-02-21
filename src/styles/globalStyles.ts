@@ -5,7 +5,7 @@ export const globalStyles = css`
     --primary-color: #121212;
     --secondary-color: #808080;
     --accent-color: #9C7CF4;
-    --background-color: #121212;
+    --background-color:rgb(5, 5, 5);
     --text-color: #E0E0E0;
     --font-primary: 'Helvetica Neue', Arial, sans-serif;
     --font-secondary: 'Georgia', serif;
