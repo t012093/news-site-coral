@@ -162,6 +162,93 @@ const TrendingContent = styled.div`
   color: var(--text-color);
 `;
 
+// Topics Explorer用のスタイル
+const TopicsExplorerSection = styled.section`
+  margin-bottom: 4rem;
+  position: relative;
+  min-height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const PlanetContainer = styled.div`
+  position: relative;
+  width: 150px;
+  height: 150px;
+`;
+
+const Planet = styled(motion.div)`
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--accent-color), #6B4ED0);
+  border-radius: 50%;
+  box-shadow: 0 0 30px rgba(156, 124, 244, 0.3);
+`;
+
+const Satellite = styled(motion.div)`
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: var(--primary-color);
+  border-radius: 50%;
+  border: 1px solid #2a2a2a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  &:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 20px var(--accent-color);
+    transform: scale(1.1);
+  }
+`;
+
+// Weekly Highlights用のスタイル
+const WeeklySection = styled.section`
+  margin-bottom: 4rem;
+  position: relative;
+  overflow: hidden;
+  padding: 2rem 0;
+`;
+
+const CarouselContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+  justify-content: center;
+  perspective: 1000px;
+`;
+
+const WeeklyCard = styled(motion.div)`
+  background: var(--primary-color);
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 300px;
+  position: relative;
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 30px rgba(156, 124, 244, 0.2);
+  }
+`;
+
+const WeeklyTitle = styled.h3`
+  color: var(--text-color);
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+`;
+
+const WeeklyContent = styled.p`
+  color: var(--text-color);
+  opacity: 0.8;
+  font-size: 0.9rem;
+`;
+
 const HomePage = () => {
   return (
     <Container>
@@ -181,6 +268,46 @@ const HomePage = () => {
           </motion.div>
         </HeroContent>
       </HeroSection>
+
+      <TopicsExplorerSection>
+        <SectionTitle>Topics Explorer</SectionTitle>
+        <PlanetContainer>
+          <Planet
+            animate={{ rotate: 360 }}
+            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          />
+          <Satellite
+            style={{ top: -80, left: 45 }}
+            whileHover={{ y: -5 }}
+          >
+            Tech
+          </Satellite>
+          <Satellite
+            style={{ top: 85, right: -30 }}
+            whileHover={{ y: -5 }}
+          >
+            Health
+          </Satellite>
+          <Satellite
+            style={{ top: 85, left: -30 }}
+            whileHover={{ y: -5 }}
+          >
+            Arts
+          </Satellite>
+          <Satellite
+            style={{ bottom: -80, left: 45 }}
+            whileHover={{ y: -5 }}
+          >
+            Spiritual
+          </Satellite>
+          <Satellite
+            style={{ top: 0, right: -60 }}
+            whileHover={{ y: -5 }}
+          >
+            Politics
+          </Satellite>
+        </PlanetContainer>
+      </TopicsExplorerSection>
 
       <MainGrid>
         <FeaturedArticle
@@ -289,6 +416,40 @@ const HomePage = () => {
           </TrendingCard>
         </TrendingGrid>
       </TrendingSection>
+
+
+    <WeeklySection>
+      <SectionTitle>Weekly Highlights</SectionTitle>
+      <CarouselContainer>
+        <WeeklyCard
+          whileHover={{ rotateY: 5, rotateX: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <WeeklyTitle>AIと倫理：今週の重要な議論</WeeklyTitle>
+          <WeeklyContent>
+            AI開発における倫理的な課題と、その解決に向けた取り組みについての詳細なレポート。
+          </WeeklyContent>
+        </WeeklyCard>
+        <WeeklyCard
+          whileHover={{ rotateY: 5, rotateX: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <WeeklyTitle>未来の働き方：リモートワークの新展開</WeeklyTitle>
+          <WeeklyContent>
+            最新のテクノロジーがもたらす、働き方改革とオフィスカルチャーの変革について。
+          </WeeklyContent>
+        </WeeklyCard>
+        <WeeklyCard
+          whileHover={{ rotateY: 5, rotateX: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <WeeklyTitle>デジタルアートの新時代</WeeklyTitle>
+          <WeeklyContent>
+            NFTとブロックチェーン技術が、アート業界にもたらす革新的な変化とは。
+          </WeeklyContent>
+        </WeeklyCard>
+      </CarouselContainer>
+    </WeeklySection>
     </Container>
   );
 };
