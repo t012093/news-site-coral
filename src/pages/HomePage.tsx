@@ -94,7 +94,7 @@ const ArticleContent = styled.div`
 
 const ArticleTag = styled.span`
   background-color: var(--accent-color);
-  color: white;
+  color: #FFFFFF;
   padding: 0.4rem 1rem;
   border-radius: 20px;
   font-size: 0.9rem;
@@ -119,6 +119,7 @@ const SectionTitle = styled.h2`
   font-size: 2rem;
   margin-bottom: 2rem;
   text-align: center;
+  color: var(--text-color);
 `;
 
 const TrendingSection = styled.section`
@@ -132,20 +133,33 @@ const TrendingGrid = styled.div`
 `;
 
 const TrendingCard = styled(motion.article)`
-  background: white;
+  background: var(--primary-color);
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px #000000;
+  border: 1px solid #2a2a2a;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 8px 30px #000000;
+  }
 `;
 
 const TrendingImage = styled.img`
   width: 100%;
   height: 200px;
   object-fit: cover;
+  transition: transform 0.3s ease;
+
+  ${TrendingCard}:hover & {
+    transform: scale(1.05);
+  }
 `;
 
 const TrendingContent = styled.div`
   padding: 1.5rem;
+  background: var(--primary-color);
+  color: var(--text-color);
 `;
 
 const HomePage = () => {
