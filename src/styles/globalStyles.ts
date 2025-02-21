@@ -2,11 +2,11 @@ import { css } from '@emotion/react';
 
 export const globalStyles = css`
   :root {
-    --primary-color: #1a1a1a;
-    --secondary-color: #666666;
-    --accent-color:rgba(118, 87, 202, 0.61);
-    --background-color: #ffffff;
-    --text-color: #333333;
+    --primary-color: #121212;
+    --secondary-color: #808080;
+    --accent-color: #9C7CF4;
+    --background-color: #121212;
+    --text-color: #E0E0E0;
     --font-primary: 'Helvetica Neue', Arial, sans-serif;
     --font-secondary: 'Georgia', serif;
   }
