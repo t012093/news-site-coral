@@ -172,8 +172,7 @@ const TechPage = () => {
           >
             <FeaturedBackground
               style={{
-                backgroundImage:
-                  'url(https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80)',
+                backgroundImage: 'url(/images/UFO.png)',
               }}
             />
             <FeaturedContent>
@@ -193,8 +192,7 @@ const TechPage = () => {
           >
             <FeaturedBackground
               style={{
-                backgroundImage:
-                  'url(https://images.unsplash.com/photo-1581090464777-f3220bbe1b8b?auto=format&fit=crop&q=80)',
+                backgroundImage: 'url(/images/city.png)',
               }}
             />
             <FeaturedContent>
@@ -216,7 +214,7 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="https://images.unsplash.com/photo-1558346490-a72e53ae2d4f?auto=format&fit=crop&q=80"
+            src="/images/gumi.png"
             alt="Robotics"
           />
           <ArticleContent>
@@ -246,7 +244,7 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="https://images.unsplash.com/photo-1526666923127-b2970f64b422?auto=format&fit=crop&q=80"
+            src="/images/hebi.png"
             alt="VR Technology"
           />
           <ArticleContent>
@@ -276,7 +274,7 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
+            src="/images/UFO.png"
             alt="Space Technology"
           />
           <ArticleContent>

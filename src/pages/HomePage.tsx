@@ -176,8 +176,7 @@ const HomePage = () => {
         >
           <ArticleBackground
             style={{
-              backgroundImage:
-                'url(https://images.unsplash.com/photo-1635070041078-e363dbe005cb?auto=format&fit=crop&q=80)',
+              backgroundImage: 'url(/images/UFO.png)',
             }}
           />
           <ArticleContent>
@@ -199,8 +198,7 @@ const HomePage = () => {
         >
           <ArticleBackground
             style={{
-              backgroundImage:
-                'url(https://images.unsplash.com/photo-1542596594-649edbc13630?auto=format&fit=crop&q=80)',
+              backgroundImage: 'url(/images/hebi.png)',
             }}
           />
           <ArticleContent>
@@ -224,7 +222,7 @@ const HomePage = () => {
             transition={{ duration: 0.2 }}
           >
             <TrendingImage
-              src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&q=80"
+              src="/images/tokyo.png"
               alt="Health Article"
             />
             <TrendingContent>
@@ -243,7 +241,7 @@ const HomePage = () => {
             transition={{ duration: 0.2 }}
           >
             <TrendingImage
-              src="https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?auto=format&fit=crop&q=80"
+              src="/images/gumi.png"
               alt="Art Article"
             />
             <TrendingContent>
@@ -262,7 +260,7 @@ const HomePage = () => {
             transition={{ duration: 0.2 }}
           >
             <TrendingImage
-              src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&q=80"
+              src="/images/city.png"
               alt="Politics Article"
             />
             <TrendingContent>
