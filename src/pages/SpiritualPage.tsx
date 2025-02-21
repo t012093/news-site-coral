@@ -43,10 +43,11 @@ const ArticleGrid = styled.div`
 `;
 
 const ArticleCard = styled(motion.article)`
-  background: white;
+  background: var(--primary-color);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2a2a2a;
 `;
 
 const ArticleImage = styled.img`
@@ -57,6 +58,8 @@ const ArticleImage = styled.img`
 
 const ArticleContent = styled.div`
   padding: 2rem;
+  background: var(--primary-color);
+  color: var(--text-color);
 `;
 
 const ArticleTag = styled.span`
@@ -98,7 +101,7 @@ const QuoteSection = styled.section`
   text-align: center;
   margin: 4rem 0;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #f6f0ff 0%, #e3f2ff 100%);
+  background: linear-gradient(135deg, #f6f0ff 0%,rgb(75, 75, 114) 100%);
   border-radius: 12px;
 `;
 
@@ -213,9 +216,9 @@ const SpiritualPage = () => {
 
       <QuoteSection>
         <Quote>
-          意識の探求は、外への旅ではなく、内なる宇宙への旅である
+        手にしている真理でもなく思想でもなく、真理を見出すためにどれだけ真摯な努力をしてきたかがその人の価値を決める。
         </Quote>
-        <QuoteAuthor>- 松原哲明 博士</QuoteAuthor>
+        <QuoteAuthor>- Gotthold Ephraim Lessing 1778</QuoteAuthor>
       </QuoteSection>
     </Container>
   );

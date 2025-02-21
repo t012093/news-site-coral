@@ -182,9 +182,9 @@ const PlanetContainer = styled.div`
 const Planet = styled(motion.div)`
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, var(--accent-color), #6B4ED0);
+  background: linear-gradient(135deg, var(--accent-color),rgba(138, 116, 217, 0.76));
   border-radius: 50%;
-  box-shadow: 0 0 30px rgba(156, 124, 244, 0.3);
+  box-shadow: 0 0 30px rgba(156, 124, 244, 0.7);
 `;
 
 const Satellite = styled(motion(Link))`
@@ -263,8 +263,7 @@ const HomePage = () => {
           >
             <HeroTitle>Discover The Future</HeroTitle>
             <HeroSubtitle>
-              テクノロジー、スピリチュアル、健康、アート、そして政治。
-              私たちの世界を形作る重要なトピックスをお届けします。
+              テクノロジー、スピリチュアル、健康、アート、そして政治。知的欲求が未来を創る。
             </HeroSubtitle>
           </motion.div>
         </HeroContent>

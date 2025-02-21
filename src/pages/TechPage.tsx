@@ -8,7 +8,7 @@ const Container = styled.div`
 const PageHeader = styled.header`
   margin-bottom: 4rem;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #2a2a72 0%, #009ffd 100%);
+  background: linear-gradient(135deg,rgb(37, 37, 76) 0%,rgb(37, 105, 145) 100%);
   color: white;
   border-radius: 12px;
   text-align: center;
@@ -42,10 +42,11 @@ const MainGrid = styled.div`
 `;
 
 const ArticleCard = styled(motion.article)`
-  background: white;
+  background: var(--primary-color);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2a2a2a;
 `;
 
 const ArticleImage = styled.img`
@@ -56,6 +57,8 @@ const ArticleImage = styled.img`
 
 const ArticleContent = styled.div`
   padding: 1.5rem;
+  background: var(--primary-color);
+  color: var(--text-color);
 `;
 
 const ArticleTag = styled.span`

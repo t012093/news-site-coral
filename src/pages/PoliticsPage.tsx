@@ -9,6 +9,7 @@ const PageHeader = styled.header`
   margin-bottom: 4rem;
   padding: 4rem 2rem;
   background-color: var(--primary-color);
+  image: linear-gradient(135deg, #2a2a72 0%, #009ffd 100%);
   color: white;
   border-radius: 12px;
   text-align: center;

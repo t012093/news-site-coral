@@ -56,11 +56,12 @@ const ContentGrid = styled.div`
 const MainContent = styled.div``;
 
 const FeaturedArticle = styled(motion.article)`
-  background: white;
+  background: var(--primary-color);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 3rem;
+  border: 1px solid #2a2a2a;
 `;
 
 const FeaturedImage = styled.img`
@@ -71,6 +72,8 @@ const FeaturedImage = styled.img`
 
 const ArticleContent = styled.div`
   padding: 2rem;
+  background: var(--primary-color);
+  color: var(--text-color);
 `;
 
 const ArticleTag = styled.span`
@@ -112,11 +115,13 @@ const ReadMoreLink = styled(motion.a)`
 const Sidebar = styled.aside``;
 
 const SidebarWidget = styled.div`
-  background: white;
+  background: var(--primary-color);
   border-radius: 12px;
   padding: 2rem;
   margin-bottom: 2rem;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2a2a2a;
+  color: var(--text-color);
 `;
 
 const WidgetTitle = styled.h3`
@@ -134,12 +139,21 @@ const TrendingList = styled.ul`
 const TrendingItem = styled(motion.li)`
   margin-bottom: 1.5rem;
   padding-bottom: 1.5rem;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #2a2a2a;
   
   &:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
     border-bottom: none;
+  }
+
+  a {
+    color: var(--text-color);
+    text-decoration: none;
+    
+    &:hover {
+      color: var(--accent-color);
+    }
   }
 `;
 

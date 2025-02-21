@@ -94,6 +94,8 @@ const ContentOverlay = styled.div`
 
 const ArticleContent = styled.div`
   padding: 1.5rem;
+  background: var(--primary-color);
+  color: var(--text-color);
 `;
 
 const ArticleTag = styled.span`
@@ -110,7 +112,7 @@ const ArticleTitle = styled.h2<{ isLight?: boolean }>`
   font-size: ${props => props.isLight ? '2.5rem' : '1.8rem'};
   margin-bottom: 1rem;
   line-height: 1.3;
-  color: ${props => props.isLight ? 'white' : 'var(--primary-color)'};
+  color: ${props => props.isLight ? 'white' : 'var(--text-color)'};
 `;
 
 const ArticleExcerpt = styled.p<{ isLight?: boolean }>`
@@ -136,10 +138,11 @@ const SmallArticleGrid = styled.div`
 `;
 
 const SmallArticle = styled(motion.article)`
-  background: white;
+  background: var(--primary-color);
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border: 1px solid #2a2a2a;
 `;
 
 const ArtsPage = () => {
