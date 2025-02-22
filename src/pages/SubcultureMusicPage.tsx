@@ -177,6 +177,36 @@ const PopularMeta = styled.div`
   color: var(--secondary-color);
 `;
 
+const VideoContainer = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+  margin: 2rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  background: var(--primary-color);
+  border: 1px solid #2a2a2a;
+`;
+
+const VideoIframe = styled.iframe`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+`;
+
+const VideoCaption = styled.p`
+  text-align: center;
+  font-size: 1rem;
+  color: var(--secondary-color);
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  font-style: italic;
+`;
+
 const ArticleContent = styled(motion.div)`
   line-height: 1.8;
   font-size: 1.2rem;
@@ -371,6 +401,18 @@ const SubcultureMusicPage = () => {
               特定の音楽文化圏への風刺的な要素を含んでいる。
             </p>
 
+            <VideoContainer>
+              <VideoIframe
+                src="https://www.youtube.com/embed/_oQ4wb0NbcQ"
+                title="界隈の動物園"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </VideoContainer>
+            <VideoCaption>
+              バーバパパ氏による「界隈の動物園」のミュージックビデオ
+            </VideoCaption>
+
             <h2>界隈曲の起源</h2>
             <p>
               そもそも「界隈曲」とは何なのか。そのルーツを辿ると、音楽プロデューサー・ころんば氏による
@@ -378,6 +420,18 @@ const SubcultureMusicPage = () => {
               「イワシがつちからはえてくるんだ」「ヤツメ穴」「.（ドット）」の4曲は、界隈曲の代表格とされ、
               「海鮮市場」という別称でも知られている。
             </p>
+
+            <VideoContainer>
+              <VideoIframe
+                src="https://www.youtube.com/embed/C9PFVo1FEwU"
+                title="ヤツメ穴"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            </VideoContainer>
+            <VideoCaption>
+              界隈曲の代表作「ヤツメ穴」
+            </VideoCaption>
 
             <h2>界隈曲の特徴</h2>
             <p>
