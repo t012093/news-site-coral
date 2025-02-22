@@ -23,8 +23,13 @@ const Logo = styled(Link)`
   font-family: var(--font-secondary);
   font-size: 2rem;
   font-weight: bold;
-  color: var(--primary-color);
+  color: white;
   text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color:  inherit;
+  }
 `;
 
 const NavLinks = styled.div`
@@ -37,7 +42,7 @@ const NavLinks = styled.div`
 `;
 
 const NavLink = styled(motion(Link))`
-  color: var(--secondary-color);
+  color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
@@ -68,7 +73,7 @@ const MobileMenuButton = styled.button`
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: var(--primary-color);
+  color: white;
 
   @media (max-width: 768px) {
     display: block;

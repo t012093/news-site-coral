@@ -9,7 +9,7 @@ const PageHeader = styled.header`
   position: relative;
   margin-bottom: 4rem;
   padding: 6rem 2rem;
-  background: linear-gradient(to right, #ff6b6b 0%, #4a90e2 100%);
+  background: linear-gradient(to right,rgb(255, 152, 152) 0%,rgba(64, 95, 155, 0.64) 100%);
   border-radius: 12px;
   overflow: hidden;
   color: white;

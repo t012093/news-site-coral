@@ -10,7 +10,7 @@ const PageHeader = styled.header`
   text-align: center;
   margin-bottom: 4rem;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #c2e9fb 0%, #e3f2ff 100%);
+  background: linear-gradient(135deg,rgb(224, 233, 240) 0%,rgb(49, 93, 132) 100%);
   border-radius: 12px;
   overflow: hidden;
 
@@ -30,7 +30,7 @@ const PageHeader = styled.header`
 const PageTitle = styled.h1`
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
-  color: var(--primary-color);
+  color: white;
   position: relative;
 `;
 
@@ -38,9 +38,10 @@ const PageDescription = styled.p`
   font-size: 1.2rem;
   max-width: 600px;
   margin: 0 auto;
-  color: var(--secondary-color);
+  color: white;
   position: relative;
   line-height: 1.6;
+  opacity: 0.9;
 `;
 
 const ContentGrid = styled.div`
@@ -90,13 +91,15 @@ const ArticleTitle = styled.h2`
   font-size: 2rem;
   margin-bottom: 1rem;
   line-height: 1.3;
+  color: white;
 `;
 
 const ArticleExcerpt = styled.p`
-  color: var(--secondary-color);
+  color: white;
   margin-bottom: 1.5rem;
   line-height: 1.6;
   font-size: 1.1rem;
+  opacity: 0.9;
 `;
 
 const ReadMoreLink = styled(motion.a)`
@@ -127,7 +130,7 @@ const SidebarWidget = styled.div`
 const WidgetTitle = styled.h3`
   font-size: 1.5rem;
   margin-bottom: 1.5rem;
-  color: var(--primary-color);
+  color: white;
 `;
 
 const TrendingList = styled.ul`
@@ -148,7 +151,7 @@ const TrendingItem = styled(motion.li)`
   }
 
   a {
-    color: var(--text-color);
+    color: white;
     text-decoration: none;
     
     &:hover {
@@ -161,11 +164,12 @@ const TrendingTitle = styled.h4`
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
   line-height: 1.4;
+  color: white;
 `;
 
 const TrendingMeta = styled.div`
   font-size: 0.9rem;
-  color: var(--secondary-color);
+  color: rgba(255, 255, 255, 0.7);
 `;
 
 const HealthPage = () => {
