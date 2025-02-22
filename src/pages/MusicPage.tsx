@@ -8,7 +8,7 @@ const Container = styled.div`
 const PageHeader = styled.header`
   margin-bottom: 4rem;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg,rgb(37, 37, 76) 0%,rgb(37, 105, 145) 100%);
+  background: linear-gradient(135deg, rgb(76, 37, 73) 0%, rgb(145, 37, 89) 100%);
   color: white;
   border-radius: 12px;
   text-align: center;
@@ -155,14 +155,14 @@ const FeaturedContent = styled.div`
   color: white;
 `;
 
-const TechPage = () => {
+const MusicPage = () => {
   return (
     <Container>
       <PageHeader>
-        <PageTitle>Technology</PageTitle>
+        <PageTitle>Music</PageTitle>
         <PageDescription>
-          最先端のテクノロジーから、私たちの暮らしを変える革新的なアイデアまで。
-          未来を形作る技術の今をお届けします。
+          現代の音楽シーンから、サブカルチャーまで。
+          多様な音楽カルチャーの今をお届けします。
         </PageDescription>
       </PageHeader>
 
@@ -172,10 +172,11 @@ const TechPage = () => {
           <FeaturedCard
             whileHover={{ y: -5 }}
             transition={{ duration: 0.2 }}
+            onClick={() => window.location.href = '/music/subculture'}
           >
             <FeaturedBackground
               style={{
-                backgroundImage: 'url(/images/UFO.png)',
+                backgroundImage: 'url(/images/pixel.png)',
               }}
             />
             <FeaturedContent>
@@ -195,13 +196,13 @@ const TechPage = () => {
           >
             <FeaturedBackground
               style={{
-                backgroundImage: 'url(/images/zou.png)',
+                backgroundImage: 'url(/images/she8.png)',
               }}
             />
             <FeaturedContent>
-              <ArticleTag>Web3</ArticleTag>
+              <ArticleTag>インタビュー</ArticleTag>
               <ArticleTitle>
-                分散型インターネットの未来：Web3が変える世界
+                次世代の音楽クリエイター：AIとの共創が生み出す新しい表現
               </ArticleTitle>
               <ArticleMeta>
                 <span>2024年2月21日</span>
@@ -217,22 +218,22 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="/images/ai.png"
-            alt="Robotics"
+            src="/images/she9.png"
+            alt="Music Festival"
           />
           <ArticleContent>
-            <ArticleTag>ロボティクス</ArticleTag>
+            <ArticleTag>フェス</ArticleTag>
             <ArticleTitle>
-              人間との共生を目指す：次世代ロボットの開発最前線
+              ポスト・パンデミック時代のフェス文化：新しい音楽体験の形
             </ArticleTitle>
             <ArticleExcerpt>
-              感情認識AI搭載の介護ロボットから、災害救助用の高度な
-              マニピュレーターまで、最新のロボット技術を紹介。
+              オンラインとオフラインの融合、新技術の導入など、
+              変化を遂げる音楽フェスティバルの最新トレンド。
             </ArticleExcerpt>
             <ArticleMeta>
               <span>2024年2月20日</span>
               <ReadMore
-                href="/article/robotics-future"
+                href="/music/festival-evolution"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -247,22 +248,22 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="/images/pixel2.png"
-            alt="VR Technology"
+            src="/images/she15.png"
+            alt="Street Music"
           />
           <ArticleContent>
-            <ArticleTag>VR/AR</ArticleTag>
+            <ArticleTag>ストリート</ArticleTag>
             <ArticleTitle>
-              メタバースの現在地：仮想世界がもたらす新たな可能性
+              都市と音楽：進化するストリートミュージックシーン
             </ArticleTitle>
             <ArticleExcerpt>
-              教育、医療、エンターテインメント。様々な分野で広がる
-              VR/AR技術の活用事例と今後の展望を探る。
+              SNSやライブ配信の普及により、新たな展開を見せる
+              ストリートミュージックカルチャーの現在。
             </ArticleExcerpt>
             <ArticleMeta>
               <span>2024年2月19日</span>
               <ReadMore
-                href="/article/metaverse-now"
+                href="/music/street-music-evolution"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -277,22 +278,22 @@ const TechPage = () => {
           transition={{ duration: 0.2 }}
         >
           <ArticleImage
-            src="/images/back.png"
-            alt="Space Technology"
+            src="/images/she55.png"
+            alt="Music Technology"
           />
           <ArticleContent>
-            <ArticleTag>宇宙開発</ArticleTag>
+            <ArticleTag>テクノロジー</ArticleTag>
             <ArticleTitle>
-              民間宇宙開発の新時代：月面開発計画の実現へ
+              没入型音楽体験の未来：VRライブの可能性
             </ArticleTitle>
             <ArticleExcerpt>
-              商業宇宙飛行から月面基地建設まで。加速する民間企業の
-              宇宙開発プロジェクトの最新動向。
+              バーチャルライブ空間での演奏から、インタラクティブな
+              音楽体験まで。テクノロジーが変える音楽の楽しみ方。
             </ArticleExcerpt>
             <ArticleMeta>
               <span>2024年2月18日</span>
               <ReadMore
-                href="/article/space-development"
+                href="/music/vr-live-future"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -306,4 +307,4 @@ const TechPage = () => {
   );
 };
 
-export default TechPage;
+export default MusicPage;

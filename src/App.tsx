@@ -7,6 +7,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import MusicPage from './pages/MusicPage';
+import SubcultureMusicPage from './pages/SubcultureMusicPage';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
@@ -99,6 +101,8 @@ function App() {
         <MainContent>
           <Routes>
             <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+            <Route path="/music" element={<PageWrapper><MusicPage /></PageWrapper>} />
+            <Route path="/music/subculture" element={<PageWrapper><SubcultureMusicPage /></PageWrapper>} />
             <Route path="/tech" element={<PageWrapper><TechPage /></PageWrapper>} />
             <Route path="/spiritual" element={<PageWrapper><SpiritualPage /></PageWrapper>} />
             <Route path="/health" element={<PageWrapper><HealthPage /></PageWrapper>} />

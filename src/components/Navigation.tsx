@@ -92,6 +92,12 @@ const Navigation = () => {
         <Logo to="/">CORAL</Logo>
         <NavLinks>
           <NavLink 
+            to="/music"
+            whileHover={linkHoverAnimation}
+          >
+            Music
+          </NavLink>
+          <NavLink 
             to="/tech"
             whileHover={linkHoverAnimation}
           >
