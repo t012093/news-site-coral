@@ -118,9 +118,11 @@ const ArticleMeta = styled.div`
 
 const SectionTitle = styled.h2`
   font-size: 2rem;
-  margin-bottom: 2rem;
-  text-align: center;
+  margin: 2rem 0 4rem 8rem;
+  text-align: left;
   color: var(--text-color);
+  position: relative;
+  left: -2rem;
 `;
 
 const TrendingSection = styled.section`
@@ -177,6 +179,7 @@ const PlanetContainer = styled.div`
   position: relative;
   width: 150px;
   height: 150px;
+  margin-top: 2rem;
 `;
 
 const Planet = styled(motion.div)`
@@ -263,7 +266,7 @@ const HomePage = () => {
           >
             <HeroTitle>Discover The Future</HeroTitle>
             <HeroSubtitle>
-              テクノロジー、スピリチュアル、健康、アート、そして政治。知的欲求が未来を創る。
+              テクノロジー、音楽、スピリチュアル、健康、アート、そして政治。知的欲求が未来を創る。
             </HeroSubtitle>
           </motion.div>
         </HeroContent>
@@ -273,41 +276,66 @@ const HomePage = () => {
         <SectionTitle>Topics Explorer</SectionTitle>
         <PlanetContainer>
           <Planet
-            animate={{ rotate: 360 }}
-            transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+            animate={{ 
+              rotate: 360,
+              scale: [1, 1.03, 1],
+            }}
+            transition={{ 
+              rotate: { duration: 40, repeat: Infinity, ease: "linear" },
+              scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+            }}
           />
           <Satellite
             to="/tech"
-            style={{ top: -80, left: 45 }}
-            whileHover={{ y: -5 }}
+            style={{ top: 60, left: -95 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
           >
             Tech
           </Satellite>
           <Satellite
+            to="/music"
+            style={{ top: -45, left: -95 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
+          >
+            Music
+          </Satellite>
+          <Satellite
             to="/health"
-            style={{ top: 85, right: -30 }}
-            whileHover={{ y: -5 }}
+            style={{ top: 45, right: -95 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 4.6, repeat: Infinity, ease: "easeInOut" } }}
           >
             Health
           </Satellite>
           <Satellite
             to="/arts"
-            style={{ top: 85, left: -30 }}
-            whileHover={{ y: -5 }}
+            style={{ top: 95, left: 0 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 5.4, repeat: Infinity, ease: "easeInOut" } }}
           >
             Arts
           </Satellite>
           <Satellite
             to="/spiritual"
-            style={{ bottom: -80, left: 45 }}
-            whileHover={{ y: -5 }}
+            style={{ top: -95, left: 0 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 4.4, repeat: Infinity, ease: "easeInOut" } }}
           >
             Spiritual
           </Satellite>
           <Satellite
             to="/politics"
-            style={{ top: 0, right: -60 }}
-            whileHover={{ y: -5 }}
+            style={{ top: -45, right: -95 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" } }}
           >
             Politics
           </Satellite>
@@ -331,7 +359,7 @@ const HomePage = () => {
               量子コンピューティングが切り開く、新時代のAI技術
             </ArticleTitle>
             <ArticleMeta>
-              <span>By 山田太郎</span>
+              
               <span>2024年2月22日</span>
             </ArticleMeta>
           </ArticleContent>
@@ -353,7 +381,6 @@ const HomePage = () => {
               現代社会における瞑想の重要性：科学的アプローチ
             </ArticleTitle>
             <ArticleMeta>
-              <span>By 佐藤美咲</span>
               <span>2024年2月21日</span>
             </ArticleMeta>
           </ArticleContent>
