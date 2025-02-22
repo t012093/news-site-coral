@@ -390,10 +390,11 @@ const HomePage = () => {
       <TrendingSection>
         <SectionTitle>Trending Now</SectionTitle>
         <TrendingGrid>
-          <TrendingCard
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
+          <Link to="/subculture-music" style={{ textDecoration: 'none' }}>
+            <TrendingCard
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
+            >
             <TrendingImage
               src="/images/hose.png"
               alt="Health Article"
@@ -407,7 +408,8 @@ const HomePage = () => {
                 <span>2024年2月20日</span>
               </ArticleMeta>
             </TrendingContent>
-          </TrendingCard>
+            </TrendingCard>
+          </Link>
 
           <TrendingCard
             whileHover={{ y: -5 }}
@@ -433,13 +435,13 @@ const HomePage = () => {
             transition={{ duration: 0.2 }}
           >
             <TrendingImage
-              src="/images/city.png"
-              alt="Politics Article"
+              src="/images/guer.png"
+              alt="Music Article"
             />
             <TrendingContent>
-              <ArticleTag>政治</ArticleTag>
+              <ArticleTag>音楽</ArticleTag>
               <ArticleTitle>
-                気候変動対策：各国の取り組みと今後の展望
+                界隈曲の世界：カオスと中毒性が織りなす音楽文化
               </ArticleTitle>
               <ArticleMeta>
                 <span>2024年2月18日</span>
