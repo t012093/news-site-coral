@@ -205,7 +205,7 @@ const MusicPage = () => {
                 次世代の音楽クリエイター：AIとの共創が生み出す新しい表現
               </ArticleTitle>
               <ArticleMeta>
-                <span>2024年2月21日</span>
+                <span>2025年2月21日</span>
               </ArticleMeta>
             </FeaturedContent>
           </FeaturedCard>
@@ -216,24 +216,25 @@ const MusicPage = () => {
         <ArticleCard
           whileHover={{ y: -5 }}
           transition={{ duration: 0.2 }}
+          onClick={() => window.location.href = '/music/barbapapa'}
         >
           <ArticleImage
-            src="/images/she9.png"
-            alt="Music Festival"
+            src="/images/pixel2.png"
+            alt="バーバパパ"
           />
           <ArticleContent>
-            <ArticleTag>フェス</ArticleTag>
+            <ArticleTag>クリエイター</ArticleTag>
             <ArticleTitle>
-              ポスト・パンデミック時代のフェス文化：新しい音楽体験の形
+              バーバパパ：シュールとカオスが織りなす映像音楽の世界
             </ArticleTitle>
             <ArticleExcerpt>
-              オンラインとオフラインの融合、新技術の導入など、
-              変化を遂げる音楽フェスティバルの最新トレンド。
+              謎に包まれたクリエイターの作品世界を探る。独特の映像表現と
+              中毒性のある音楽で、多くの視聴者を魅了し続けている現象に迫る。
             </ArticleExcerpt>
             <ArticleMeta>
-              <span>2024年2月20日</span>
+              <span>2025年2月24日</span>
               <ReadMore
-                href="/music/festival-evolution"
+                href="/music/barbapapa"
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
@@ -261,7 +262,7 @@ const MusicPage = () => {
               ストリートミュージックカルチャーの現在。
             </ArticleExcerpt>
             <ArticleMeta>
-              <span>2024年2月19日</span>
+              <span>2025年2月19日</span>
               <ReadMore
                 href="/music/street-music-evolution"
                 whileHover={{ x: 5 }}
@@ -291,7 +292,7 @@ const MusicPage = () => {
               音楽体験まで。テクノロジーが変える音楽の楽しみ方。
             </ArticleExcerpt>
             <ArticleMeta>
-              <span>2024年2月18日</span>
+              <span>2025年2月18日</span>
               <ReadMore
                 href="/music/vr-live-future"
                 whileHover={{ x: 5 }}

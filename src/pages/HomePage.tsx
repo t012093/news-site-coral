@@ -360,7 +360,7 @@ const HomePage = () => {
             </ArticleTitle>
             <ArticleMeta>
               
-              <span>2024年2月22日</span>
+              <span>2025年2月22日</span>
             </ArticleMeta>
           </ArticleContent>
         </FeaturedArticle>
@@ -381,7 +381,7 @@ const HomePage = () => {
               現代社会における瞑想の重要性：科学的アプローチ
             </ArticleTitle>
             <ArticleMeta>
-              <span>2024年2月21日</span>
+              <span>2025年2月21日</span>
             </ArticleMeta>
           </ArticleContent>
         </FeaturedArticle>
@@ -405,7 +405,7 @@ const HomePage = () => {
                 最新の睡眠科学が解き明かす、質の高い睡眠の秘密
               </ArticleTitle>
               <ArticleMeta>
-                <span>2024年2月20日</span>
+                <span>2025年2月20日</span>
               </ArticleMeta>
             </TrendingContent>
             </TrendingCard>
@@ -425,7 +425,7 @@ const HomePage = () => {
                 NFTアートが変える、現代アートシーンの新たな展開
               </ArticleTitle>
               <ArticleMeta>
-                <span>2024年2月19日</span>
+                <span>2025年2月19日</span>
               </ArticleMeta>
             </TrendingContent>
           </TrendingCard>
@@ -445,7 +445,7 @@ const HomePage = () => {
                   界隈曲の世界：カオスと中毒性が織りなす音楽文化
                 </ArticleTitle>
                 <ArticleMeta>
-                  <span>2024年2月18日</span>
+                  <span>2025年2月18日</span>
                 </ArticleMeta>
               </TrendingContent>
             </TrendingCard>

@@ -223,7 +223,7 @@ const PoliticsPage = () => {
               </ArticleTitle>
               <ArticleMeta>
                 <span>By 鈴木健一</span>
-                <span>2024年2月22日</span>
+                <span>2025年2月22日</span>
                 <span>読了時間 10分</span>
               </ArticleMeta>
               <ArticleExcerpt>
@@ -257,7 +257,7 @@ const PoliticsPage = () => {
                     デジタル経済における規制と革新：新しい法制度の模索
                   </NewsTitle>
                   <ArticleMeta>
-                    <span>2024年2月21日</span>
+                    <span>2025年2月21日</span>
                   </ArticleMeta>
                 </NewsContent>
               </NewsCard>
@@ -276,7 +276,7 @@ const PoliticsPage = () => {
                     高齢化社会における持続可能な社会保障制度の構築
                   </NewsTitle>
                   <ArticleMeta>
-                    <span>2024年2月20日</span>
+                    <span>2025年2月20日</span>
                   </ArticleMeta>
                 </NewsContent>
               </NewsCard>

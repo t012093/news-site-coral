@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -51,7 +52,7 @@ const ArticleCard = styled(motion.article)`
 
 const ArticleImage = styled.img`
   width: 100%;
-  height: 200px;
+  height: 250px;
   object-fit: cover;
 `;
 
@@ -92,10 +93,11 @@ const ArticleMeta = styled.div`
   font-size: 0.9rem;
 `;
 
-const ReadMore = styled(motion.a)`
+const ReadMore = styled(motion.span)`
   color: var(--accent-color);
   text-decoration: none;
   font-weight: 500;
+  cursor: pointer;
   
   &:hover {
     text-decoration: underline;
@@ -169,138 +171,144 @@ const TechPage = () => {
       <FeaturedSection>
         <SectionTitle>Featured Stories</SectionTitle>
         <FeaturedGrid>
-          <FeaturedCard
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FeaturedBackground
-              style={{
-                backgroundImage: 'url(/images/UFO.png)',
-              }}
-            />
-            <FeaturedContent>
-              <ArticleTag>音楽</ArticleTag>
-              <ArticleTitle>
-                界隈曲の世界：カオスと中毒性が織りなす音楽文化
-              </ArticleTitle>
-              <ArticleMeta>
-                <span>2024年2月23日</span>
-              </ArticleMeta>
-            </FeaturedContent>
-          </FeaturedCard>
+          <Link to="/music/subculture" style={{ textDecoration: 'none' }}>
+            <FeaturedCard
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FeaturedBackground
+                style={{
+                  backgroundImage: 'url(/images/UFO.png)',
+                }}
+              />
+              <FeaturedContent>
+                <ArticleTag>音楽</ArticleTag>
+                <ArticleTitle>
+                  界隈曲の世界：カオスと中毒性が織りなす音楽文化
+                </ArticleTitle>
+                <ArticleMeta>
+                  <span>2025年2月23日</span>
+                </ArticleMeta>
+              </FeaturedContent>
+            </FeaturedCard>
+          </Link>
 
-          <FeaturedCard
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <FeaturedBackground
-              style={{
-                backgroundImage: 'url(/images/zou.png)',
-              }}
-            />
-            <FeaturedContent>
-              <ArticleTag>Web3</ArticleTag>
-              <ArticleTitle>
-                分散型インターネットの未来：Web3が変える世界
-              </ArticleTitle>
-              <ArticleMeta>
-                <span>2024年2月21日</span>
-              </ArticleMeta>
-            </FeaturedContent>
-          </FeaturedCard>
+          <Link to="/article/web3-future" style={{ textDecoration: 'none' }}>
+            <FeaturedCard
+              whileHover={{ y: -5 }}
+              transition={{ duration: 0.2 }}
+            >
+              <FeaturedBackground
+                style={{
+                  backgroundImage: 'url(/images/zou.png)',
+                }}
+              />
+              <FeaturedContent>
+                <ArticleTag>Web3</ArticleTag>
+                <ArticleTitle>
+                  分散型インターネットの未来：Web3が変える世界
+                </ArticleTitle>
+                <ArticleMeta>
+                  <span>2025年2月21日</span>
+                </ArticleMeta>
+              </FeaturedContent>
+            </FeaturedCard>
+          </Link>
         </FeaturedGrid>
       </FeaturedSection>
 
       <MainGrid>
-        <ArticleCard
-          whileHover={{ y: -5 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ArticleImage
-            src="/images/ai.png"
-            alt="Robotics"
-          />
-          <ArticleContent>
-            <ArticleTag>ロボティクス</ArticleTag>
-            <ArticleTitle>
-              人間との共生を目指す：次世代ロボットの開発最前線
-            </ArticleTitle>
-            <ArticleExcerpt>
-              感情認識AI搭載の介護ロボットから、災害救助用の高度な
-              マニピュレーターまで、最新のロボット技術を紹介。
-            </ArticleExcerpt>
-            <ArticleMeta>
-              <span>2024年2月20日</span>
-              <ReadMore
-                href="/article/robotics-future"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                続きを読む →
-              </ReadMore>
-            </ArticleMeta>
-          </ArticleContent>
-        </ArticleCard>
+        <Link to="/tech/ai-writing" style={{ textDecoration: 'none' }}>
+          <ArticleCard
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArticleImage
+              src="/images/ai.png"
+              alt="Robotics"
+            />
+            <ArticleContent>
+              <ArticleTag>ロボティクス</ArticleTag>
+              <ArticleTitle>
+                AI時代のライティング：ライターとニュースサイトの未来
+              </ArticleTitle>
+              <ArticleExcerpt>
+                AI技術の進化がもたらすライティングの変革と、ニュースサイトの未来像を探ります。
+              </ArticleExcerpt>
+              <ArticleMeta>
+                <span>2025年2月20日</span>
+                <ReadMore
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMore>
+              </ArticleMeta>
+            </ArticleContent>
+          </ArticleCard>
+        </Link>
 
-        <ArticleCard
-          whileHover={{ y: -5 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ArticleImage
-            src="/images/pixel2.png"
-            alt="VR Technology"
-          />
-          <ArticleContent>
-            <ArticleTag>VR/AR</ArticleTag>
-            <ArticleTitle>
-              メタバースの現在地：仮想世界がもたらす新たな可能性
-            </ArticleTitle>
-            <ArticleExcerpt>
-              教育、医療、エンターテインメント。様々な分野で広がる
-              VR/AR技術の活用事例と今後の展望を探る。
-            </ArticleExcerpt>
-            <ArticleMeta>
-              <span>2024年2月19日</span>
-              <ReadMore
-                href="/article/metaverse-now"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                続きを読む →
-              </ReadMore>
-            </ArticleMeta>
-          </ArticleContent>
-        </ArticleCard>
+        <Link to="/article/metaverse-now" style={{ textDecoration: 'none' }}>
+          <ArticleCard
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArticleImage
+              src="/images/pixel2.png"
+              alt="VR Technology"
+            />
+            <ArticleContent>
+              <ArticleTag>VR/AR</ArticleTag>
+              <ArticleTitle>
+                メタバースの現在地：仮想世界がもたらす新たな可能性
+              </ArticleTitle>
+              <ArticleExcerpt>
+                教育、医療、エンターテインメント。様々な分野で広がる
+                VR/AR技術の活用事例と今後の展望を探る。
+              </ArticleExcerpt>
+              <ArticleMeta>
+                <span>2025年2月19日</span>
+                <ReadMore
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMore>
+              </ArticleMeta>
+            </ArticleContent>
+          </ArticleCard>
+        </Link>
 
-        <ArticleCard
-          whileHover={{ y: -5 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ArticleImage
-            src="/images/back.png"
-            alt="Space Technology"
-          />
-          <ArticleContent>
-            <ArticleTag>宇宙開発</ArticleTag>
-            <ArticleTitle>
-              民間宇宙開発の新時代：月面開発計画の実現へ
-            </ArticleTitle>
-            <ArticleExcerpt>
-              商業宇宙飛行から月面基地建設まで。加速する民間企業の
-              宇宙開発プロジェクトの最新動向。
-            </ArticleExcerpt>
-            <ArticleMeta>
-              <span>2024年2月18日</span>
-              <ReadMore
-                href="/article/space-development"
-                whileHover={{ x: 5 }}
-                transition={{ duration: 0.2 }}
-              >
-                続きを読む →
-              </ReadMore>
-            </ArticleMeta>
-          </ArticleContent>
-        </ArticleCard>
+        <Link to="/article/space-development" style={{ textDecoration: 'none' }}>
+          <ArticleCard
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArticleImage
+              src="/images/back.png"
+              alt="Space Technology"
+            />
+            <ArticleContent>
+              <ArticleTag>宇宙開発</ArticleTag>
+              <ArticleTitle>
+                民間宇宙開発の新時代：月面開発計画の実現へ
+              </ArticleTitle>
+              <ArticleExcerpt>
+                商業宇宙飛行から月面基地建設まで。加速する民間企業の
+                宇宙開発プロジェクトの最新動向。
+              </ArticleExcerpt>
+              <ArticleMeta>
+                <span>2025年2月18日</span>
+                <ReadMore
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMore>
+              </ArticleMeta>
+            </ArticleContent>
+          </ArticleCard>
+        </Link>
       </MainGrid>
     </Container>
   );

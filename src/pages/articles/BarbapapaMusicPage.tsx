@@ -11,7 +11,7 @@ const HeroSection = styled.div`
   height: 60vh;
   min-height: 500px;
   margin-bottom: 4rem;
-  background-image: url('/images/pixel.png');
+  background-image: url('/images/pixel2.png');
   background-size: cover;
   background-position: center;
   width: 100vw;
@@ -177,10 +177,66 @@ const PopularMeta = styled.div`
   color: var(--secondary-color);
 `;
 
+const RelatedSection = styled.div`
+  margin: 4rem 0;
+`;
+
+const RelatedTitle = styled.h3`
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: var(--accent-color);
+`;
+
+const RelatedGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
+const RelatedCard = styled(motion.a)`
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--primary-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+  }
+`;
+
+const RelatedImage = styled.img`
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+`;
+
+const RelatedContent = styled.div`
+  padding: 1.5rem;
+`;
+
+const RelatedArticleTitle = styled.h4`
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+`;
+
+const RelatedArticleMeta = styled.div`
+  font-size: 0.9rem;
+  color: var(--secondary-color);
+`;
+
 const VideoContainer = styled.div`
   position: relative;
   width: 100%;
-  padding-bottom: 56.25%; /* 16:9のアスペクト比 */
+  padding-bottom: 56.25%;
   margin: 2rem 0;
   border-radius: 12px;
   overflow: hidden;
@@ -250,19 +306,6 @@ const ArticleContent = styled(motion.div)`
     font-weight: 600;
     letter-spacing: -0.02em;
   }
-
-  blockquote {
-    margin: 2rem 0;
-    padding: 1.5rem 2rem;
-    border-left: 4px solid var(--accent-color);
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 0 8px 8px 0;
-    font-style: italic;
-    
-    p {
-      margin: 0;
-    }
-  }
 `;
 
 const ShareSection = styled.div`
@@ -302,90 +345,6 @@ const ShareButton = styled(motion.button)`
   }
 `;
 
-const RelatedSection = styled.div`
-  margin: 4rem 0;
-`;
-
-const RelatedTitle = styled.h3`
-  font-size: 1.5rem;
-  margin-bottom: 2rem;
-  color: var(--accent-color);
-`;
-
-const RelatedGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const RelatedCard = styled(motion.a)`
-  display: block;
-  text-decoration: none;
-  color: inherit;
-  background: var(--primary-color);
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-
-  &:hover {
-    transform: translateY(-5px);
-  }
-`;
-
-const RelatedImage = styled.img`
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-`;
-
-const RelatedContent = styled.div`
-  padding: 1.5rem;
-`;
-
-const RelatedArticleTitle = styled.h4`
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-  color: var(--text-color);
-`;
-
-const RelatedArticleMeta = styled.div`
-  font-size: 0.9rem;
-  color: var(--secondary-color);
-`;
-
-const ArtistDetailButton = styled(motion.a)`
-  display: inline-block;
-  background: var(--accent-color);
-  color: white;
-  padding: 0.8rem 1.5rem;
-  border-radius: 25px;
-  text-decoration: none;
-  font-weight: 500;
-  margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  &::after {
-    content: ' →';
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  &:hover::after {
-    opacity: 1;
-  }
-`;
-
 const BackButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
@@ -406,13 +365,36 @@ const BackButton = styled(motion.a)`
   }
 `;
 
+const StatBox = styled(motion.div)`
+  background: var(--primary-color);
+  border-radius: 12px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  
+  h3 {
+    font-size: 1.2rem;
+    color: var(--accent-color);
+    margin-bottom: 0.5rem;
+  }
+  
+  p {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    background: linear-gradient(45deg, var(--accent-color), #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+`;
+
 const fadeIn = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   transition: { duration: 0.6 }
 };
 
-const SubcultureMusicPage = () => {
+const BarbapapaMusicPage = () => {
   return (
     <Container>
       <HeroSection>
@@ -423,13 +405,13 @@ const SubcultureMusicPage = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
-              <ArticleTitle>界隈曲の世界：カオスと中毒性が織りなす音楽文化</ArticleTitle>
+              <ArticleTitle>バーバパパ：シュールとカオスが織りなす映像音楽の世界</ArticleTitle>
               <ArticleMeta>
                 <ArticleTag
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.2 }}
                 >
-                  音楽
+                  クリエイター
                 </ArticleTag>
                 <ArticleDate>2025年2月23日</ArticleDate>
               </ArticleMeta>
@@ -446,106 +428,71 @@ const SubcultureMusicPage = () => {
             variants={fadeIn}
           >
             <p>
-            YouTube上には、時に理解が追いつかないほどカオスで、それでいて妙にクセになる楽曲が存在する。
-              そのひとつが、バーバパパ氏による「界隈の動物園」だ。シンセサイザーが不穏な旋律を奏で、
-              機械音声が不可解なフレーズを繰り返すMVは、どこかノスタルジックでありながらも、不気味な違和感を残す。
-              この楽曲は、いわゆる「界隈曲」と呼ばれるジャンルへのパロディ的オマージュとなっており、
-              特定の音楽文化圏への風刺的な要素を含んでいる。
+              YouTube上で独特の音楽と映像作品を発表し、多くの視聴者を魅了しているクリエイター、バーバパパ。
+              彼の作品は、一度見たら忘れられない強烈なインパクトと中毒性を持ち、現代のデジタルアート
+              シーンにおいて独自の位置を確立しています。今回は、謎に包まれたこのアーティストの魅力に
+              迫ります。
             </p>
 
             <VideoContainer>
               <VideoIframe
-                src="https://www.youtube.com/embed/_oQ4wb0NbcQ"
-                title="界隈の動物園"
+                src="https://www.youtube.com/embed/xxxxxxxx"
+                title="ウィエ"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </VideoContainer>
             <VideoCaption>
-              バーバパパ氏による「界隈の動物園」のミュージックビデオ
+              バーバパパ氏の代表作「ウィエ」
             </VideoCaption>
 
-            <h2>界隈曲の起源</h2>
+            <h2>謎に包まれたクリエイター</h2>
             <p>
-              そもそも「界隈曲」とは何なのか。そのルーツを辿ると、音楽プロデューサー・ころんば氏による
-              作品群に行き着く。2012年から2013年にかけて発表された「クロマグロがとんでくる」
-              「イワシがつちからはえてくるんだ」「ヤツメ穴」「.（ドット）」の4曲は、界隈曲の代表格とされ、
-              「海鮮市場」という別称でも知られている。
+              バーバパパは、主に3DCGを駆使したミュージックビデオやアニメーションを制作・投稿している
+              日本のYouTuber、映像作家、音楽家です。その正体は明かされておらず、関西出身の男性である
+              こと以外はほとんど知られていません。しかし、その作品は確かな技術力と独創性を感じさせ、
+              多くのファンを魅了し続けています。
+            </p>
+
+            <h2>代表作「ウ"ィ"エ"」の衝撃</h2>
+            <p>
+              彼の代表作として知られる「ウ"ィ"エ"」は、独特の映像と音楽で視聴者を圧倒し、YouTubeで
+              3400万回以上の再生回数を記録しています。この作品で展開される奇妙でありながらも引き込まれる
+              世界観は、多くの人々に衝撃を与え、現代のインターネットカルチャーを代表する作品の一つと
+              なっています。
+            </p>
+
+            <h2>多彩な作品群と進化する技術</h2>
+            <p>
+              バーバパパは、「ウ"ィ"エ"」以外にも「ドリオ夫人」や「にょーり君」など、多くの印象的な
+              作品を手掛けています。これらの作品はそれぞれ独自の世界観とストーリーを持ち、視聴者を
+              不思議な感覚へと誘います。また、作品を重ねるごとに技術力は向上し、最新作では高度な3DCG
+              技術と音楽制作能力が見事に融合した高品質なコンテンツを提供しています。
             </p>
 
             <VideoContainer>
               <VideoIframe
-                src="https://www.youtube.com/embed/C9PFVo1FEwU"
-                title="ヤツメ穴"
+                src="https://www.youtube.com/embed/yyyyyyyy"
+                title="ドリオ夫人"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </VideoContainer>
             <VideoCaption>
-              界隈曲の代表作「ヤツメ穴」
+              独特の世界観が展開される「ドリオ夫人」
             </VideoCaption>
 
-            <h2>界隈曲の特徴</h2>
+            <h2>独自の世界観と中毒性</h2>
             <p>
-              これらの楽曲の特徴として、シンセサイザーやエレクトリックピアノを多用した独特の音楽性、
-              合成音声を駆使した歌唱法、ジャズ的なコード進行が挙げられる。また、歌詞やタイトルには
-              ひらがな・カタカナ・記号が頻繁に用いられ、モールス信号や暗号のような要素が含まれることも多い。
-              MVにおいては、レトロなドット絵の映像美が特徴的で、視聴者に強い印象を残す。
-            </p>
-
-            <h2>界隈曲の影響と広がり</h2>
-            <p>
-              ころんば氏の影響は広く、2号.氏や「全てあなたの所為です。」氏など、多くのアーティストが
-              同様の作風を取り入れた楽曲を制作している。こうした楽曲群も「界隈曲」と総称され、
-              特定のサブカルチャー内で根強い人気を誇っている。
-            </p>
-
-            <VideoContainer>
-              <VideoIframe
-                src="https://open.spotify.com/embed/playlist/60zqcevR2Saq4wChmvLexG?utm_source=generator"
-                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                loading="lazy"
-                title="界隈曲プレイリスト"
-              />
-            </VideoContainer>
-            <VideoCaption>
-              界隈曲まとめプレイリスト：代表的な楽曲をセレクト
-            </VideoCaption>
-
-            <h2>歪で不思議なバーバパパの魅力</h2>
-            <p>
-              界隈曲のシーンで独自の存在感を放つバーバパパ氏は、音楽と映像の両面で実験的なアプローチを取る
-              クリエイターとして知られている。その作風は、既存の音楽ジャンルの枠に収まらない独特の歪みと
-              不思議さを持ち、視聴者を未知の音楽体験へと誘う。シンセサイザーを駆使した不安定な音響と、
-              デジタルノイズを効果的に取り入れた楽曲構成は、聴く者の予測を裏切り続ける魅力を持っている。
+              バーバパパの作品は、視聴者から「インフルエンザに罹った時に見る夢みたい」と評されるほど、
+              独特でシュールな世界観を持っています。その奇妙さと中毒性は、現代のデジタルカルチャーに
+              おいて特異な存在感を放ち、多くのファンを惹きつけてやまない理由となっています。
             </p>
 
             <p>
-              特筆すべきは、その映像表現の独創性だ。ドット絵やグリッチアート、3DCGなどを融合させた
-              映像スタイルは、音楽との見事な調和を生み出している。時にノスタルジックで、時に前衛的な
-              その表現は、視聴者の記憶に強く残り続ける印象的な体験を提供する。
-            </p>
-            <ArtistDetailButton 
-              href="/music/barbapapa-music"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              style={{ marginBottom: '2rem' }}
-            >
-              バーバパパ氏の作品世界をより深く探る
-            </ArtistDetailButton>
-
-            <h2>パロディとしての「界隈の動物園」</h2>
-            <p>
-              そんな界隈曲を独自の視点でパロディ化したのが、バーバパパ氏の「界隈の動物園」である。
-              この楽曲では、界隈曲の特徴を意識した音楽・映像表現がなされており、そのカオスさを
-              より誇張した形で描き出している。曲調はどこか不安を煽るものでありながらも、
-              一度聴くと妙にクセになる中毒性を持つ。
-            </p>
-
-            <p>
-              界隈曲は、独特の音楽性と映像美によって、多くのリスナーを惹きつけ続けている。
-              現在も新たなアーティストによる作品が生み出され続け、界隈曲は進化を遂げながら
-              独自の文化を形成している。
+              また、彼の作品に一貫して見られる特徴は、現実と非現実の境界を巧みに操作する手法です。
+              日常的な要素と超現実的な表現を組み合わせることで、視聴者の想像力を刺激し、独特の
+              没入感を生み出しています。
             </p>
 
             <ShareSection>
@@ -576,16 +523,16 @@ const SubcultureMusicPage = () => {
               <RelatedTitle>関連記事</RelatedTitle>
               <RelatedGrid>
                 <RelatedCard 
-                  href="/music/festival-evolution"
+                  href="/music/subculture"
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <RelatedImage src="/images/she9.png" alt="Music Festival" />
+                  <RelatedImage src="/images/pixel.png" alt="界隈曲の世界" />
                   <RelatedContent>
                     <RelatedArticleTitle>
-                      ポスト・パンデミック時代のフェス文化
+                      界隈曲の世界：カオスと中毒性が織りなす音楽文化
                     </RelatedArticleTitle>
-                    <RelatedArticleMeta>2025年2月20日</RelatedArticleMeta>
+                    <RelatedArticleMeta>2025年2月23日</RelatedArticleMeta>
                   </RelatedContent>
                 </RelatedCard>
 
@@ -616,6 +563,30 @@ const SubcultureMusicPage = () => {
         </MainContent>
 
         <Sidebar>
+          <StatBox
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
+            <h3>代表作の再生回数</h3>
+            <p>34M+</p>
+          </StatBox>
+
+          <StatBox
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
+            <h3>YouTube登録者数</h3>
+            <p>100K+</p>
+          </StatBox>
+
+          <StatBox
+            whileHover={{ scale: 1.02 }}
+            transition={{ duration: 0.2 }}
+          >
+            <h3>作品数</h3>
+            <p>50+</p>
+          </StatBox>
+
           <SidebarWidget>
             <WidgetTitle>人気の記事</WidgetTitle>
             <PopularList>
@@ -623,11 +594,11 @@ const SubcultureMusicPage = () => {
                 whileHover={{ x: 5 }}
                 transition={{ duration: 0.2 }}
               >
-                <PopularLink href="/music/festival-evolution">
+                <PopularLink href="/music/subculture">
                   <PopularTitle>
-                    ポスト・パンデミック時代のフェス文化：新しい音楽体験の形
+                    界隈曲の世界：カオスと中毒性が織りなす音楽文化
                   </PopularTitle>
-                  <PopularMeta>2025年2月20日</PopularMeta>
+                  <PopularMeta>2025年2月23日</PopularMeta>
                 </PopularLink>
               </PopularItem>
 
@@ -658,17 +629,17 @@ const SubcultureMusicPage = () => {
           </SidebarWidget>
 
           <SidebarWidget>
-            <WidgetTitle>注目のトピック</WidgetTitle>
+            <WidgetTitle>バーバパパの代表作</WidgetTitle>
             <ArticleTag
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.2 }}
               style={{ marginBottom: '0.8rem', display: 'inline-block' }}
             >
-              界隈曲
+              ウィエ
             </ArticleTag>
             <p style={{ color: 'var(--secondary-color)', lineHeight: '1.6', fontSize: '1rem' }}>
-              独特の音楽性と映像美で注目を集める界隈曲。
-              その魅力と独自の文化についての深掘り特集をお届けします。
+              3400万回以上の再生回数を記録した代表作。独特の映像と音楽で
+              多くの視聴者を魅了し続けている。
             </p>
           </SidebarWidget>
         </Sidebar>
@@ -677,4 +648,4 @@ const SubcultureMusicPage = () => {
   );
 };
 
-export default SubcultureMusicPage;
+export default BarbapapaMusicPage;

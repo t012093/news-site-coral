@@ -9,6 +9,8 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import MusicPage from './pages/MusicPage';
 import SubcultureMusicPage from './pages/articles/SubcultureMusicPage';
+import BarbapapaMusicPage from './pages/articles/BarbapapaMusicPage';
+import AIWritingArticle from './pages/articles/AIWritingArticle';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
@@ -103,7 +105,9 @@ function App() {
             <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
             <Route path="/music" element={<PageWrapper><MusicPage /></PageWrapper>} />
             <Route path="/music/subculture" element={<PageWrapper><SubcultureMusicPage /></PageWrapper>} />
+            <Route path="/music/barbapapa" element={<PageWrapper><BarbapapaMusicPage /></PageWrapper>} />
             <Route path="/tech" element={<PageWrapper><TechPage /></PageWrapper>} />
+            <Route path="/tech/ai-writing" element={<PageWrapper><AIWritingArticle /></PageWrapper>} />
             <Route path="/spiritual" element={<PageWrapper><SpiritualPage /></PageWrapper>} />
             <Route path="/health" element={<PageWrapper><HealthPage /></PageWrapper>} />
             <Route path="/arts" element={<PageWrapper><ArtsPage /></PageWrapper>} />
