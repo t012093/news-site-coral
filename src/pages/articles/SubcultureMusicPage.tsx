@@ -184,9 +184,26 @@ const VideoContainer = styled.div`
   margin: 2rem 0;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  background: var(--primary-color);
-  border: 1px solid #2a2a2a;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
+  border: 2px solid #1DB954;
+  transition: all 0.3s ease;
+
+  &:hover {
+    box-shadow: 0 6px 30px rgba(29, 185, 84, 0.2);
+    border-color: #1ed760;
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #1DB954, #1ed760);
+    z-index: 1;
+  }
 `;
 
 const VideoIframe = styled.iframe`
@@ -201,10 +218,17 @@ const VideoIframe = styled.iframe`
 const VideoCaption = styled.p`
   text-align: center;
   font-size: 1rem;
-  color: var(--secondary-color);
+  color: #1DB954;
   margin-top: 1rem;
   margin-bottom: 2rem;
   font-style: italic;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  &::before {
+    content: '▶';
+    margin-right: 8px;
+    font-size: 0.8em;
+  }
 `;
 
 const ArticleContent = styled(motion.div)`
@@ -334,6 +358,34 @@ const RelatedArticleMeta = styled.div`
   color: var(--secondary-color);
 `;
 
+const ArtistDetailButton = styled(motion.a)`
+  display: inline-block;
+  background: var(--accent-color);
+  color: white;
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  text-decoration: none;
+  font-weight: 500;
+  margin-top: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  &::after {
+    content: ' →';
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+  
+  &:hover::after {
+    opacity: 1;
+  }
+`;
+
 const BackButton = styled(motion.a)`
   display: inline-flex;
   align-items: center;
@@ -394,7 +446,7 @@ const SubcultureMusicPage = () => {
             variants={fadeIn}
           >
             <p>
-              YouTube上には、時に理解が追いつかないほどカオスで、それでいて妙にクセになる楽曲が存在する。
+            YouTube上には、時に理解が追いつかないほどカオスで、それでいて妙にクセになる楽曲が存在する。
               そのひとつが、バーバパパ氏による「界隈の動物園」だ。シンセサイザーが不穏な旋律を奏で、
               機械音声が不可解なフレーズを繰り返すMVは、どこかノスタルジックでありながらも、不気味な違和感を残す。
               この楽曲は、いわゆる「界隈曲」と呼ばれるジャンルへのパロディ的オマージュとなっており、
@@ -447,6 +499,40 @@ const SubcultureMusicPage = () => {
               同様の作風を取り入れた楽曲を制作している。こうした楽曲群も「界隈曲」と総称され、
               特定のサブカルチャー内で根強い人気を誇っている。
             </p>
+
+            <VideoContainer>
+              <VideoIframe
+                src="https://open.spotify.com/embed/playlist/60zqcevR2Saq4wChmvLexG?utm_source=generator"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+                title="界隈曲プレイリスト"
+              />
+            </VideoContainer>
+            <VideoCaption>
+              界隈曲まとめプレイリスト：代表的な楽曲をセレクト
+            </VideoCaption>
+
+            <h2>歪で不思議なバーバパパの魅力</h2>
+            <p>
+              界隈曲のシーンで独自の存在感を放つバーバパパ氏は、音楽と映像の両面で実験的なアプローチを取る
+              クリエイターとして知られている。その作風は、既存の音楽ジャンルの枠に収まらない独特の歪みと
+              不思議さを持ち、視聴者を未知の音楽体験へと誘う。シンセサイザーを駆使した不安定な音響と、
+              デジタルノイズを効果的に取り入れた楽曲構成は、聴く者の予測を裏切り続ける魅力を持っている。
+            </p>
+
+            <p>
+              特筆すべきは、その映像表現の独創性だ。ドット絵やグリッチアート、3DCGなどを融合させた
+              映像スタイルは、音楽との見事な調和を生み出している。時にノスタルジックで、時に前衛的な
+              その表現は、視聴者の記憶に強く残り続ける印象的な体験を提供する。
+            </p>
+            <ArtistDetailButton 
+              href="/music/barbapapa-music"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              style={{ marginBottom: '2rem' }}
+            >
+              バーバパパ氏の作品世界をより深く探る
+            </ArtistDetailButton>
 
             <h2>パロディとしての「界隈の動物園」</h2>
             <p>

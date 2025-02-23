@@ -8,7 +8,7 @@ import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import MusicPage from './pages/MusicPage';
-import SubcultureMusicPage from './pages/SubcultureMusicPage';
+import SubcultureMusicPage from './pages/articles/SubcultureMusicPage';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';

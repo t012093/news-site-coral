@@ -185,7 +185,7 @@ const MusicPage = () => {
                 界隈曲の世界：カオスと中毒性が織りなす音楽文化
               </ArticleTitle>
               <ArticleMeta>
-                <span>2024年2月23日</span>
+                <span>2025年2月23日</span>
               </ArticleMeta>
             </FeaturedContent>
           </FeaturedCard>
