@@ -137,7 +137,9 @@ const SmallArticleGrid = styled.div`
   gap: 2rem;
 `;
 
-const SmallArticle = styled(motion.article)`
+const SmallArticle = styled(motion.a)`
+  display: block;
+  text-decoration: none;
   background: var(--primary-color);
   border-radius: 12px;
   overflow: hidden;
@@ -203,6 +205,7 @@ const ArtsPage = () => {
         <CategoryTitle>Latest in Culture</CategoryTitle>
         <SmallArticleGrid>
           <SmallArticle
+            href="/articles/hotspot-drama"
             whileHover={{ y: -10 }}
             transition={{ duration: 0.3 }}
           >
@@ -222,20 +225,21 @@ const ArtsPage = () => {
           </SmallArticle>
 
           <SmallArticle
+            href="/articles/hotspot-drama"
             whileHover={{ y: -10 }}
             transition={{ duration: 0.3 }}
           >
             <ArticleImage
-              src="images/chat.png"
-              alt="Theater Performance"
+              src="/images/hotspot/hotspot1.png"
+              alt="Hotspot Drama"
             />
             <ArticleContent>
-              <ArticleTag>舞台芸術</ArticleTag>
+              <ArticleTag>ドラマレビュー</ArticleTag>
               <ArticleTitle>
-                現代演劇における観客参加型の実験
+                ドラマ『ホットスポット』の魅力とは？
               </ArticleTitle>
               <ArticleExcerpt>
-                デジタル技術を活用した新しい演劇体験の可能性を探る。
+                宇宙人とシングルマザーが織りなす、心温まる日常系ドラマの魅力を分析します。
               </ArticleExcerpt>
             </ArticleContent>
           </SmallArticle>

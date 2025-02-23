@@ -12,6 +12,7 @@ import SubcultureMusicPage from './pages/articles/SubcultureMusicPage';
 import BarbapapaMusicPage from './pages/articles/BarbapapaMusicPage';
 import AIWritingArticle from './pages/articles/AIWritingArticle';
 import GiftOfIgnorancePage from './pages/articles/GiftOfIgnorancePage';
+import HotspotDramaPage from './pages/articles/HotspotDramaPage';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
@@ -114,6 +115,7 @@ function App() {
             <Route path="/arts" element={<PageWrapper><ArtsPage /></PageWrapper>} />
             <Route path="/politics" element={<PageWrapper><PoliticsPage /></PageWrapper>} />
             <Route path="/articles/gift-of-ignorance" element={<PageWrapper><GiftOfIgnorancePage /></PageWrapper>} />
+            <Route path="/articles/hotspot-drama" element={<PageWrapper><HotspotDramaPage /></PageWrapper>} />
           </Routes>
         </MainContent>
         <Footer />
