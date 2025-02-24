@@ -436,8 +436,8 @@ const BarbapapaMusicPage = () => {
 
             <VideoContainer>
               <VideoIframe
-                src="https://www.youtube.com/embed/xxxxxxxx"
-                title="ウィエ"
+                src="https://www.youtube.com/embed/iSsct7423J4"
+                title="VEAH"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
@@ -464,7 +464,7 @@ const BarbapapaMusicPage = () => {
 
             <h2>多彩な作品群と進化する技術</h2>
             <p>
-              バーバパパは、「ウ"ィ"エ"」以外にも「ドリオ夫人」や「にょーり君」など、多くの印象的な
+              バーバパパは、「ウ"ィ"エ"」以外にも「Motor Synthecycle Racing Battle」や「にょーり君」など、多くの印象的な
               作品を手掛けています。これらの作品はそれぞれ独自の世界観とストーリーを持ち、視聴者を
               不思議な感覚へと誘います。また、作品を重ねるごとに技術力は向上し、最新作では高度な3DCG
               技術と音楽制作能力が見事に融合した高品質なコンテンツを提供しています。
@@ -472,14 +472,14 @@ const BarbapapaMusicPage = () => {
 
             <VideoContainer>
               <VideoIframe
-                src="https://www.youtube.com/embed/yyyyyyyy"
-                title="ドリオ夫人"
+                src="https://www.youtube.com/embed/jSVK5mhTV1s"
+                title="otor Synthecycle Racing Battle"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               />
             </VideoContainer>
             <VideoCaption>
-              独特の世界観が展開される「ドリオ夫人」
+              独特の世界観が展開される「Motor Synthecycle Racing Battle」
             </VideoCaption>
 
             <h2>独自の世界観と中毒性</h2>
