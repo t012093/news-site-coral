@@ -11,7 +11,7 @@ const HeroSection = styled.div`
   height: 60vh;
   min-height: 500px;
   margin-bottom: 4rem;
-  background-image: url('/images/pixel2.png');
+  background-image: url('/images/baba.png');
   background-size: cover;
   background-position: center;
   width: 100vw;
@@ -443,7 +443,7 @@ const BarbapapaMusicPage = () => {
               />
             </VideoContainer>
             <VideoCaption>
-              バーバパパ氏の代表作「ウィエ」
+              バーバパパ氏の代表作「ウ"ィ"エ"」
             </VideoCaption>
 
             <h2>謎に包まれたクリエイター</h2>

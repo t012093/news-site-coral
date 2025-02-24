@@ -219,7 +219,7 @@ const MusicPage = () => {
           onClick={() => window.location.href = '/music/barbapapa'}
         >
           <ArticleImage
-            src="/images/pixel2.png"
+            src="/images/baba.png"
             alt="バーバパパ"
           />
           <ArticleContent>
