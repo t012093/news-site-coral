@@ -183,26 +183,20 @@ const VideoContainer = styled.div`
   padding-bottom: 56.25%; /* 16:9のアスペクト比 */
   margin: 2rem 0;
   border-radius: 12px;
-  overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   background: linear-gradient(145deg, #1a1a1a, #0d0d0d);
   border: 2px solid #1DB954;
   transition: all 0.3s ease;
+  overflow: hidden;
 
   &:hover {
     box-shadow: 0 6px 30px rgba(29, 185, 84, 0.2);
     border-color: #1ed760;
   }
 
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, #1DB954, #1ed760);
-    z-index: 1;
+  iframe {
+    border-radius: 10px;
+    overflow: hidden;
   }
 `;
 
@@ -576,30 +570,30 @@ const SubcultureMusicPage = () => {
               <RelatedTitle>関連記事</RelatedTitle>
               <RelatedGrid>
                 <RelatedCard 
-                  href="/music/festival-evolution"
+                  href="/music/barbapapa"
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <RelatedImage src="/images/she9.png" alt="Music Festival" />
+                  <RelatedImage src="/images/baba.png" alt="バーバパパ" />
                   <RelatedContent>
                     <RelatedArticleTitle>
-                      ポスト・パンデミック時代のフェス文化
+                      バーバパパ：シュールとカオスが織りなす映像音楽の世界
                     </RelatedArticleTitle>
-                    <RelatedArticleMeta>2025年2月20日</RelatedArticleMeta>
+                    <RelatedArticleMeta>2025年2月24日</RelatedArticleMeta>
                   </RelatedContent>
                 </RelatedCard>
 
                 <RelatedCard
-                  href="/music/vr-live-future"
+                  href="/articles/hotspot-drama"
                   whileHover={{ y: -5 }}
                   transition={{ duration: 0.2 }}
                 >
-                  <RelatedImage src="/images/she55.png" alt="VR Live" />
+                  <RelatedImage src="/images/hotspot/hotspot1.png" alt="ホットスポット" />
                   <RelatedContent>
                     <RelatedArticleTitle>
-                      没入型音楽体験の未来：VRライブの可能性
+                      ドラマ『ホットスポット』の魅力とは？
                     </RelatedArticleTitle>
-                    <RelatedArticleMeta>2025年2月18日</RelatedArticleMeta>
+                    <RelatedArticleMeta>2025年2月24日</RelatedArticleMeta>
                   </RelatedContent>
                 </RelatedCard>
               </RelatedGrid>
