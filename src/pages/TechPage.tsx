@@ -171,23 +171,23 @@ const TechPage = () => {
       <FeaturedSection>
         <SectionTitle>Featured Stories</SectionTitle>
         <FeaturedGrid>
-          <Link to="/music/subculture" style={{ textDecoration: 'none' }}>
+          <Link to="/tech/gibberlink" style={{ textDecoration: 'none' }}>
             <FeaturedCard
               whileHover={{ y: -5 }}
               transition={{ duration: 0.2 }}
             >
               <FeaturedBackground
                 style={{
-                  backgroundImage: 'url(/images/UFO.png)',
+                  backgroundImage: 'url(/images/wabe.png)',
                 }}
               />
               <FeaturedContent>
-                <ArticleTag>音楽</ArticleTag>
+                <ArticleTag>AI技術</ArticleTag>
                 <ArticleTitle>
-                  界隈曲の世界：カオスと中毒性が織りなす音楽文化
+                  ElevenLabsが革新的なAI通信プロトコル「GibberLink」を発表
                 </ArticleTitle>
                 <ArticleMeta>
-                  <span>2025年2月23日</span>
+                  <span>2025年2月27日</span>
                 </ArticleMeta>
               </FeaturedContent>
             </FeaturedCard>
@@ -285,7 +285,7 @@ const TechPage = () => {
             transition={{ duration: 0.2 }}
           >
             <ArticleImage
-              src="/images/back.png"
+              src="/images/UFO.png"
               alt="Space Technology"
             />
             <ArticleContent>

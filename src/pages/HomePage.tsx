@@ -343,27 +343,28 @@ const HomePage = () => {
       </TopicsExplorerSection>
 
       <MainGrid>
-        <FeaturedArticle
-          gridArea="1 / 1 / 2 / 8"
-          whileHover={{ y: -5 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ArticleBackground
-            style={{
-              backgroundImage: 'url(/images/UFO.png)',
-            }}
-          />
-          <ArticleContent>
-            <ArticleTag>テクノロジー</ArticleTag>
-            <ArticleTitle>
-              量子コンピューティングが切り開く、新時代のAI技術
-            </ArticleTitle>
-            <ArticleMeta>
-              
-              <span>2025年2月22日</span>
-            </ArticleMeta>
-          </ArticleContent>
-        </FeaturedArticle>
+        <Link to="/tech/gibberlink" style={{ textDecoration: 'none', gridArea: '1 / 1 / 2 / 8', display: 'block' }}>
+          <FeaturedArticle
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+            gridArea="auto"
+          >
+            <ArticleBackground
+              style={{
+                backgroundImage: 'url(/images/wabe.png)',
+              }}
+            />
+            <ArticleContent>
+              <ArticleTag>AI技術</ArticleTag>
+              <ArticleTitle>
+                AI同士が独自言語で会話「GibberLink」が登場
+              </ArticleTitle>
+              <ArticleMeta>
+                <span>2025年2月27日</span>
+              </ArticleMeta>
+            </ArticleContent>
+          </FeaturedArticle>
+        </Link>
 
         <FeaturedArticle
           gridArea="1 / 8 / 2 / 13"

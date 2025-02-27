@@ -13,6 +13,7 @@ import BarbapapaMusicPage from './pages/articles/BarbapapaMusicPage';
 import AIWritingArticle from './pages/articles/AIWritingArticle';
 import GiftOfIgnorancePage from './pages/articles/GiftOfIgnorancePage';
 import HotspotDramaPage from './pages/articles/HotspotDramaPage';
+import GibberLinkAIArticle from './pages/articles/GibberLinkAIArticle';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
@@ -110,6 +111,7 @@ function App() {
             <Route path="/music/barbapapa" element={<PageWrapper><BarbapapaMusicPage /></PageWrapper>} />
             <Route path="/tech" element={<PageWrapper><TechPage /></PageWrapper>} />
             <Route path="/tech/ai-writing" element={<PageWrapper><AIWritingArticle /></PageWrapper>} />
+            <Route path="/tech/gibberlink" element={<PageWrapper><GibberLinkAIArticle /></PageWrapper>} />
             <Route path="/spiritual" element={<PageWrapper><SpiritualPage /></PageWrapper>} />
             <Route path="/health" element={<PageWrapper><HealthPage /></PageWrapper>} />
             <Route path="/arts" element={<PageWrapper><ArtsPage /></PageWrapper>} />
