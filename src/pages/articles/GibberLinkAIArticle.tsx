@@ -332,7 +332,7 @@ const GibberLinkAIArticle = () => {
             <p>
               さらに、同社の技術革新は多岐にわたります。32以上の言語に対応した高品質な音声合成システム、リアルタイムの音声複製技術、そして独自のAI音声識別システムを開発。特に2023年6月に発表されたAI Speech Classifierは、業界初となるAI生成音声の識別ツールとして注目を集めました。これらの革新的な技術開発により、ElevenLabsはAI音声技術の最前線を走る企業として世界的な認知を獲得しています。
             </p>
-            <img src="/images/pixel.png" alt="技術デモイメージ1" />
+            <img src="/images/she2.png" alt="技術デモイメージ1" />
             <h2>将来への展望</h2>
             <p>
               GibberLinkの登場は、AI同士のコミュニケーションの在り方を再定義する可能性を秘めています。人間の介在を必要としない効率的なデータ交換は、カスタマーサービスや自動化システムなど、さまざまな分野での応用が期待されます。さらに、このプロジェクトは<a href="https://github.com/PennyroyalTea/gibberlink" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-color)', textDecoration: 'none' }}>GitHub上でオープンソースとして公開</a>されており、世界中の開発者がこの技術を活用し、さらなる革新を追求することが可能です。
