@@ -279,7 +279,7 @@ const TechPage = () => {
           </ArticleCard>
         </Link>
 
-        <Link to="/article/space-development" style={{ textDecoration: 'none' }}>
+        <Link to="/article/Agent2AgentArticle" style={{ textDecoration: 'none' }}>
           <ArticleCard
             whileHover={{ y: -5 }}
             transition={{ duration: 0.2 }}
@@ -294,7 +294,7 @@ const TechPage = () => {
                 民間宇宙開発の新時代：月面開発計画の実現へ
               </ArticleTitle>
               <ArticleExcerpt>
-                商業宇宙飛行から月面基地建設まで。加速する民間企業の
+                test
                 宇宙開発プロジェクトの最新動向。
               </ArticleExcerpt>
               <ArticleMeta>

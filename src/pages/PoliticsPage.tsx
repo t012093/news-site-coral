@@ -249,6 +249,27 @@ const PoliticsPage = () => {
               >
                 <NewsImage
                   src="images/toudai.png"
+                  alt="Finance Ministry Protest"
+                />
+                <NewsContent>
+                  <ArticleTag>行政改革</ArticleTag>
+                  <NewsTitle>
+                    <a href="/articles/finance-ministry-demo">
+                      財務省解体デモの真相：市民の不満が示す日本の財政課題
+                    </a>
+                  </NewsTitle>
+                  <ArticleMeta>
+                    <span>2025年3月1日</span>
+                  </ArticleMeta>
+                </NewsContent>
+              </NewsCard>
+
+              <NewsCard
+                whileHover={{ y: -5 }}
+                transition={{ duration: 0.2 }}
+              >
+                <NewsImage
+                  src="images/toudai.png"
                   alt="Digital Economy"
                 />
                 <NewsContent>

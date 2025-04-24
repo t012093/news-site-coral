@@ -14,11 +14,13 @@ import AIWritingArticle from './pages/articles/AIWritingArticle';
 import GiftOfIgnorancePage from './pages/articles/GiftOfIgnorancePage';
 import HotspotDramaPage from './pages/articles/HotspotDramaPage';
 import GibberLinkAIArticle from './pages/articles/GibberLinkAIArticle';
+import FinanceMinistryDemoArticle from './pages/articles/FinanceMinistryDemoArticle';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
 import ArtsPage from './pages/ArtsPage';
 import PoliticsPage from './pages/PoliticsPage';
+import Agent2AgentArticle from './pages/articles/Agent2AgentArticle';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -118,6 +120,7 @@ function App() {
             <Route path="/politics" element={<PageWrapper><PoliticsPage /></PageWrapper>} />
             <Route path="/articles/gift-of-ignorance" element={<PageWrapper><GiftOfIgnorancePage /></PageWrapper>} />
             <Route path="/articles/hotspot-drama" element={<PageWrapper><HotspotDramaPage /></PageWrapper>} />
+            <Route path="/articles/finance-ministry-demo" element={<PageWrapper><FinanceMinistryDemoArticle /></PageWrapper>} />
           </Routes>
         </MainContent>
         <Footer />
