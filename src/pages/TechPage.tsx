@@ -218,6 +218,35 @@ const TechPage = () => {
       </FeaturedSection>
 
       <MainGrid>
+        <Link to="/tech/stripe-paypay-dena" style={{ textDecoration: 'none' }}>
+          <ArticleCard
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArticleImage
+              src="/images/pay.png"
+              alt="決済革命"
+            />
+            <ArticleContent>
+              <ArticleTag>決済技術</ArticleTag>
+              <ArticleTitle>
+                決済革命前夜：StripeがPayPay・DeNAと連携、ネットワークトークンで日本市場を揺るがす
+              </ArticleTitle>
+              <ArticleExcerpt>
+                StripeがPayPay・DeNAとの連携を発表。ネットワークトークンを活用し、日本の決済市場に新たな風を吹き込む。
+              </ArticleExcerpt>
+              <ArticleMeta>
+                <span>2025年4月23日</span>
+                <ReadMore
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMore>
+              </ArticleMeta>
+            </ArticleContent>
+          </ArticleCard>
+        </Link>
         <Link to="/tech/ai-writing" style={{ textDecoration: 'none' }}>
           <ArticleCard
             whileHover={{ y: -5 }}
@@ -247,7 +276,6 @@ const TechPage = () => {
             </ArticleContent>
           </ArticleCard>
         </Link>
-
         <Link to="/article/metaverse-now" style={{ textDecoration: 'none' }}>
           <ArticleCard
             whileHover={{ y: -5 }}
@@ -278,7 +306,6 @@ const TechPage = () => {
             </ArticleContent>
           </ArticleCard>
         </Link>
-
         <Link to="/article/space-development" style={{ textDecoration: 'none' }}>
           <ArticleCard
             whileHover={{ y: -5 }}
