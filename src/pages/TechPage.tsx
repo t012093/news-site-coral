@@ -230,10 +230,10 @@ const TechPage = () => {
             <ArticleContent>
               <ArticleTag>決済技術</ArticleTag>
               <ArticleTitle>
-                決済革命前夜：StripeがPayPay・DeNAと連携、ネットワークトークンで日本市場を揺るがす
+                決済革命前夜：StripeがPayPay・DeNAと連携し、日本市場に挑む
               </ArticleTitle>
               <ArticleExcerpt>
-                StripeがPayPay・DeNAとの連携を発表。ネットワークトークンを活用し、日本の決済市場に新たな風を吹き込む。
+              StripeがPayPay・DeNAと連携。ネットワークトークンで日本の決済市場に新風を吹き込む。
               </ArticleExcerpt>
               <ArticleMeta>
                 <span>2025年4月23日</span>
@@ -296,36 +296,6 @@ const TechPage = () => {
               </ArticleExcerpt>
               <ArticleMeta>
                 <span>2025年2月19日</span>
-                <ReadMore
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  続きを読む →
-                </ReadMore>
-              </ArticleMeta>
-            </ArticleContent>
-          </ArticleCard>
-        </Link>
-        <Link to="/article/space-development" style={{ textDecoration: 'none' }}>
-          <ArticleCard
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ArticleImage
-              src="/images/UFO.png"
-              alt="Space Technology"
-            />
-            <ArticleContent>
-              <ArticleTag>宇宙開発</ArticleTag>
-              <ArticleTitle>
-                民間宇宙開発の新時代：月面開発計画の実現へ
-              </ArticleTitle>
-              <ArticleExcerpt>
-                商業宇宙飛行から月面基地建設まで。加速する民間企業の
-                宇宙開発プロジェクトの最新動向。
-              </ArticleExcerpt>
-              <ArticleMeta>
-                <span>2025年2月18日</span>
                 <ReadMore
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
