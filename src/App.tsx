@@ -20,6 +20,7 @@ import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
 import ArtsPage from './pages/ArtsPage';
 import PoliticsPage from './pages/PoliticsPage';
+import Agent2AgentArticle from './pages/articles/Agent2AgentArticle';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -114,6 +115,7 @@ function App() {
             <Route path="/tech/stripe-paypay-dena" element={<PageWrapper><StripePayPayDeNAArticle /></PageWrapper>} />
             <Route path="/tech/ai-writing" element={<PageWrapper><AIWritingArticle /></PageWrapper>} />
             <Route path="/tech/gibberlink" element={<PageWrapper><GibberLinkAIArticle /></PageWrapper>} />
+            <Route path="/tech/agent2agent" element={<PageWrapper><Agent2AgentArticle /></PageWrapper>} />
             <Route path="/spiritual" element={<PageWrapper><SpiritualPage /></PageWrapper>} />
             <Route path="/health" element={<PageWrapper><HealthPage /></PageWrapper>} />
             <Route path="/arts" element={<PageWrapper><ArtsPage /></PageWrapper>} />
