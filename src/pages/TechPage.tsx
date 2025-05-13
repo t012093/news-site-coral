@@ -218,6 +218,35 @@ const TechPage = () => {
       </FeaturedSection>
 
       <MainGrid>
+        <Link to="/tech/agent2agent" style={{ textDecoration: 'none' }}>
+          <ArticleCard
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArticleImage
+              src="/images/agent2agent.png"
+              alt="AIエージェント連携革命"
+            />
+            <ArticleContent>
+              <ArticleTag>AIエージェント</ArticleTag>
+              <ArticleTitle>
+                AIエージェント革命：Googleが「Agent2Agentプロトコル」発表
+              </ArticleTitle>
+              <ArticleExcerpt>
+                Google CloudがAIエージェント連携のためのA2Aプロトコルを発表。マルチエージェント時代が始まる。
+              </ArticleExcerpt>
+              <ArticleMeta>
+                <span>2025年5月12日</span>
+                <ReadMore
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMore>
+              </ArticleMeta>
+            </ArticleContent>
+          </ArticleCard>
+        </Link>
         <Link to="/tech/stripe-paypay-dena" style={{ textDecoration: 'none' }}>
           <ArticleCard
             whileHover={{ y: -5 }}
@@ -233,7 +262,7 @@ const TechPage = () => {
                 決済革命前夜：StripeがPayPay・DeNAと連携し、日本市場に挑む
               </ArticleTitle>
               <ArticleExcerpt>
-              StripeがPayPay・DeNAと連携。ネットワークトークンで日本の決済市場に新風を吹き込む。
+                StripeがPayPay・DeNAと連携。ネットワークトークンで日本の決済市場に新風を吹き込む。
               </ArticleExcerpt>
               <ArticleMeta>
                 <span>2025年4月23日</span>
@@ -266,36 +295,6 @@ const TechPage = () => {
               </ArticleExcerpt>
               <ArticleMeta>
                 <span>2025年2月20日</span>
-                <ReadMore
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  続きを読む →
-                </ReadMore>
-              </ArticleMeta>
-            </ArticleContent>
-          </ArticleCard>
-        </Link>
-        <Link to="/article/metaverse-now" style={{ textDecoration: 'none' }}>
-          <ArticleCard
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <ArticleImage
-              src="/images/pixel2.png"
-              alt="VR Technology"
-            />
-            <ArticleContent>
-              <ArticleTag>VR/AR</ArticleTag>
-              <ArticleTitle>
-                メタバースの現在地：仮想世界がもたらす新たな可能性
-              </ArticleTitle>
-              <ArticleExcerpt>
-                教育、医療、エンターテインメント。様々な分野で広がる
-                VR/AR技術の活用事例と今後の展望を探る。
-              </ArticleExcerpt>
-              <ArticleMeta>
-                <span>2025年2月19日</span>
                 <ReadMore
                   whileHover={{ x: 5 }}
                   transition={{ duration: 0.2 }}
