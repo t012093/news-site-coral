@@ -247,6 +247,35 @@ const TechPage = () => {
             </ArticleContent>
           </ArticleCard>
         </Link>
+        <Link to="/tech/ai-reasoning-breakthrough" style={{ textDecoration: 'none' }}>
+          <ArticleCard
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
+            <ArticleImage
+              src="/images/ai.png"
+              alt="AI Reasoning"
+            />
+            <ArticleContent>
+              <ArticleTag>AI推論</ArticleTag>
+              <ArticleTitle>
+                AI推論の革命：人間の思考を超える新時代の扉
+              </ArticleTitle>
+              <ArticleExcerpt>
+                OpenAIのo1モデルとGoogleのGenie 2が示す、AI推論能力の飛躍的進歩。人間の思考を超える時代が到来した。
+              </ArticleExcerpt>
+              <ArticleMeta>
+                <span>2025年7月29日</span>
+                <ReadMore
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMore>
+              </ArticleMeta>
+            </ArticleContent>
+          </ArticleCard>
+        </Link>
         <Link to="/tech/ai-writing" style={{ textDecoration: 'none' }}>
           <ArticleCard
             whileHover={{ y: -5 }}

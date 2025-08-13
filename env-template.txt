@@ -1,0 +1,11 @@
+# WordPress.com用 環境変数テンプレート
+# あなたのWordPress.comサイトを作成後、以下を .env.local にコピー&編集してください
+
+# WordPressサイトURL（重要：あなたのサイト名に変更）
+VITE_WP_API_URL=https://YOUR-SITE-NAME.wordpress.com/wp-json/wp/v2
+
+# 例：
+# VITE_WP_API_URL=https://coral-news.wordpress.com/wp-json/wp/v2
+
+# デバッグモード（開発時のみ）
+VITE_WP_DEBUG=true

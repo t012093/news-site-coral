@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -184,10 +185,94 @@ const HealthPage = () => {
 
       <ContentGrid>
         <MainContent>
+          <Link to="/health/ai-sleep-science-revolution" style={{ textDecoration: 'none' }}>
+            <FeaturedArticle
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              whileHover={{ y: -5 }}
+            >
+              <FeaturedImage
+                src="/images/labo.png"
+                alt="AI Sleep Science"
+              />
+              <ArticleContent>
+                <ArticleTag>AI睡眠科学</ArticleTag>
+                <ArticleTitle>AI睡眠科学の革命：夢の解読から生体ハッキングまで</ArticleTitle>
+                <ArticleExcerpt>
+                  Mount Sinai医科大学の100万時間睡眠データ分析から日本の15.3%成長市場まで。
+                  AIが睡眠の謎を解き明かし、バイオハッキングの新時代を切り開く。
+                </ArticleExcerpt>
+                <ReadMoreLink
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMoreLink>
+              </ArticleContent>
+            </FeaturedArticle>
+          </Link>
+
+          <Link to="/health/offensive-defensive-vacation" style={{ textDecoration: 'none' }}>
+            <FeaturedArticle
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              whileHover={{ y: -5 }}
+            >
+              <FeaturedImage
+                src="/images/she15.png"
+                alt="Offensive and Defensive Vacation"
+              />
+              <ArticleContent>
+                <ArticleTag>休暇哲学</ArticleTag>
+                <ArticleTitle>攻めの休暇と守りの休暇：現代社会における「休み方」の哲学と科学</ArticleTitle>
+                <ArticleExcerpt>
+                  ハーバード大学の神経科学研究から東京大学の社会学調査まで。
+                  休暇の本質を問い直し、人間存在の深層に迫る現代的考察。
+                </ArticleExcerpt>
+                <ReadMoreLink
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMoreLink>
+              </ArticleContent>
+            </FeaturedArticle>
+          </Link>
+
+          <Link to="/health/hippocampus-memory" style={{ textDecoration: 'none' }}>
+            <FeaturedArticle
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              whileHover={{ y: -5 }}
+            >
+              <FeaturedImage
+                src="/images/ai.png"
+                alt="Hippocampus Memory Science"
+              />
+              <ArticleContent>
+                <ArticleTag>神経科学</ArticleTag>
+                <ArticleTitle>海馬という"シーン生成器"──記憶、境界拡張、そして人間の内なる空間地図</ArticleTitle>
+                <ArticleExcerpt>
+                  ロンドン大学の最新研究から明かされる記憶の真実。
+                  海馬は単なる記憶装置ではなく、空間と時間を統合するクリエイティブな中枢である。
+                </ArticleExcerpt>
+                <ReadMoreLink
+                  whileHover={{ x: 5 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  続きを読む →
+                </ReadMoreLink>
+              </ArticleContent>
+            </FeaturedArticle>
+          </Link>
+          
           <FeaturedArticle
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.6 }}
           >
             <FeaturedImage
               src="images/logo.png"

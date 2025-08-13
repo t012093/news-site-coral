@@ -11,15 +11,21 @@ import MusicPage from './pages/MusicPage';
 import SubcultureMusicPage from './pages/articles/SubcultureMusicPage';
 import BarbapapaMusicPage from './pages/articles/BarbapapaMusicPage';
 import AIWritingArticle from './pages/articles/AIWritingArticle';
+import AIReasoningBreakthroughArticle from './pages/articles/AIReasoningBreakthroughArticle';
+import AISleepScienceRevolutionArticle from './pages/articles/AISleepScienceRevolutionArticle';
 import GiftOfIgnorancePage from './pages/articles/GiftOfIgnorancePage';
 import HotspotDramaPage from './pages/articles/HotspotDramaPage';
 import GibberLinkAIArticle from './pages/articles/GibberLinkAIArticle';
 import StripePayPayDeNAArticle from './pages/articles/StripePayPayDeNAArticle';
+import OffensiveDefensiveVacationArticle from './pages/articles/OffensiveDefensiveVacationArticle';
+import HippocampusMemoryArticle from './pages/articles/HippocampusMemoryArticle';
 import TechPage from './pages/TechPage';
 import SpiritualPage from './pages/SpiritualPage';
 import HealthPage from './pages/HealthPage';
 import ArtsPage from './pages/ArtsPage';
 import PoliticsPage from './pages/PoliticsPage';
+import { ArticlePage } from './pages/ArticlePage';
+import { WordPressStatusIndicator } from './components/WordPressStatusIndicator';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -113,16 +119,22 @@ function App() {
             <Route path="/tech" element={<PageWrapper><TechPage /></PageWrapper>} />
             <Route path="/tech/stripe-paypay-dena" element={<PageWrapper><StripePayPayDeNAArticle /></PageWrapper>} />
             <Route path="/tech/ai-writing" element={<PageWrapper><AIWritingArticle /></PageWrapper>} />
+            <Route path="/tech/ai-reasoning-breakthrough" element={<PageWrapper><AIReasoningBreakthroughArticle /></PageWrapper>} />
             <Route path="/tech/gibberlink" element={<PageWrapper><GibberLinkAIArticle /></PageWrapper>} />
             <Route path="/spiritual" element={<PageWrapper><SpiritualPage /></PageWrapper>} />
             <Route path="/health" element={<PageWrapper><HealthPage /></PageWrapper>} />
+            <Route path="/health/ai-sleep-science-revolution" element={<PageWrapper><AISleepScienceRevolutionArticle /></PageWrapper>} />
+            <Route path="/health/offensive-defensive-vacation" element={<PageWrapper><OffensiveDefensiveVacationArticle /></PageWrapper>} />
+            <Route path="/health/hippocampus-memory" element={<PageWrapper><HippocampusMemoryArticle /></PageWrapper>} />
             <Route path="/arts" element={<PageWrapper><ArtsPage /></PageWrapper>} />
             <Route path="/politics" element={<PageWrapper><PoliticsPage /></PageWrapper>} />
             <Route path="/articles/gift-of-ignorance" element={<PageWrapper><GiftOfIgnorancePage /></PageWrapper>} />
             <Route path="/articles/hotspot-drama" element={<PageWrapper><HotspotDramaPage /></PageWrapper>} />
+            <Route path="/article/:slug" element={<PageWrapper><ArticlePage /></PageWrapper>} />
           </Routes>
         </MainContent>
         <Footer />
+        <WordPressStatusIndicator />
       </AppContainer>
     </Router>
   );

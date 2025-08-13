@@ -1,6 +1,8 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { useRecentPosts, useWordPressStatus } from '../hooks/useWordPress';
+import { ArticleList } from '../components/ArticleList';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -254,6 +256,9 @@ const WeeklyContent = styled.p`
 `;
 
 const HomePage = () => {
+  const { data: recentPosts, isLoading, error } = useRecentPosts(6);
+  const { data: wpStatus } = useWordPressStatus();
+
   return (
     <Container>
       <HeroSection>
@@ -389,69 +394,27 @@ const HomePage = () => {
       </MainGrid>
 
       <TrendingSection>
-        <SectionTitle>Trending Now</SectionTitle>
-        <TrendingGrid>
-          <Link to="/music/subculture" style={{ textDecoration: 'none' }}>
-            <TrendingCard
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
-            >
-            <TrendingImage
-              src="/images/hose.png"
-              alt="Health Article"
-            />
-            <TrendingContent>
-              <ArticleTag>健康</ArticleTag>
-              <ArticleTitle>
-                最新の睡眠科学が解き明かす、質の高い睡眠の秘密
-              </ArticleTitle>
-              <ArticleMeta>
-                <span>2025年2月20日</span>
-              </ArticleMeta>
-            </TrendingContent>
-            </TrendingCard>
-          </Link>
-
-          <TrendingCard
-            whileHover={{ y: -5 }}
-            transition={{ duration: 0.2 }}
-          >
-            <TrendingImage
-              src="/images/gumi.png"
-              alt="Art Article"
-            />
-            <TrendingContent>
-              <ArticleTag>アート</ArticleTag>
-              <ArticleTitle>
-                NFTアートが変える、現代アートシーンの新たな展開
-              </ArticleTitle>
-              <ArticleMeta>
-                <span>2025年2月19日</span>
-              </ArticleMeta>
-            </TrendingContent>
-          </TrendingCard>
-
-          <Link to="/music/subculture" style={{ textDecoration: 'none' }}>
-            <TrendingCard
-              whileHover={{ y: -5 }}
-              transition={{ duration: 0.2 }}
-            >
-              <TrendingImage
-                src="/images/guer.png"
-                alt="Music Article"
-              />
-              <TrendingContent>
-                <ArticleTag>音楽</ArticleTag>
-                <ArticleTitle>
-                  界隈曲の世界：カオスと中毒性が織りなす音楽文化
-                </ArticleTitle>
-                <ArticleMeta>
-                  <span>2025年2月18日</span>
-                </ArticleMeta>
-              </TrendingContent>
-            </TrendingCard>
-          </Link>
-        </TrendingGrid>
+        <SectionTitle>Latest Articles</SectionTitle>
+        {wpStatus && !wpStatus.connected && (
+          <div style={{ 
+            textAlign: 'center', 
+            padding: '2rem', 
+            background: 'rgba(255, 193, 7, 0.1)', 
+            border: '1px solid rgba(255, 193, 7, 0.3)',
+            borderRadius: '8px',
+            marginBottom: '2rem',
+            color: '#ffc107'
+          }}>
+            <p>WordPress接続待機中 - デモデータを表示しています</p>
+            <small>設定: {wpStatus.apiInfo.baseURL}</small>
+          </div>
+        )}
+        <ArticleList
+          articles={recentPosts?.posts || []}
+          loading={isLoading}
+          error={error?.message || null}
+          columns={3}
+        />
       </TrendingSection>
 
 
