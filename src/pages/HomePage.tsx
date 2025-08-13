@@ -344,6 +344,15 @@ const HomePage = () => {
           >
             Politics
           </Satellite>
+          <Satellite
+            to="/events"
+            style={{ top: 60, right: -95 }}
+            whileHover={{ y: -5, scale: 1.1 }}
+            animate={{ y: [-2, 2, -2] }}
+            transition={{ y: { duration: 4.8, repeat: Infinity, ease: "easeInOut" } }}
+          >
+            Events
+          </Satellite>
         </PlanetContainer>
       </TopicsExplorerSection>
 

@@ -1,5 +1,42 @@
 import { Article } from '../types/wordpress';
 
+// イベント関連の型定義
+export interface Event {
+  id: number;
+  title: string;
+  description: string;
+  date: string;
+  startTime: string;
+  endTime: string;
+  location: {
+    type: 'online' | 'offline';
+    venue?: string;
+    address?: string;
+    url?: string;
+  };
+  category: string;
+  organizer: {
+    name: string;
+    avatar: string;
+    bio: string;
+  };
+  participants: {
+    count: number;
+    maxCapacity: number;
+    avatars: string[];
+  };
+  price: {
+    amount: number;
+    currency: string;
+    isFree: boolean;
+  };
+  tags: string[];
+  image: string;
+  status: 'upcoming' | 'ongoing' | 'past';
+  featured: boolean;
+  slug: string;
+}
+
 // モックデータ - WordPressが利用できない場合のフォールバック
 export const mockArticles: Article[] = [
   {
@@ -298,4 +335,222 @@ export const mockTags = [
   { id: 13, name: '政治', slug: 'politics', description: '', count: 4 },
   { id: 14, name: '民主主義', slug: 'democracy', description: '', count: 2 },
   { id: 15, name: 'デジタル化', slug: 'digitalization', description: '', count: 6 },
+];
+
+// イベントのモックデータ
+export const mockEvents: Event[] = [
+  {
+    id: 1,
+    slug: 'ai-future-workshop',
+    title: 'AI Future Workshop: 生成AIと創造性の未来',
+    description: 'AI技術の最新動向と創造的な活用方法について、実践的なワークショップを通して学びます。技術者だけでなく、クリエイターやビジネスパーソンにも役立つ内容です。',
+    date: '2025-02-20',
+    startTime: '14:00',
+    endTime: '17:00',
+    location: {
+      type: 'offline',
+      venue: 'CORAL LAB 渋谷',
+      address: '東京都渋谷区神南1-12-16 和光ビル5F',
+    },
+    category: 'Tech Talk',
+    organizer: {
+      name: 'CORAL Tech Community',
+      avatar: '/images/coral.png',
+      bio: 'テクノロジーとイノベーションを探求するコミュニティ',
+    },
+    participants: {
+      count: 42,
+      maxCapacity: 60,
+      avatars: ['/images/man.png', '/images/she.png', '/images/man4.png', '/images/she2.png'],
+    },
+    price: {
+      amount: 5000,
+      currency: 'JPY',
+      isFree: false,
+    },
+    tags: ['AI', 'Workshop', '生成AI', 'Creative'],
+    image: '/images/ai.png',
+    status: 'upcoming',
+    featured: true,
+  },
+  {
+    id: 2,
+    slug: 'mindfulness-meditation-circle',
+    title: 'マインドフルネス瞑想サークル',
+    description: '忙しい日常から離れ、静かな時間の中で瞑想を実践します。初心者から上級者まで、どなたでもご参加いただけます。',
+    date: '2025-02-15',
+    startTime: '19:00',
+    endTime: '20:30',
+    location: {
+      type: 'online',
+      url: 'https://meet.coral-community.com/meditation',
+    },
+    category: 'Spiritual',
+    organizer: {
+      name: '田中 瞑想',
+      avatar: '/images/she.png',
+      bio: 'マインドフルネス指導者・脳科学研究者',
+    },
+    participants: {
+      count: 28,
+      maxCapacity: 50,
+      avatars: ['/images/she3.png', '/images/man9.png', '/images/she5.png'],
+    },
+    price: {
+      amount: 0,
+      currency: 'JPY',
+      isFree: true,
+    },
+    tags: ['瞑想', 'マインドフルネス', 'オンライン', 'ウェルビーイング'],
+    image: '/images/cat.png',
+    status: 'upcoming',
+    featured: true,
+  },
+  {
+    id: 3,
+    slug: 'music-tech-meetup',
+    title: 'Music × Tech Meetup: 音楽の未来を語ろう',
+    description: '音楽業界とテクノロジーの融合について、業界の専門家や音楽愛好家と議論します。AI作曲、VR音楽体験、NFT音楽など最新トピックを扱います。',
+    date: '2025-02-25',
+    startTime: '18:30',
+    endTime: '21:00',
+    location: {
+      type: 'offline',
+      venue: 'SOUND LOUNGE TOKYO',
+      address: '東京都新宿区歌舞伎町1-14-7 林ビル7F',
+    },
+    category: 'Networking',
+    organizer: {
+      name: '音楽太郎',
+      avatar: '/images/man.png',
+      bio: '音楽プロデューサー・テクノロジスト',
+    },
+    participants: {
+      count: 35,
+      maxCapacity: 80,
+      avatars: ['/images/guer.png', '/images/hato.png', '/images/she8.png', '/images/man4.png'],
+    },
+    price: {
+      amount: 3000,
+      currency: 'JPY',
+      isFree: false,
+    },
+    tags: ['音楽', 'テクノロジー', 'ネットワーキング', 'AI作曲'],
+    image: '/images/guer.png',
+    status: 'upcoming',
+    featured: false,
+  },
+  {
+    id: 4,
+    slug: 'digital-art-exhibition',
+    title: 'デジタルアート展：NFTアートの新境地',
+    description: '新進気鋭のデジタルアーティストによる作品展示と、NFTアートの未来について考えるトークセッション。',
+    date: '2025-03-05',
+    startTime: '13:00',
+    endTime: '18:00',
+    location: {
+      type: 'offline',
+      venue: 'GALLERY CORAL',
+      address: '東京都港区六本木7-22-1 TOCビル3F',
+    },
+    category: 'Exhibition',
+    organizer: {
+      name: 'アート次郎',
+      avatar: '/images/man4.png',
+      bio: 'デジタルアーティスト・NFTクリエイター',
+    },
+    participants: {
+      count: 67,
+      maxCapacity: 100,
+      avatars: ['/images/she55.png', '/images/gumi.png', '/images/pixel.png'],
+    },
+    price: {
+      amount: 2000,
+      currency: 'JPY',
+      isFree: false,
+    },
+    tags: ['デジタルアート', 'NFT', '展示', 'クリエイティブ'],
+    image: '/images/gumi.png',
+    status: 'upcoming',
+    featured: false,
+  },
+  {
+    id: 5,
+    slug: 'health-tech-symposium',
+    title: 'HealthTech Symposium 2025',
+    description: '健康技術の最前線を探る一日。ウェアラブルデバイス、テレヘルス、AI診断など、健康とテクノロジーの融合について専門家が講演します。',
+    date: '2025-03-10',
+    startTime: '10:00',
+    endTime: '17:00',
+    location: {
+      type: 'online',
+      url: 'https://symposium.coral-community.com/healthtech2025',
+    },
+    category: 'Conference',
+    organizer: {
+      name: '健康花子',
+      avatar: '/images/she2.png',
+      bio: 'ヘルステック専門家・医師',
+    },
+    participants: {
+      count: 156,
+      maxCapacity: 300,
+      avatars: ['/images/hose.png', '/images/he.png', '/images/she9.png'],
+    },
+    price: {
+      amount: 8000,
+      currency: 'JPY',
+      isFree: false,
+    },
+    tags: ['HealthTech', 'ウェアラブル', 'AI診断', 'オンライン'],
+    image: '/images/hose.png',
+    status: 'upcoming',
+    featured: true,
+  },
+  {
+    id: 6,
+    slug: 'community-pizza-night',
+    title: 'CORAL Community Pizza Night',
+    description: 'コミュニティメンバー同士の親睦を深める、カジュアルなピザパーティー。様々なバックグラウンドを持つ参加者と交流できます。',
+    date: '2025-02-28',
+    startTime: '19:00',
+    endTime: '22:00',
+    location: {
+      type: 'offline',
+      venue: 'CORAL SPACE',
+      address: '東京都渋谷区恵比寿1-20-8 エビスビル1F',
+    },
+    category: 'Social',
+    organizer: {
+      name: 'CORAL運営チーム',
+      avatar: '/images/coralman.png',
+      bio: 'CORALコミュニティの運営を担当',
+    },
+    participants: {
+      count: 23,
+      maxCapacity: 40,
+      avatars: ['/images/coral2.png', '/images/coral4.png', '/images/coral6.png'],
+    },
+    price: {
+      amount: 2500,
+      currency: 'JPY',
+      isFree: false,
+    },
+    tags: ['コミュニティ', 'ネットワーキング', 'カジュアル', '親睦会'],
+    image: '/images/coral7.png',
+    status: 'upcoming',
+    featured: false,
+  },
+];
+
+export const mockEventCategories = [
+  'Tech Talk',
+  'Workshop', 
+  'Networking',
+  'Exhibition',
+  'Conference',
+  'Social',
+  'Spiritual',
+  'Creative',
+  'Discussion',
 ];
