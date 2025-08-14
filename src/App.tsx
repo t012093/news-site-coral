@@ -186,7 +186,7 @@ function App() {
             </Routes>
           </MainContent>
           <Footer />
-          <WordPressStatusIndicator />
+          {import.meta.env.DEV && <WordPressStatusIndicator />}
         </AppContainer>
       </AuthProvider>
     </Router>
