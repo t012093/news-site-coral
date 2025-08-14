@@ -6,7 +6,7 @@ import { TeamMember } from '../../types/shift';
 const TeamContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 `;
 
 const TeamHeader = styled.div`
@@ -29,16 +29,28 @@ const TeamTitle = styled.h4`
 const OnlineIndicator = styled.div`
   display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.7);
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #22c55e;
+  background: rgba(34, 197, 94, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
+  border: 1px solid rgba(34, 197, 94, 0.2);
 `;
 
 const StatusDot = styled.div<{ color: string }>`
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: ${props => props.color};
+  box-shadow: 0 0 10px ${props => props.color};
+  animation: pulse 2s infinite;
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+  }
 `;
 
 const MembersList = styled.div`
@@ -52,27 +64,53 @@ const MembersList = styled.div`
 const MemberCard = styled(motion.div)<{ isOnline: boolean }>`
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px;
-  background: #2a2a2a;
-  border-radius: 8px;
+  gap: 14px;
+  padding: 16px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 12px;
   border-left: 4px solid ${props => props.isOnline ? '#22c55e' : '#64748b'};
-  opacity: ${props => props.isOnline ? 1 : 0.7};
+  opacity: ${props => props.isOnline ? 1 : 0.8};
   transition: all 0.3s ease;
   cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, transparent, rgba(147, 51, 234, 0.05));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
   
   &:hover {
-    background: #3a3a3a;
-    transform: translateX(4px);
+    background: linear-gradient(135deg, #3a3a3a, #2f2f2f);
+    transform: translateX(6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    
+    &::before {
+      opacity: 1;
+    }
   }
 `;
 
 const Avatar = styled.img`
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   object-fit: cover;
-  border: 2px solid ${props => props.color || 'var(--accent-color)'};
+  border: 3px solid ${props => props.color || 'var(--accent-color)'};
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(147, 51, 234, 0.4);
+  }
 `;
 
 const MemberInfo = styled.div`
@@ -80,15 +118,25 @@ const MemberInfo = styled.div`
 `;
 
 const MemberName = styled.div`
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: var(--text-color);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
+  letter-spacing: 0.02em;
 `;
 
 const MemberRole = styled.div`
-  font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  
+  &::before {
+    content: '•';
+    color: var(--accent-color);
+    font-weight: bold;
+  }
 `;
 
 const MemberStatus = styled.div<{ status: string }>`
@@ -162,10 +210,12 @@ const ActionButton = styled(motion.button)`
 `;
 
 const ShiftSummary = styled.div`
-  background: #2a2a2a;
-  border-radius: 8px;
-  padding: 12px;
-  margin-bottom: 16px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 18px;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 `;
 
 const SummaryRow = styled.div`
@@ -184,10 +234,11 @@ const SummaryLabel = styled.span`
   color: rgba(255, 255, 255, 0.7);
 `;
 
-const SummaryValue = styled.span`
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--text-color);
+const SummaryValue = styled.span<{ highlight?: boolean }>`
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: ${props => props.highlight ? 'var(--accent-color)' : 'var(--text-color)'};
+  text-shadow: ${props => props.highlight ? '0 0 10px rgba(147, 51, 234, 0.5)' : 'none'};
 `;
 
 const mockTeamMembers: TeamMember[] = [
@@ -275,7 +326,6 @@ const TeamStatusPanel: React.FC = () => {
 
   const onlineCount = mockTeamMembers.filter(m => m.isOnline).length;
   const totalMembers = mockTeamMembers.length;
-  const availableCount = filteredMembers.length;
 
   const getStatusText = (member: TeamMember) => {
     if (!member.isOnline) return 'オフライン';
@@ -317,17 +367,17 @@ const TeamStatusPanel: React.FC = () => {
 
       <ShiftSummary>
         <SummaryRow>
-          <SummaryLabel>オンライン:</SummaryLabel>
-          <SummaryValue>{onlineCount}人</SummaryValue>
+          <SummaryLabel>🟢 オンライン:</SummaryLabel>
+          <SummaryValue highlight>{onlineCount}人</SummaryValue>
         </SummaryRow>
         <SummaryRow>
-          <SummaryLabel>勤務中:</SummaryLabel>
-          <SummaryValue>
+          <SummaryLabel>💼 勤務中:</SummaryLabel>
+          <SummaryValue highlight>
             {mockTeamMembers.filter(m => getStatusText(m) === '勤務中').length}人
           </SummaryValue>
         </SummaryRow>
         <SummaryRow>
-          <SummaryLabel>今日のシフト:</SummaryLabel>
+          <SummaryLabel>📊 今日のシフト:</SummaryLabel>
           <SummaryValue>8/10 充足</SummaryValue>
         </SummaryRow>
       </ShiftSummary>

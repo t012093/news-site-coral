@@ -20,54 +20,70 @@ const CalendarContainer = styled.div`
 
 const CalendarHeader = styled.div`
   display: flex;
-  justify-content: between;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
-  padding: 0 8px;
+  margin-bottom: 28px;
+  padding: 16px 20px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 16px;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 `;
 
 const NavigationButton = styled(motion.button)`
-  background: transparent;
-  border: 1px solid #3a3a3a;
+  background: linear-gradient(135deg, #3a3a3a, #2f2f2f);
+  border: 1px solid #4a4a4a;
   color: var(--text-color);
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 1.2rem;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  min-width: 50px;
   
   &:hover {
-    background: #3a3a3a;
+    background: linear-gradient(135deg, var(--accent-color), #8b5fe6);
     border-color: var(--accent-color);
+    color: white;
+    box-shadow: 0 4px 15px rgba(147, 51, 234, 0.3);
   }
 `;
 
 const MonthTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 600;
+  font-size: 1.6rem;
+  font-weight: 700;
   color: var(--text-color);
   margin: 0;
   flex: 1;
   text-align: center;
+  background: linear-gradient(135deg, var(--accent-color), #8b5fe6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 0.02em;
 `;
 
 const CalendarGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 1px;
-  background: #2a2a2a;
-  border-radius: 8px;
+  gap: 2px;
+  background: #1a1a1a;
+  border-radius: 12px;
   overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border: 1px solid #2a2a2a;
 `;
 
 const WeekDayHeader = styled.div`
-  background: var(--primary-color);
-  padding: 12px 8px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  padding: 14px 8px;
   text-align: center;
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--accent-color);
-  border-bottom: 1px solid #2a2a2a;
+  border-bottom: 2px solid var(--accent-color);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 `;
 
 const DayCell = styled(motion.div)<{ 
@@ -75,36 +91,60 @@ const DayCell = styled(motion.div)<{
   isToday: boolean; 
   hasEvents: boolean;
 }>`
-  background: var(--primary-color);
-  min-height: 80px;
-  padding: 8px;
+  background: ${props => props.isCurrentMonth ? 'var(--primary-color)' : '#1a1a1a'};
+  min-height: 90px;
+  padding: 10px;
   cursor: pointer;
   position: relative;
-  opacity: ${props => props.isCurrentMonth ? 1 : 0.4};
+  opacity: ${props => props.isCurrentMonth ? 1 : 0.5};
+  transition: all 0.3s ease;
+  border-radius: 8px;
   
   &:hover {
-    background: #2a2a2a;
+    background: linear-gradient(135deg, #2a2a2a, #252525);
+    transform: scale(1.02);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   }
   
   ${props => props.isToday && `
-    background: linear-gradient(135deg, var(--accent-color)20, var(--primary-color));
+    background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), var(--primary-color)) !important;
     border: 2px solid var(--accent-color);
+    box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
+  `}
+  
+  ${props => props.hasEvents && `
+    border-left: 4px solid var(--accent-color);
   `}
 `;
 
 const DayNumber = styled.div<{ isToday: boolean }>`
-  font-size: 0.9rem;
-  font-weight: ${props => props.isToday ? '700' : '500'};
+  font-size: 0.95rem;
+  font-weight: ${props => props.isToday ? '800' : '600'};
   color: ${props => props.isToday ? 'var(--accent-color)' : 'var(--text-color)'};
-  margin-bottom: 4px;
+  margin-bottom: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: ${props => props.isToday ? 'var(--accent-color)20' : 'transparent'};
+  text-shadow: ${props => props.isToday ? '0 0 10px rgba(147, 51, 234, 0.8)' : 'none'};
 `;
 
 const EventDot = styled.div<{ color: string }>`
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   background: ${props => props.color};
   border-radius: 50%;
-  margin: 2px;
+  margin: 4px;
+  box-shadow: 0 0 8px ${props => props.color};
+  animation: pulse 2s infinite;
+  
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+  }
 `;
 
 const EventsContainer = styled.div`
@@ -115,20 +155,25 @@ const EventsContainer = styled.div`
 `;
 
 const EventPreview = styled(motion.div)<{ color: string }>`
-  font-size: 0.7rem;
-  padding: 2px 4px;
-  background: ${props => props.color}20;
+  font-size: 0.68rem;
+  padding: 3px 6px;
+  background: ${props => props.color}25;
   color: ${props => props.color};
-  border-radius: 3px;
-  border-left: 2px solid ${props => props.color};
+  border-radius: 6px;
+  border-left: 3px solid ${props => props.color};
   max-width: 100%;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 2px 8px ${props => props.color}20;
+  transition: all 0.2s ease;
   
   &:hover {
     background: ${props => props.color}40;
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px ${props => props.color}40;
   }
 `;
 
@@ -423,7 +468,6 @@ const InteractiveCalendar: React.FC<InteractiveCalendarProps> = ({
 
   const renderDayView = () => {
     const hours = Array.from({ length: 24 }, (_, i) => i);
-    const dayEvents = getEventsForDay(currentDate);
     
     return (
       <DayView>

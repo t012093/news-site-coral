@@ -9,15 +9,22 @@ import ShiftStats from '../components/shift/ShiftStats';
 
 const DashboardContainer = styled.div`
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 320px 1fr;
   grid-template-rows: auto 1fr;
-  gap: 24px;
+  gap: 32px;
   height: calc(100vh - 160px);
+  padding: 0 8px;
+  
+  @media (max-width: 1200px) {
+    grid-template-columns: 280px 1fr;
+    gap: 24px;
+  }
   
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto 1fr;
     height: auto;
+    gap: 20px;
   }
 `;
 
@@ -26,18 +33,29 @@ const Header = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 24px 0;
-  border-bottom: 1px solid #2a2a2a;
+  padding: 24px 16px;
+  background: linear-gradient(135deg, var(--primary-color), #1a1a1a);
+  border-radius: 16px;
+  border: 1px solid #2a2a2a;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  margin-bottom: 8px;
 `;
 
 const Title = styled.h1`
-  font-size: 2.5rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--text-color);
   margin: 0;
   background: linear-gradient(135deg, var(--accent-color), #8b5fe6);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+  }
 `;
 
 const QuickActions = styled.div`
@@ -52,31 +70,45 @@ const QuickActions = styled.div`
 
 const ActionButton = styled(motion.button)`
   padding: 12px 24px;
-  background: var(--primary-color);
+  background: linear-gradient(135deg, var(--primary-color), #1a1a1a);
   border: 1px solid var(--accent-color);
   color: var(--accent-color);
-  border-radius: 8px;
+  border-radius: 10px;
   font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
   
   &:hover {
-    background: var(--accent-color);
+    background: linear-gradient(135deg, var(--accent-color), #8b5fe6);
     color: white;
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.3);
+    box-shadow: 0 8px 25px rgba(147, 51, 234, 0.4);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 10px 16px;
+    font-size: 0.85rem;
   }
 `;
 
 const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 20px;
+  height: fit-content;
   
   @media (max-width: 1024px) {
     grid-column: 1 / -1;
     grid-row: 2;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+  }
+  
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -93,11 +125,19 @@ const MainContent = styled.div`
 `;
 
 const Card = styled(motion.div)`
-  background: var(--primary-color);
+  background: linear-gradient(145deg, var(--primary-color), #1a1a1a);
   border: 1px solid #2a2a2a;
-  border-radius: 16px;
+  border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(147, 51, 234, 0.1);
+    border-color: rgba(147, 51, 234, 0.3);
+  }
 `;
 
 const CardTitle = styled.h3`
@@ -113,24 +153,36 @@ const CardTitle = styled.h3`
 const TodaySchedule = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 `;
 
-const ScheduleItem = styled.div`
+const ScheduleItem = styled(motion.div)`
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px;
-  background: #2a2a2a;
-  border-radius: 8px;
+  padding: 14px 16px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 12px;
   border-left: 4px solid var(--accent-color);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    background: linear-gradient(135deg, #3a3a3a, #2f2f2f);
+    transform: translateX(4px);
+    box-shadow: 0 4px 16px rgba(147, 51, 234, 0.2);
+  }
 `;
 
 const TimeSlot = styled.span`
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
   color: var(--accent-color);
-  min-width: 80px;
+  min-width: 70px;
+  background: rgba(147, 51, 234, 0.1);
+  padding: 4px 8px;
+  border-radius: 6px;
+  text-align: center;
 `;
 
 const EventTitle = styled.span`
@@ -141,24 +193,45 @@ const EventTitle = styled.span`
 
 const ViewToggle = styled.div`
   display: flex;
-  background: #2a2a2a;
-  border-radius: 8px;
-  padding: 4px;
-  margin-bottom: 16px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 12px;
+  padding: 6px;
+  margin-bottom: 20px;
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  
+  @media (max-width: 640px) {
+    flex-direction: column;
+    gap: 4px;
+  }
 `;
 
 const ToggleButton = styled.button<{ active: boolean }>`
-  padding: 8px 16px;
-  background: ${props => props.active ? 'var(--accent-color)' : 'transparent'};
+  padding: 10px 18px;
+  background: ${props => props.active 
+    ? 'linear-gradient(135deg, var(--accent-color), #8b5fe6)' 
+    : 'transparent'
+  };
   color: ${props => props.active ? 'white' : 'var(--text-color)'};
   border: none;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  flex: 1;
   
   &:hover {
-    background: ${props => props.active ? 'var(--accent-color)' : '#3a3a3a'};
+    background: ${props => props.active 
+      ? 'linear-gradient(135deg, var(--accent-color), #8b5fe6)'
+      : 'linear-gradient(135deg, #3a3a3a, #2f2f2f)'
+    };
+    transform: translateY(-1px);
+  }
+  
+  @media (max-width: 640px) {
+    padding: 8px 12px;
+    font-size: 0.8rem;
   }
 `;
 
@@ -180,8 +253,13 @@ const ShiftDashboard: React.FC = () => {
       <Header>
         <div>
           <Title>📅 シフト管理</Title>
-          <p style={{ color: 'rgba(255, 255, 255, 0.7)', margin: '8px 0 0 0' }}>
-            ようこそ、{user?.displayName || 'ユーザー'}さん
+          <p style={{ 
+            color: 'rgba(255, 255, 255, 0.8)', 
+            margin: '8px 0 0 0',
+            fontSize: '0.9rem',
+            fontWeight: '500'
+          }}>
+            ようこそ、{user?.displayName || 'ユーザー'}さん 👋
           </p>
         </div>
         <QuickActions>
@@ -210,7 +288,13 @@ const ShiftDashboard: React.FC = () => {
           <CardTitle>📋 今日の予定</CardTitle>
           <TodaySchedule>
             {todaySchedule.map((item, index) => (
-              <ScheduleItem key={index}>
+              <ScheduleItem 
+                key={index}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + index * 0.05 }}
+                whileHover={{ scale: 1.02 }}
+              >
                 <TimeSlot>{item.time}</TimeSlot>
                 <EventTitle>{item.title}</EventTitle>
               </ScheduleItem>

@@ -6,7 +6,7 @@ import { ShiftStats as ShiftStatsType } from '../../types/shift';
 const StatsContainer = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
 `;
 
 const StatsTitle = styled.h4`
@@ -20,13 +20,22 @@ const StatsTitle = styled.h4`
 `;
 
 const StatCard = styled(motion.div)`
-  background: #2a2a2a;
-  border-radius: 8px;
-  padding: 16px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 14px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 12px;
   border-left: 4px solid var(--accent-color);
+  border: 1px solid #3a3a3a;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(147, 51, 234, 0.1);
+    border-color: rgba(147, 51, 234, 0.3);
+  }
 `;
 
 const StatRow = styled.div`
@@ -44,27 +53,32 @@ const StatLabel = styled.span`
 `;
 
 const StatValue = styled.span<{ highlight?: boolean; color?: string }>`
-  font-size: 0.9rem;
-  font-weight: 600;
+  font-size: 0.95rem;
+  font-weight: 700;
   color: ${props => 
     props.color ? props.color :
     props.highlight ? 'var(--accent-color)' : 'var(--text-color)'
+  };
+  text-shadow: ${props => 
+    props.highlight ? '0 0 10px rgba(147, 51, 234, 0.5)' : 'none'
   };
 `;
 
 const ProgressBar = styled.div`
   width: 100%;
-  height: 4px;
+  height: 6px;
   background: #3a3a3a;
-  border-radius: 2px;
+  border-radius: 3px;
   overflow: hidden;
-  margin-top: 4px;
+  margin-top: 8px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
 const ProgressFill = styled(motion.div)<{ color?: string }>`
   height: 100%;
-  background: ${props => props.color || 'var(--accent-color)'};
-  border-radius: 2px;
+  background: linear-gradient(90deg, ${props => props.color || 'var(--accent-color)'}, ${props => props.color || 'var(--accent-color)'}80);
+  border-radius: 3px;
+  box-shadow: 0 0 10px ${props => props.color || 'var(--accent-color)'}60;
 `;
 
 const MiniChart = styled.div`
@@ -87,21 +101,34 @@ const ChartBar = styled(motion.div)<{ height: number; color?: string }>`
   }
 `;
 
-const QuickStat = styled.div`
+const QuickStat = styled(motion.div)`
   text-align: center;
-  padding: 8px;
+  padding: 12px;
+  background: linear-gradient(135deg, #2a2a2a, #252525);
+  border-radius: 10px;
+  border: 1px solid #3a3a3a;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 const QuickStatValue = styled.div<{ color?: string }>`
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.4rem;
+  font-weight: 800;
   color: ${props => props.color || 'var(--accent-color)'};
+  text-shadow: 0 0 15px ${props => props.color || 'var(--accent-color)'}40;
+  margin-bottom: 4px;
 `;
 
 const QuickStatLabel = styled.div`
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
-  margin-top: 2px;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 600;
+  letter-spacing: 0.02em;
 `;
 
 const StatsGrid = styled.div`
@@ -133,21 +160,30 @@ const ShiftStats: React.FC = () => {
       </StatsTitle>
 
       <StatsGrid>
-        <QuickStat>
+        <QuickStat
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <QuickStatValue color="#22c55e">
             {mockStats.totalShifts}
           </QuickStatValue>
           <QuickStatLabel>今月のシフト</QuickStatLabel>
         </QuickStat>
         
-        <QuickStat>
+        <QuickStat
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <QuickStatValue color="#f59e0b">
             {mockStats.pendingRequests}
           </QuickStatValue>
           <QuickStatLabel>申請中</QuickStatLabel>
         </QuickStat>
         
-        <QuickStat>
+        <QuickStat
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
           <QuickStatValue color="#ef4444">
             {mockStats.overtimeHours}h
           </QuickStatValue>
