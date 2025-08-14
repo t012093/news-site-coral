@@ -277,6 +277,12 @@ const Navigation = () => {
                       <DropdownItem to="/profile" onClick={() => setShowDropdown(false)}>
                         📋 マイページ
                       </DropdownItem>
+                      <DropdownItem to="/shift" onClick={() => setShowDropdown(false)}>
+                        🗓️ シフト管理
+                      </DropdownItem>
+                      <DropdownItem to="/tasks" onClick={() => setShowDropdown(false)}>
+                        📋 タスク管理
+                      </DropdownItem>
                       <DropdownButton onClick={handleLogout}>
                         🚪 ログアウト
                       </DropdownButton>

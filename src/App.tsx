@@ -37,6 +37,8 @@ import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import { ArticlePage } from './pages/ArticlePage';
 import { WordPressStatusIndicator } from './components/WordPressStatusIndicator';
+import ShiftDashboard from './pages/ShiftDashboard';
+import TaskDashboard from './pages/TaskDashboard';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -170,6 +172,24 @@ function App() {
               <Route path="/articles/gift-of-ignorance" element={<PageWrapper><GiftOfIgnorancePage /></PageWrapper>} />
               <Route path="/articles/hotspot-drama" element={<PageWrapper><HotspotDramaPage /></PageWrapper>} />
               <Route path="/article/:slug" element={<PageWrapper><ArticlePage /></PageWrapper>} />
+              
+              {/* シフト管理 */}
+              <Route path="/shift" element={
+                <PageWrapper>
+                  <ProtectedRoute>
+                    <ShiftDashboard />
+                  </ProtectedRoute>
+                </PageWrapper>
+              } />
+              
+              {/* タスク管理 */}
+              <Route path="/tasks" element={
+                <PageWrapper>
+                  <ProtectedRoute>
+                    <TaskDashboard />
+                  </ProtectedRoute>
+                </PageWrapper>
+              } />
               
               {/* 認証関連のルート */}
               <Route path="/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
