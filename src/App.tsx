@@ -29,6 +29,9 @@ import ArtsPage from './pages/ArtsPage';
 import PoliticsPage from './pages/PoliticsPage';
 import EventsPage from './pages/EventsPage';
 import EventDetailPage from './pages/EventDetailPage';
+import ProjectsPage from './pages/ProjectsPage';
+import InternationalArtCollabPage from './pages/projects/InternationalArtCollabPage';
+import InternationalPlatformDevPage from './pages/projects/InternationalPlatformDevPage';
 import LoginPage from './pages/auth/LoginPage';
 import RegisterPage from './pages/auth/RegisterPage';
 import ProfilePage from './pages/profile/ProfilePage';
@@ -161,6 +164,9 @@ function App() {
               <Route path="/politics" element={<PageWrapper><PoliticsPage /></PageWrapper>} />
               <Route path="/events" element={<PageWrapper><EventsPage /></PageWrapper>} />
               <Route path="/events/:slug" element={<PageWrapper><EventDetailPage /></PageWrapper>} />
+              <Route path="/projects" element={<PageWrapper><ProjectsPage /></PageWrapper>} />
+              <Route path="/projects/international-art-collaboration" element={<PageWrapper><InternationalArtCollabPage /></PageWrapper>} />
+              <Route path="/projects/international-platform-development" element={<PageWrapper><InternationalPlatformDevPage /></PageWrapper>} />
               <Route path="/articles/gift-of-ignorance" element={<PageWrapper><GiftOfIgnorancePage /></PageWrapper>} />
               <Route path="/articles/hotspot-drama" element={<PageWrapper><HotspotDramaPage /></PageWrapper>} />
               <Route path="/article/:slug" element={<PageWrapper><ArticlePage /></PageWrapper>} />

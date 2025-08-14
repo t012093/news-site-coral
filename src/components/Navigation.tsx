@@ -248,6 +248,12 @@ const Navigation = () => {
           >
             Events
           </NavLink>
+          <NavLink 
+            to="/projects"
+            whileHover={linkHoverAnimation}
+          >
+            Projects
+          </NavLink>
           
           <AuthSection>
             {isAuthenticated && user ? (
