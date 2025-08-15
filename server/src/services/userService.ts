@@ -253,7 +253,7 @@ export class UserService {
       LIMIT $1 OFFSET $2
     `, [limit, offset]);
 
-    const users = result.rows.map(row => this.mapDbUserToUser(row));
+    const users = result.rows.map((row: any) => this.mapDbUserToUser(row));
 
     return { users, total };
   }
@@ -292,7 +292,7 @@ export class UserService {
       LIMIT $2 OFFSET $3
     `, [searchPattern, limit, offset]);
 
-    const users = result.rows.map(row => this.mapDbUserToUser(row));
+    const users = result.rows.map((row: any) => this.mapDbUserToUser(row));
 
     return { users, total };
   }

@@ -195,7 +195,7 @@ export class TaskService {
       projectId: taskData.projectId,
       assignedTo: taskData.assignedTo,
       createdBy: taskData.createdBy,
-      dueDate: taskData.dueDate ? taskData.dueDate.toISOString() : undefined,
+      dueDate: taskData.dueDate ? (taskData.dueDate instanceof Date ? taskData.dueDate.toISOString() : taskData.dueDate) : undefined,
       estimatedHours: taskData.estimatedHours,
       actualHours: 0,
       isArchived: false,
@@ -224,7 +224,7 @@ export class TaskService {
     const updatedTask: Task = {
       ...task,
       ...updates,
-      dueDate: updates.dueDate ? updates.dueDate.toISOString() : task.dueDate,
+      dueDate: updates.dueDate ? (updates.dueDate instanceof Date ? updates.dueDate.toISOString() : updates.dueDate) : task.dueDate,
       tags: updates.tags || task.tags,
       updatedAt: new Date().toISOString(),
     };

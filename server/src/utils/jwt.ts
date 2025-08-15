@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken';
+import jwt, { SignOptions } from 'jsonwebtoken';
 import { JWTPayload } from '@/types';
 import { createError } from '@/middleware/errorHandler';
 
@@ -32,11 +32,11 @@ export class JWTManager {
    */
   public generateAccessToken(payload: Omit<JWTPayload, 'iat' | 'exp'>): string {
     try {
-      return jwt.sign(payload, this.jwtSecret, {
+      return jwt.sign(payload as object, this.jwtSecret, {
         expiresIn: this.jwtExpiresIn,
         issuer: 'coral-backend',
         audience: 'coral-frontend',
-      });
+      } as any);
     } catch (error) {
       throw createError.internalError('Failed to generate access token');
     }
@@ -48,13 +48,13 @@ export class JWTManager {
   public generateRefreshToken(userId: string): string {
     try {
       return jwt.sign(
-        { userId, type: 'refresh' },
+        { userId, type: 'refresh' } as object,
         this.jwtRefreshSecret,
         {
           expiresIn: this.jwtRefreshExpiresIn,
           issuer: 'coral-backend',
           audience: 'coral-frontend',
-        }
+        } as any
       );
     } catch (error) {
       throw createError.internalError('Failed to generate refresh token');

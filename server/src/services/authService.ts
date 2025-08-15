@@ -112,8 +112,8 @@ export class AuthService {
         refreshToken: newTokens.refreshToken,
       };
 
-    } catch (error) {
-      if (error.statusCode) {
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'statusCode' in error) {
         throw error;
       }
       throw createError.unauthorized('Invalid refresh token');

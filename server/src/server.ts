@@ -30,6 +30,10 @@ const app = express();
 app.set('trust proxy', true);
 
 const server = createServer(app);
+
+const PORT = process.env.PORT || 3001;
+const NODE_ENV = process.env.NODE_ENV || 'development';
+
 // Dynamic CORS origins based on environment
 const getAllowedOrigins = () => {
   const origins = [
@@ -55,9 +59,6 @@ const io = new SocketIOServer(server, {
     allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   },
 });
-
-const PORT = process.env.PORT || 3001;
-const NODE_ENV = process.env.NODE_ENV || 'development';
 
 // Rate limiting
 const limiter = rateLimit({
