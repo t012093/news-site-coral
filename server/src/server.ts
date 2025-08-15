@@ -69,9 +69,17 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
-  trustProxy: true, // Explicitly set for Railway environment
+  skip: (req) => {
+    // Skip rate limiting for health checks
+    return req.path === '/health';
+  },
   keyGenerator: (req) => {
-    return req.headers['x-forwarded-for'] as string || req.ip || 'unknown';
+    // Use forwarded IP for Railway proxy environment
+    const forwarded = req.headers['x-forwarded-for'];
+    if (forwarded) {
+      return (forwarded as string).split(',')[0].trim();
+    }
+    return req.ip || 'unknown';
   }
 });
 
