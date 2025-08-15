@@ -22,17 +22,18 @@ let redisClient: RedisClientType | any;
 if (USE_REAL_DATABASES) {
   // Real PostgreSQL connection - prefer DATABASE_URL if available
   if (DATABASE_URL) {
+    // Check if using Supabase pooler URL (port 6543)
+    const isPoolerUrl = DATABASE_URL.includes(':6543');
+    
     pool = new Pool({
       connectionString: DATABASE_URL,
-      max: 20,
+      max: isPoolerUrl ? 10 : 20, // Lower max connections for pooler
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 10000, // Increased timeout for Railway environment
+      connectionTimeoutMillis: 10000,
       ssl: process.env.NODE_ENV === 'production' ? { 
-        rejectUnauthorized: false,
-        // Force IPv4 for Railway environment
-        family: 4
+        rejectUnauthorized: false
       } : false,
-      // Additional connection options for Railway
+      // Additional connection options
       keepAlive: true,
       keepAliveInitialDelayMillis: 10000,
     });
