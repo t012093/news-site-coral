@@ -26,7 +26,8 @@ if (USE_REAL_DATABASES) {
       connectionString: DATABASE_URL,
       max: 20,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 2000,
+      connectionTimeoutMillis: 5000, // Increased timeout for Railway environment
+      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
     });
   } else {
     pool = new Pool({
