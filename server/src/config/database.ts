@@ -5,6 +5,7 @@ import { createClient, RedisClientType } from 'redis';
 dotenv.config();
 
 // Environment variables with defaults
+const DATABASE_URL = process.env.DATABASE_URL;
 const DB_HOST = process.env.DB_HOST || 'localhost';
 const DB_PORT = parseInt(process.env.DB_PORT || '5432');
 const DB_NAME = process.env.DB_NAME || 'coral_db';
@@ -19,17 +20,26 @@ let pool: Pool | any;
 let redisClient: RedisClientType | any;
 
 if (USE_REAL_DATABASES) {
-  // Real PostgreSQL connection
-  pool = new Pool({
-    host: DB_HOST,
-    port: DB_PORT,
-    database: DB_NAME,
-    user: DB_USER,
-    password: DB_PASSWORD,
-    max: 20,
-    idleTimeoutMillis: 30000,
-    connectionTimeoutMillis: 2000,
-  });
+  // Real PostgreSQL connection - prefer DATABASE_URL if available
+  if (DATABASE_URL) {
+    pool = new Pool({
+      connectionString: DATABASE_URL,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    });
+  } else {
+    pool = new Pool({
+      host: DB_HOST,
+      port: DB_PORT,
+      database: DB_NAME,
+      user: DB_USER,
+      password: DB_PASSWORD,
+      max: 20,
+      idleTimeoutMillis: 30000,
+      connectionTimeoutMillis: 2000,
+    });
+  }
 
   // Error handling for pool
   pool.on('error', (err: any) => {
