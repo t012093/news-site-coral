@@ -114,34 +114,42 @@ app.use(errorHandler);
 // Initialize database connections
 const initializeDatabases = async () => {
   try {
-    // Initialize Redis connection
-    await initializeRedis();
+    // Initialize Redis connection (non-blocking)
+    await initializeRedis().catch(err => {
+      console.warn('⚠️ Redis initialization failed, continuing with mock client:', err.message);
+    });
     
-    // Test database connections
-    const dbConnected = await testDatabaseConnection();
-    const redisConnected = await testRedisConnection();
+    // Test database connections (non-blocking)
+    const dbConnected = await testDatabaseConnection().catch(() => false);
+    const redisConnected = await testRedisConnection().catch(() => false);
     
     if (dbConnected && redisConnected) {
       console.log('✅ All database connections successful');
     } else if (!dbConnected && !redisConnected) {
       console.log('⚠️  Running without database connections (mock mode)');
     } else {
-      console.log('⚠️  Some database connections failed');
+      console.log('⚠️  Some database connections failed, continuing with available connections');
     }
   } catch (error) {
-    console.error('❌ Database initialization error:', error);
+    console.error('❌ Database initialization error:', error.message);
+    // Don't throw error - continue with mock connections
   }
 };
 
 // Start server
 const startServer = async () => {
-  await initializeDatabases();
-  
-  server.listen(PORT, () => {
-    console.log(`🚀 Server is running on port ${PORT} in ${NODE_ENV} mode`);
-    console.log(`📡 Socket.IO server is ready`);
-    console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
-  });
+  try {
+    await initializeDatabases();
+    
+    server.listen(PORT, '0.0.0.0', () => {
+      console.log(`🚀 Server is running on 0.0.0.0:${PORT} in ${NODE_ENV} mode`);
+      console.log(`📡 Socket.IO server is ready`);
+      console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
+    });
+  } catch (error) {
+    console.error('❌ Failed to start server:', error);
+    process.exit(1);
+  }
 };
 
 startServer();
