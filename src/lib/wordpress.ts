@@ -15,7 +15,7 @@ class WordPressAPI {
 
   constructor() {
     // バックエンドのプロキシエンドポイントを使用
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    const apiUrl = import.meta.env.VITE_API_URL || 'https://news-site-coral-production.up.railway.app/api';
     this.baseURL = `${apiUrl}/news`;
     
     this.api = axios.create({

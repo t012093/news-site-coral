@@ -16,7 +16,7 @@ class SocketService {
         return;
       }
 
-      const serverUrl = import.meta.env.VITE_SOCKET_URL || 'http://localhost:3001';
+      const serverUrl = import.meta.env.VITE_SOCKET_URL || 'https://news-site-coral-production.up.railway.app';
       
       this.socket = io(serverUrl, {
         auth: {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import { Task, Project, TaskFilter, TaskSort, TaskStatus } from '../types/task';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://news-site-coral-production.up.railway.app/api';
 
 const taskAPI = axios.create({
   baseURL: API_BASE_URL,
