@@ -128,7 +128,7 @@ export const authRateLimit = (maxAttempts: number = 5, windowMinutes: number = 1
   const attempts: Map<string, { count: number; resetTime: number }> = new Map();
 
   return (req: Request, res: Response, next: NextFunction): void => {
-    const key = req.ip;
+    const key = req.ip || 'unknown';
     const now = Date.now();
     const windowMs = windowMinutes * 60 * 1000;
 

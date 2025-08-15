@@ -1,6 +1,5 @@
 import { Server as SocketIOServer, Socket } from 'socket.io';
 import { jwtManager } from '@/utils/jwt';
-import { MessageService } from '@/services/messageService';
 
 // Store active connections and user status
 const connectedUsers = new Map<string, string>(); // userId -> socketId
@@ -28,266 +27,208 @@ export const initializeSocketIO = (io: SocketIOServer): void => {
         return next(new Error('Authentication required'));
       }
 
+      // Verify JWT token
       const payload = jwtManager.verifyAccessToken(token);
+      
+      if (!payload || !payload.userId) {
+        return next(new Error('Invalid token payload'));
+      }
+
+      // Attach user data to socket
       socket.userId = payload.userId;
       socket.user = {
         userId: payload.userId,
         email: payload.email,
         role: payload.role,
       };
-      
+
       next();
     } catch (error) {
-      next(new Error('Invalid token'));
+      console.error('Socket authentication error:', error);
+      next(new Error('Authentication failed'));
     }
   });
 
+  // Handle new connections
   io.on('connection', (socket: AuthenticatedSocket) => {
-    const userId = socket.userId!;
-    console.log(`👋 User ${userId} connected: ${socket.id}`);
+    const userId = socket.userId;
+    
+    if (!userId) {
+      console.error('No userId found on authenticated socket');
+      socket.disconnect();
+      return;
+    }
+
+    console.log(`✅ User ${userId} connected (${socket.id})`);
 
     // Store connection
     connectedUsers.set(userId, socket.id);
     userOnlineStatus.set(userId, true);
 
-    // Notify about online status
-    socket.broadcast.emit('user_online', { userId, timestamp: new Date().toISOString() });
-
-    // Authentication success
-    socket.emit('authenticated', { 
-      status: 'success',
-      user: socket.user,
-      timestamp: new Date().toISOString()
+    // Broadcast user online status
+    socket.broadcast.emit('user_status', {
+      userId,
+      isOnline: true,
+      lastSeen: new Date(),
     });
 
-    // Project-related events
-    socket.on('join_project', (data: { projectId: string }) => {
-      console.log(`📂 User ${userId} joining project: ${data.projectId}`);
-      socket.join(`project:${data.projectId}`);
-      socket.emit('project_joined', { 
-        projectId: data.projectId,
-        timestamp: new Date().toISOString()
-      });
-    });
-
-    socket.on('leave_project', (data: { projectId: string }) => {
-      console.log(`📂 User ${userId} leaving project: ${data.projectId}`);
-      socket.leave(`project:${data.projectId}`);
-      socket.emit('project_left', { 
-        projectId: data.projectId,
-        timestamp: new Date().toISOString()
-      });
-    });
-
-    // Task-related events
-    socket.on('task_updated', (data: { taskId: string; projectId: string; updates: any }) => {
-      console.log(`📋 Task updated: ${data.taskId} in project ${data.projectId}`);
-      // Broadcast to all users in the project
-      socket.to(`project:${data.projectId}`).emit('task_updated', {
-        taskId: data.taskId,
-        updates: data.updates,
-        updatedBy: userId,
-        timestamp: new Date().toISOString()
-      });
-    });
-
-    // Message-related events
-    socket.on('join_conversation', (data: { conversationId: string }) => {
-      console.log(`💬 User ${userId} joining conversation: ${data.conversationId}`);
-      socket.join(`conversation:${data.conversationId}`);
-      socket.emit('conversation_joined', { 
-        conversationId: data.conversationId,
-        timestamp: new Date().toISOString()
-      });
-    });
-
-    socket.on('leave_conversation', (data: { conversationId: string }) => {
-      console.log(`💬 User ${userId} leaving conversation: ${data.conversationId}`);
-      
-      // Remove from typing users if typing
-      if (typingUsers.has(data.conversationId)) {
-        const typingSet = typingUsers.get(data.conversationId)!;
-        typingSet.delete(userId);
-        if (typingSet.size === 0) {
-          typingUsers.delete(data.conversationId);
-        } else {
-          // Notify others that user stopped typing
-          socket.to(`conversation:${data.conversationId}`).emit('typing_stop', {
-            userId,
-            conversationId: data.conversationId,
-            timestamp: new Date().toISOString()
-          });
-        }
-      }
-      
-      socket.leave(`conversation:${data.conversationId}`);
-      socket.emit('conversation_left', { 
-        conversationId: data.conversationId,
-        timestamp: new Date().toISOString()
-      });
-    });
-
-    socket.on('send_message', async (data: { conversationId: string; content: string; messageType?: string; replyToId?: string }) => {
+    // Join user to their conversations
+    socket.on('join_conversations', async (conversationIds: string[]) => {
       try {
-        console.log(`📤 User ${userId} sending message to conversation: ${data.conversationId}`);
-        
-        // Send message through the service
-        const message = await MessageService.sendMessage(data.conversationId, userId, {
-          content: data.content,
-          messageType: data.messageType as any,
-          replyToId: data.replyToId,
-        });
+        for (const conversationId of conversationIds) {
+          await socket.join(`conversation:${conversationId}`);
+        }
+        console.log(`User ${userId} joined ${conversationIds.length} conversations`);
+      } catch (error) {
+        console.error('Error joining conversations:', error);
+      }
+    });
 
-        // Broadcast to all users in the conversation
-        io.to(`conversation:${data.conversationId}`).emit('new_message', {
-          message,
-          timestamp: new Date().toISOString()
-        });
-
-        // Send confirmation to sender
-        socket.emit('message_sent', {
-          messageId: message.id,
+    // Handle sending messages
+    socket.on('send_message', async (data: {
+      conversationId: string;
+      content: string;
+      messageType?: string;
+      replyToId?: string;
+    }) => {
+      try {
+        // TODO: Implement message creation when MessageService is ready
+        const message = {
+          id: 'temp-id',
           conversationId: data.conversationId,
-          timestamp: new Date().toISOString()
-        });
+          senderId: userId,
+          content: data.content,
+          messageType: data.messageType || 'text',
+          createdAt: new Date(),
+        };
 
+        // Emit to all users in the conversation
+        io.to(`conversation:${data.conversationId}`).emit('new_message', message);
+        
+        console.log(`Message sent in conversation ${data.conversationId} by user ${userId}`);
       } catch (error) {
         console.error('Error sending message:', error);
         socket.emit('message_error', {
           error: 'Failed to send message',
           conversationId: data.conversationId,
-          timestamp: new Date().toISOString()
         });
       }
     });
 
+    // Handle typing indicators
     socket.on('typing_start', (data: { conversationId: string }) => {
-      console.log(`⌨️  User ${userId} started typing in conversation: ${data.conversationId}`);
+      const { conversationId } = data;
       
-      if (!typingUsers.has(data.conversationId)) {
-        typingUsers.set(data.conversationId, new Set());
+      if (!typingUsers.has(conversationId)) {
+        typingUsers.set(conversationId, new Set());
       }
-      typingUsers.get(data.conversationId)!.add(userId);
-
-      // Notify others in the conversation
-      socket.to(`conversation:${data.conversationId}`).emit('typing_start', {
+      
+      typingUsers.get(conversationId)?.add(userId);
+      
+      // Notify other users in the conversation
+      socket.to(`conversation:${conversationId}`).emit('user_typing', {
+        conversationId,
         userId,
-        conversationId: data.conversationId,
-        timestamp: new Date().toISOString()
+        isTyping: true,
       });
     });
 
     socket.on('typing_stop', (data: { conversationId: string }) => {
-      console.log(`⌨️  User ${userId} stopped typing in conversation: ${data.conversationId}`);
+      const { conversationId } = data;
       
-      if (typingUsers.has(data.conversationId)) {
-        typingUsers.get(data.conversationId)!.delete(userId);
-        if (typingUsers.get(data.conversationId)!.size === 0) {
-          typingUsers.delete(data.conversationId);
-        }
-      }
-
-      // Notify others in the conversation
-      socket.to(`conversation:${data.conversationId}`).emit('typing_stop', {
+      typingUsers.get(conversationId)?.delete(userId);
+      
+      // Notify other users in the conversation
+      socket.to(`conversation:${conversationId}`).emit('user_typing', {
+        conversationId,
         userId,
-        conversationId: data.conversationId,
-        timestamp: new Date().toISOString()
+        isTyping: false,
       });
     });
 
-    // Mark messages as read
-    socket.on('mark_as_read', async (data: { conversationId: string; messageId: string }) => {
+    // Handle message read receipts
+    socket.on('mark_read', async (data: {
+      messageId: string;
+      conversationId: string;
+    }) => {
       try {
-        await MessageService.markMessagesAsRead(data.conversationId, userId, data.messageId);
+        // TODO: Implement mark as read when MessageService is ready
         
-        // Notify others in the conversation
-        socket.to(`conversation:${data.conversationId}`).emit('messages_read', {
-          userId,
-          conversationId: data.conversationId,
+        // Notify other users in the conversation
+        socket.to(`conversation:${data.conversationId}`).emit('message_read', {
           messageId: data.messageId,
-          timestamp: new Date().toISOString()
+          userId,
+          readAt: new Date(),
         });
-
       } catch (error) {
-        console.error('Error marking messages as read:', error);
+        console.error('Error marking message as read:', error);
       }
     });
 
-    // User presence events
-    socket.on('user_status_update', (data: { status: 'online' | 'away' | 'busy' | 'offline' }) => {
-      console.log(`👤 User ${userId} status updated to: ${data.status}`);
+    // Handle user presence updates
+    socket.on('update_presence', (data: { status: 'online' | 'away' | 'busy' }) => {
       userOnlineStatus.set(userId, data.status === 'online');
       
       // Broadcast status update
-      socket.broadcast.emit('user_status_changed', {
+      socket.broadcast.emit('user_status', {
         userId,
         status: data.status,
-        timestamp: new Date().toISOString()
+        lastSeen: new Date(),
       });
     });
 
-    // Get online users
-    socket.on('get_online_users', (data: { userIds?: string[] }) => {
-      const requestedUsers = data.userIds || Array.from(userOnlineStatus.keys());
-      const onlineUsers = requestedUsers.filter(id => userOnlineStatus.get(id) === true);
-      
-      socket.emit('online_users', {
-        onlineUsers,
-        timestamp: new Date().toISOString()
-      });
-    });
-
-    // Handle disconnection
-    socket.on('disconnect', (reason) => {
-      console.log(`👋 User ${userId} disconnected: ${socket.id}, reason: ${reason}`);
+    // Handle disconnect
+    socket.on('disconnect', (reason: string) => {
+      console.log(`❌ User ${userId} disconnected: ${reason} (${socket.id})`);
       
       // Remove from connected users
       connectedUsers.delete(userId);
       userOnlineStatus.set(userId, false);
-
-      // Remove from all typing indicators
-      typingUsers.forEach((typingSet, conversationId) => {
+      
+      // Clean up typing indicators
+      for (const [conversationId, typingSet] of typingUsers.entries()) {
         if (typingSet.has(userId)) {
           typingSet.delete(userId);
-          if (typingSet.size === 0) {
-            typingUsers.delete(conversationId);
-          }
           // Notify others that user stopped typing
-          socket.to(`conversation:${conversationId}`).emit('typing_stop', {
-            userId,
+          socket.broadcast.to(`conversation:${conversationId}`).emit('user_typing', {
             conversationId,
-            timestamp: new Date().toISOString()
+            userId,
+            isTyping: false,
           });
         }
-      });
-
-      // Notify about offline status
-      socket.broadcast.emit('user_offline', { 
-        userId, 
-        timestamp: new Date().toISOString() 
+      }
+      
+      // Broadcast user offline status
+      socket.broadcast.emit('user_status', {
+        userId,
+        isOnline: false,
+        lastSeen: new Date(),
       });
     });
 
-    // Error handling
-    socket.on('error', (error) => {
-      console.error(`❌ Socket error for user ${userId} (${socket.id}):`, error);
+    // Handle errors
+    socket.on('error', (error: any) => {
+      console.error(`Socket error for user ${userId} (${socket.id}):`, error);
     });
 
-    // Ping-pong for connection health
-    socket.on('ping', () => {
-      socket.emit('pong', { timestamp: new Date().toISOString() });
+    // Send initial connection confirmation
+    socket.emit('connected', {
+      socketId: socket.id,
+      userId,
+      timestamp: new Date(),
     });
   });
 
-  // Handle connection errors
-  io.engine.on('connection_error', (err) => {
-    console.error('❌ Socket.IO connection error:', err);
+  io.on('error', (err: any) => {
+    console.error('Socket.IO server error:', err);
   });
 
-  console.log('✅ Socket.IO server initialized successfully');
+  console.log('✅ Socket.IO server initialized');
 };
 
-// Export utilities for use in other modules
-export const getConnectedUsers = () => connectedUsers;
-export const getUserOnlineStatus = (userId: string) => userOnlineStatus.get(userId) || false;
-export const getTypingUsers = (conversationId: string) => typingUsers.get(conversationId) || new Set();
+// Utility functions for external use
+export const getConnectedUsers = (): Map<string, string> => connectedUsers;
+export const isUserOnline = (userId: string): boolean => userOnlineStatus.get(userId) || false;
+export const getUserTypingStatus = (conversationId: string): string[] => {
+  return Array.from(typingUsers.get(conversationId) || []);
+};

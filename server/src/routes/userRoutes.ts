@@ -1,11 +1,11 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { asyncHandler } from '@/middleware/errorHandler';
 
 const router = Router();
 
 // Placeholder controllers - will be implemented later
 const userController = {
-  getUsers: asyncHandler(async (req, res) => {
+  getUsers: asyncHandler(async (req: Request, res: Response) => {
     res.status(501).json({
       success: false,
       error: { message: 'Get users endpoint not yet implemented' },
@@ -13,7 +13,7 @@ const userController = {
     });
   }),
 
-  getUser: asyncHandler(async (req, res) => {
+  getUser: asyncHandler(async (req: Request, res: Response) => {
     res.status(501).json({
       success: false,
       error: { message: 'Get user endpoint not yet implemented' },
@@ -21,7 +21,7 @@ const userController = {
     });
   }),
 
-  updateUser: asyncHandler(async (req, res) => {
+  updateUser: asyncHandler(async (req: Request, res: Response) => {
     res.status(501).json({
       success: false,
       error: { message: 'Update user endpoint not yet implemented' },
