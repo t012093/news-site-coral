@@ -35,6 +35,11 @@ const server = createServer(app);
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// Fix NODE_ENV if it's truncated
+if (NODE_ENV === 'productio') {
+  process.env.NODE_ENV = 'production';
+}
+
 // Dynamic CORS origins based on environment
 const getAllowedOrigins = () => {
   const origins = [
