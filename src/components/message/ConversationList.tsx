@@ -144,7 +144,8 @@ const ConversationList: React.FC<ConversationListProps> = ({
   currentUserId
 }) => {
   const getOtherUserId = (conversation: Conversation): string => {
-    return conversation.participants.find(id => id !== currentUserId) || '';
+    const participant = conversation.participants.find(p => p.userId !== currentUserId);
+    return participant?.userId || '';
   };
 
   const getOtherUser = (conversation: Conversation): MessageUser | undefined => {
@@ -196,7 +197,7 @@ const ConversationList: React.FC<ConversationListProps> = ({
                   })}
                 </TimeStamp>
               )}
-              {conversation.unreadCount > 0 && (
+              {conversation.unreadCount && conversation.unreadCount > 0 && (
                 <UnreadBadge>
                   {conversation.unreadCount > 99 ? '99+' : conversation.unreadCount}
                 </UnreadBadge>

@@ -174,7 +174,7 @@ const schema = yup.object().shape({
     .string()
     .min(6, 'パスワードは6文字以上で入力してください')
     .required('パスワードは必須です'),
-  rememberMe: yup.boolean(),
+  rememberMe: yup.boolean().optional(),
 });
 
 const LoginPage: React.FC = () => {
@@ -195,7 +195,7 @@ const LoginPage: React.FC = () => {
       email: '',
       password: '',
       rememberMe: false,
-    },
+    } as LoginData,
   });
 
   const onSubmit = async (data: LoginData) => {

@@ -1,7 +1,10 @@
+# Railway環境変数設定用
+# Railway Console > Variables で以下をコピー&ペーストしてください
+
 # Server Configuration
-NODE_ENV=development
-PORT=3001
-HOST=localhost
+NODE_ENV=production
+PORT=$PORT
+HOST=0.0.0.0
 
 # Database Configuration - Supabase
 USE_REAL_DATABASES=true
@@ -17,23 +20,20 @@ SUPABASE_URL=https://ykywpylhxedsamsfcnov.supabase.co
 SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlreXdweWxoeGVkc2Ftc2Zjbm92Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTUyNDc1ODksImV4cCI6MjA3MDgyMzU4OX0.0iXEChGYyp4asXsCPhsiUD5MuNUiI2y0dEqaNTmnOm4
 SUPABASE_SERVICE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlreXdweWxoeGVkc2Ftc2Zjbm92Iiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NTI0NzU4OSwiZXhwIjoyMDcwODIzNTg5fQ.6IUbCcZSVjZaMqSscSlskD6OTcjQuXiypXqsthXkS1c
 
-# Redis Configuration (will be set by Railway)
-# Redis設定 - Upstash Redisを使用する場合は以下のURLに置き換えてください
-# REDIS_URL=rediss://default:YOUR_UPSTASH_PASSWORD@YOUR_UPSTASH_ENDPOINT.upstash.io:6379
-# 開発環境ではRedisなしで動作するようモックを使用
-REDIS_URL=
+# Redis Configuration (Upstash Redis接続情報に置き換え)
+REDIS_URL=rediss://username:password@upstash-redis-endpoint:6380
 
-# JWT Configuration
-JWT_SECRET=your-super-secret-jwt-key-for-development-min-32-characters-long
-JWT_REFRESH_SECRET=your-refresh-token-secret-key-for-development-min-32-characters
+# JWT Configuration (本番用強力キー)
+JWT_SECRET=a04f26a3a329679517744e9fd99320caed2b9fd82ea793fb71d4404aeaa185c0
+JWT_REFRESH_SECRET=0499ae742d5f91be64a80b203248d9c92b0a2ab6c2cf2cfada529c2039dbbf81
 JWT_EXPIRES_IN=24h
 JWT_REFRESH_EXPIRES_IN=30d
 
-# Cookie Configuration
-COOKIE_SECRET=your-cookie-secret-for-development-min-32-characters-long
+# Cookie Configuration (本番用強力キー)
+COOKIE_SECRET=c2e9f0f58278d1555923cefff2f4b7e1d15410bbbf0565e84ff9d32d1d14f830
 
-# CORS Configuration
-FRONTEND_URL=https://crispy-rotary-phone-vj6xq69w45v3p4xq-5174.app.github.dev
+# CORS Configuration (フロントエンドURLに置き換え)
+FRONTEND_URL=https://your-vercel-app.vercel.app
 
 # File Upload Configuration
 MAX_FILE_SIZE=10485760

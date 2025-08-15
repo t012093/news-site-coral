@@ -28,7 +28,7 @@ export interface UserPreferences {
 export interface LoginData {
   email: string;
   password: string;
-  rememberMe?: boolean;
+  rememberMe: boolean;
 }
 
 export interface RegisterData {

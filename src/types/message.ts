@@ -14,6 +14,7 @@ export interface Message {
   replyToId?: string;
   createdAt: Date;
   updatedAt: Date;
+  status?: 'sent' | 'delivered' | 'read';
   readBy: Array<{
     userId: string;
     readAt: Date;
@@ -29,6 +30,7 @@ export interface Conversation {
   description?: string;
   createdAt: Date;
   updatedAt: Date;
+  lastActivity?: Date;
   participants: Array<{
     id: string;
     userId: string;
