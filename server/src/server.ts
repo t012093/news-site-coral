@@ -35,6 +35,10 @@ const server = createServer(app);
 const PORT = process.env.PORT || 3001;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
+// Debug: Log PORT value
+console.log(`📍 PORT environment variable: ${process.env.PORT}`);
+console.log(`📍 Using PORT: ${PORT}`);
+
 // Fix NODE_ENV if it's truncated
 if (NODE_ENV === 'productio') {
   process.env.NODE_ENV = 'production';

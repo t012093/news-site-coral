@@ -145,26 +145,6 @@ const SignUpLink = styled(Link)`
   }
 `;
 
-const DemoInfo = styled.div`
-  background: rgba(156, 124, 244, 0.1);
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  border: 1px solid rgba(156, 124, 244, 0.3);
-`;
-
-const DemoTitle = styled.h3`
-  color: var(--accent-color);
-  font-size: 0.9rem;
-  margin-bottom: 0.5rem;
-`;
-
-const DemoText = styled.p`
-  color: var(--text-color);
-  font-size: 0.8rem;
-  margin: 0;
-`;
-
 const schema = yup.object().shape({
   email: yup
     .string()
@@ -221,14 +201,6 @@ const LoginPage: React.FC = () => {
           <Title>ログイン</Title>
           <Subtitle>CORALコミュニティへようこそ</Subtitle>
         </Header>
-
-        <DemoInfo>
-          <DemoTitle>🚀 デモアカウント</DemoTitle>
-          <DemoText>
-            メール: demo@coral.com<br />
-            パスワード: demo123
-          </DemoText>
-        </DemoInfo>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <FormGroup>
