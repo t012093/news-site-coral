@@ -131,7 +131,7 @@ const initializeDatabases = async () => {
       console.log('⚠️  Some database connections failed, continuing with available connections');
     }
   } catch (error) {
-    console.error('❌ Database initialization error:', error.message);
+    console.error('❌ Database initialization error:', error instanceof Error ? error.message : 'Unknown error');
     // Don't throw error - continue with mock connections
   }
 };
@@ -141,7 +141,7 @@ const startServer = async () => {
   try {
     await initializeDatabases();
     
-    server.listen(PORT, '0.0.0.0', () => {
+    server.listen(Number(PORT), '0.0.0.0', () => {
       console.log(`🚀 Server is running on 0.0.0.0:${PORT} in ${NODE_ENV} mode`);
       console.log(`📡 Socket.IO server is ready`);
       console.log(`🔗 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:5173'}`);
