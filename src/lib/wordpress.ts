@@ -14,7 +14,9 @@ class WordPressAPI {
   private baseURL: string;
 
   constructor() {
-    this.baseURL = import.meta.env.VITE_WP_API_URL || 'https://demo.wp-api.org/wp-json/wp/v2';
+    // バックエンドのプロキシエンドポイントを使用
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+    this.baseURL = `${apiUrl}/news`;
     
     this.api = axios.create({
       baseURL: this.baseURL,
@@ -47,11 +49,13 @@ class WordPressAPI {
         ...params,
       };
 
-      const response = await this.api.get('/posts', { params: queryParams });
+      // モックデータを使用（WordPressへのCORS問題を回避）
+      const response = await this.api.get('/mock-posts', { params: queryParams });
       
-      const posts = response.data.map((post: WordPressPost) => this.transformPost(post));
-      const total = parseInt(response.headers['x-wp-total'] || '0');
-      const totalPages = parseInt(response.headers['x-wp-totalpages'] || '0');
+      // モックデータはすでに簡略化された形式なので、簡易的な変換を行う
+      const posts = response.data.map((post: any) => this.transformMockPost(post));
+      const total = response.data.length;
+      const totalPages = 1;
 
       return { posts, total, totalPages };
     } catch (error) {
@@ -215,6 +219,43 @@ class WordPressAPI {
   // HTMLタグを除去
   private stripHtml(html: string): string {
     return html.replace(/<[^>]*>/g, '').trim();
+  }
+
+  // モックデータ用の変換メソッド
+  private transformMockPost(post: any): Article {
+    const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
+    const author = post._embedded?.['author']?.[0];
+
+    return {
+      id: post.id,
+      slug: `post-${post.id}`,
+      title: post.title?.rendered || 'Untitled',
+      content: post.content?.rendered || '',
+      excerpt: this.stripHtml(post.excerpt?.rendered || ''),
+      date: post.date,
+      modified: post.date,
+      author: {
+        id: 1,
+        name: author?.name || 'CORAL編集部',
+        avatar: '',
+        bio: '',
+      },
+      featuredImage: featuredMedia ? {
+        id: 1,
+        url: featuredMedia.source_url,
+        alt: '',
+        sizes: {
+          thumbnail: featuredMedia.source_url,
+          medium: featuredMedia.source_url,
+          large: featuredMedia.source_url,
+          full: featuredMedia.source_url,
+        },
+      } : undefined,
+      categories: [],
+      tags: [],
+      readingTime: undefined,
+      relatedArticles: undefined,
+    };
   }
 
   // 環境設定確認用のメソッド

@@ -20,6 +20,7 @@ import userRoutes from '@/routes/userRoutes';
 import taskRoutes from '@/routes/taskRoutes';
 import projectRoutes from '@/routes/projectRoutes';
 import messageRoutes from '@/routes/messageRoutes';
+import newsRoutes from '@/routes/newsRoutes';
 
 // Load environment variables
 dotenv.config();
@@ -103,6 +104,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/tasks', taskRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/messages', messageRoutes);
+app.use('/api/news', newsRoutes);
 
 // Initialize Socket.IO
 initializeSocketIO(io);
