@@ -3,12 +3,14 @@ export interface User {
   email: string;
   username: string;
   displayName: string;
+  name: string;
+  role: 'user' | 'admin';
   avatar?: string;
   bio?: string;
   createdAt: string;
   updatedAt: string;
   emailVerified: boolean;
-  preferences: UserPreferences;
+  preferences?: UserPreferences;
 }
 
 export interface UserPreferences {

@@ -46,149 +46,78 @@ authAPI.interceptors.response.use(
 export const authService = {
   async login(data: LoginData): Promise<AuthResponse> {
     try {
-      const response = await authAPI.post<AuthResponse>('/auth/login', data);
+      const response = await authAPI.post('/auth/login', data);
       
-      const { token, refreshToken } = response.data;
+      // バックエンドのレスポンス構造に合わせる
+      const apiResponse = response.data;
+      const authResponse: AuthResponse = {
+        user: apiResponse.data.user,
+        token: apiResponse.data.token,
+        refreshToken: apiResponse.data.refreshToken,
+      };
+      
       const expires = data.rememberMe ? 30 : 1; // 30日 または 1日
       
-      Cookies.set('auth_token', token, { expires });
-      Cookies.set('refresh_token', refreshToken, { expires: 30 });
+      Cookies.set('auth_token', authResponse.token, { expires });
+      Cookies.set('refresh_token', authResponse.refreshToken, { expires: 30 });
       
-      return response.data;
+      return authResponse;
     } catch (error: any) {
       console.error('Login error:', error);
       
-      // モックデータでのログイン処理（開発用）
-      if (data.email === 'demo@coral.com' && data.password === 'demo123') {
-        const mockResponse: AuthResponse = {
-          user: {
-            id: '1',
-            email: 'demo@coral.com',
-            username: 'demo_user',
-            displayName: 'デモユーザー',
-            avatar: '/images/man.png',
-            bio: 'CORALコミュニティのデモユーザーです',
-            createdAt: new Date().toISOString(),
-            updatedAt: new Date().toISOString(),
-            emailVerified: true,
-            preferences: {
-              notifications: {
-                eventReminders: true,
-                newsletter: true,
-                eventRecommendations: true,
-              },
-              privacy: {
-                showProfile: true,
-                showEventHistory: true,
-              },
-            },
-          },
-          token: 'mock-jwt-token',
-          refreshToken: 'mock-refresh-token',
-        };
-        
-        Cookies.set('auth_token', mockResponse.token, { expires: data.rememberMe ? 30 : 1 });
-        Cookies.set('refresh_token', mockResponse.refreshToken, { expires: 30 });
-        
-        return mockResponse;
-      }
-      
-      throw new Error(error.response?.data?.message || 'ログインに失敗しました');
+      const errorMessage = error.response?.data?.message || error.response?.data?.error?.message || 'ログインに失敗しました';
+      throw new Error(errorMessage);
     }
   },
 
   async register(data: RegisterData): Promise<AuthResponse> {
     try {
-      const response = await authAPI.post<AuthResponse>('/auth/register', data);
+      const response = await authAPI.post('/auth/register', data);
       
-      const { token, refreshToken } = response.data;
-      Cookies.set('auth_token', token, { expires: 1 });
-      Cookies.set('refresh_token', refreshToken, { expires: 30 });
+      // バックエンドのレスポンス構造に合わせる
+      const apiResponse = response.data;
+      const authResponse: AuthResponse = {
+        user: apiResponse.data.user,
+        token: apiResponse.data.token,
+        refreshToken: apiResponse.data.refreshToken,
+      };
       
-      return response.data;
+      Cookies.set('auth_token', authResponse.token, { expires: 1 });
+      Cookies.set('refresh_token', authResponse.refreshToken, { expires: 30 });
+      
+      return authResponse;
     } catch (error: any) {
       console.error('Register error:', error);
       
-      // モックデータでの登録処理（開発用）
-      const mockResponse: AuthResponse = {
-        user: {
-          id: Date.now().toString(),
-          email: data.email,
-          username: data.username,
-          displayName: data.displayName,
-          avatar: '/images/she.png',
-          bio: '',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          emailVerified: false,
-          preferences: {
-            notifications: {
-              eventReminders: true,
-              newsletter: true,
-              eventRecommendations: true,
-            },
-            privacy: {
-              showProfile: true,
-              showEventHistory: true,
-            },
-          },
-        },
-        token: 'mock-jwt-token-new',
-        refreshToken: 'mock-refresh-token-new',
-      };
-      
-      Cookies.set('auth_token', mockResponse.token, { expires: 1 });
-      Cookies.set('refresh_token', mockResponse.refreshToken, { expires: 30 });
-      
-      return mockResponse;
+      const errorMessage = error.response?.data?.message || error.response?.data?.error?.message || '登録に失敗しました';
+      throw new Error(errorMessage);
     }
   },
 
   async getCurrentUser(): Promise<User> {
     try {
-      const response = await authAPI.get<User>('/auth/me');
-      return response.data;
+      const response = await authAPI.get('/auth/me');
+      
+      // バックエンドのレスポンス構造に合わせる
+      const apiResponse = response.data;
+      return apiResponse.data;
     } catch (error) {
       console.error('Get current user error:', error);
-      
-      // モックユーザーデータを返す（開発用）
-      const token = Cookies.get('auth_token');
-      if (token === 'mock-jwt-token') {
-        return {
-          id: '1',
-          email: 'demo@coral.com',
-          username: 'demo_user',
-          displayName: 'デモユーザー',
-          avatar: '/images/man.png',
-          bio: 'CORALコミュニティのデモユーザーです',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          emailVerified: true,
-          preferences: {
-            notifications: {
-              eventReminders: true,
-              newsletter: true,
-              eventRecommendations: true,
-            },
-            privacy: {
-              showProfile: true,
-              showEventHistory: true,
-            },
-          },
-        };
-      }
-      
       throw error;
     }
   },
 
   async updateProfile(data: Partial<User>): Promise<User> {
     try {
-      const response = await authAPI.put<User>('/auth/profile', data);
-      return response.data;
-    } catch (error) {
+      const response = await authAPI.put('/auth/profile', data);
+      
+      // バックエンドのレスポンス構造に合わせる
+      const apiResponse = response.data;
+      return apiResponse.data;
+    } catch (error: any) {
       console.error('Update profile error:', error);
-      throw new Error('プロフィールの更新に失敗しました');
+      const errorMessage = error.response?.data?.message || error.response?.data?.error?.message || 'プロフィールの更新に失敗しました';
+      throw new Error(errorMessage);
     }
   },
 
@@ -199,10 +128,15 @@ export const authService = {
     }
     
     try {
-      const response = await authAPI.post<{ token: string }>('/auth/refresh', {
+      const response = await authAPI.post('/auth/refresh', {
         refreshToken,
       });
-      return response.data;
+      
+      // バックエンドのレスポンス構造に合わせる
+      const apiResponse = response.data;
+      return {
+        token: apiResponse.data.token
+      };
     } catch (error) {
       console.error('Token refresh error:', error);
       throw error;

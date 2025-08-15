@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
+import MessageIcon from './message/MessageIcon';
 
 const Nav = styled.nav`
   background-color: var(--background-color);
@@ -196,10 +197,6 @@ const Navigation = () => {
     navigate('/');
   };
 
-  const handleProfileClick = () => {
-    setShowDropdown(false);
-    navigate('/profile');
-  };
 
   return (
     <Nav>
@@ -257,7 +254,9 @@ const Navigation = () => {
           
           <AuthSection>
             {isAuthenticated && user ? (
-              <DropdownContainer>
+              <>
+                <MessageIcon unreadCount={2} />
+                <DropdownContainer>
                 <UserInfo 
                   onClick={() => setShowDropdown(!showDropdown)}
                   style={{ cursor: 'pointer' }}
@@ -290,6 +289,7 @@ const Navigation = () => {
                   )}
                 </AnimatePresence>
               </DropdownContainer>
+              </>
             ) : (
               <>
                 <AuthButton

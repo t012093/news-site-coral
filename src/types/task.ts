@@ -2,7 +2,7 @@
 
 export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';
 export type TaskStatus = 'todo' | 'in_progress' | 'review' | 'completed' | 'blocked' | 'cancelled';
-export type TaskCategory = 'development' | 'design' | 'marketing' | 'content' | 'research' | 'meeting' | 'other';
+export type TaskCategory = 'development' | 'design' | 'testing' | 'other';
 
 export interface Task {
   id: string;

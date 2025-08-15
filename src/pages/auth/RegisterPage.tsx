@@ -169,9 +169,10 @@ const schema = yup.object().shape({
   password: yup
     .string()
     .min(8, 'パスワードは8文字以上で入力してください')
+    .max(128, 'パスワードは128文字以下で入力してください')
     .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]/,
-      'パスワードは大小英字・数字・記号を含む必要があります'
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]+$/,
+      'パスワードは大小英字・数字・特殊文字（!@#$%^&*(),.?":{}|<>）を含む必要があります'
     )
     .required('パスワードは必須です'),
   confirmPassword: yup
@@ -182,6 +183,7 @@ const schema = yup.object().shape({
 
 const RegisterPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
+  const [serverError, setServerError] = useState<string | null>(null);
   const { register: registerUser } = useAuth();
   const navigate = useNavigate();
 
@@ -202,11 +204,31 @@ const RegisterPage: React.FC = () => {
 
   const onSubmit = async (data: RegisterData) => {
     setIsLoading(true);
+    setServerError(null);
     try {
       await registerUser(data);
       navigate('/');
-    } catch (error) {
-      // エラーハンドリングはAuthContextで行われる
+    } catch (error: any) {
+      console.error('Registration error:', error);
+      
+      // エラーメッセージの解析
+      let errorMessage = '登録に失敗しました。もう一度お試しください。';
+      
+      if (error.message) {
+        if (error.message.includes('Password validation failed')) {
+          errorMessage = 'パスワードが要件を満たしていません。パスワードの要件を確認してください。';
+        } else if (error.message.includes('Email already exists')) {
+          errorMessage = 'このメールアドレスは既に使用されています。';
+        } else if (error.message.includes('Username already exists')) {
+          errorMessage = 'このユーザー名は既に使用されています。';
+        } else if (error.message.includes('Network Error') || error.message.includes('CORS')) {
+          errorMessage = 'サーバーに接続できませんでした。しばらく時間をおいて再度お試しください。';
+        } else {
+          errorMessage = error.message;
+        }
+      }
+      
+      setServerError(errorMessage);
     } finally {
       setIsLoading(false);
     }
@@ -225,6 +247,20 @@ const RegisterPage: React.FC = () => {
         </Header>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
+          {serverError && (
+            <div style={{
+              background: 'rgba(239, 68, 68, 0.1)',
+              border: '1px solid rgba(239, 68, 68, 0.3)',
+              borderRadius: '8px',
+              padding: '1rem',
+              marginBottom: '1.5rem',
+              color: '#ef4444',
+              fontSize: '0.9rem'
+            }}>
+              ⚠️ {serverError}
+            </div>
+          )}
+          
           <FormGroup>
             <Label>メールアドレス</Label>
             <Input
@@ -283,8 +319,10 @@ const RegisterPage: React.FC = () => {
           <PasswordHint>
             <HintTitle>パスワードの要件:</HintTitle>
             <HintList>
-              <li>8文字以上</li>
-              <li>大文字・小文字・数字・記号をそれぞれ含む</li>
+              <li>8文字以上、128文字以下</li>
+              <li>大文字・小文字・数字・特殊文字をそれぞれ含む</li>
+              <li>特殊文字: !@#$%^&*(),.?":{}|&lt;&gt;</li>
+              <li>一般的なパスワードは使用不可</li>
             </HintList>
           </PasswordHint>
 

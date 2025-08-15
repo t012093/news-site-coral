@@ -39,6 +39,7 @@ import { ArticlePage } from './pages/ArticlePage';
 import { WordPressStatusIndicator } from './components/WordPressStatusIndicator';
 import ShiftDashboard from './pages/ShiftDashboard';
 import TaskDashboard from './pages/TaskDashboard';
+import MessagePage from './pages/MessagePage';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -187,6 +188,15 @@ function App() {
                 <PageWrapper>
                   <ProtectedRoute>
                     <TaskDashboard />
+                  </ProtectedRoute>
+                </PageWrapper>
+              } />
+              
+              {/* メッセージ機能 */}
+              <Route path="/messages" element={
+                <PageWrapper>
+                  <ProtectedRoute>
+                    <MessagePage />
                   </ProtectedRoute>
                 </PageWrapper>
               } />

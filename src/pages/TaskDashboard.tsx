@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Task, Project, TaskFilter, TaskSort, TaskBoard, TaskStatus } from '../types/task';
+import { useTasks, useProjects, useUpdateTaskStatus, useCreateTask } from '../hooks/useTaskQueries';
 import TaskSearch from '../components/task/TaskSearch';
 import TaskFilters from '../components/task/TaskFilters';
 import TaskList from '../components/task/TaskList';
@@ -359,7 +360,22 @@ const TaskDashboard: React.FC = () => {
   const [sort, setSort] = useState<TaskSort>({ field: 'updatedAt', direction: 'desc' });
   const [selectedProject, setSelectedProject] = useState<string>('all');
   const [showCreateForm, setShowCreateForm] = useState(false);
-  const [tasks, setTasks] = useState(mockTasks);
+
+  // API から実際のデータを取得
+  const {
+    data: tasks = [],
+    isLoading: tasksLoading,
+    error: tasksError
+  } = useTasks(filter, sort);
+
+  const {
+    data: projects = mockProjects, // プロジェクトAPIが実装されるまでのフォールバック
+    isLoading: projectsLoading,
+    error: projectsError
+  } = useProjects();
+
+  const updateTaskStatusMutation = useUpdateTaskStatus();
+  const createTaskMutation = useCreateTask();
 
   const filteredTasks = useMemo(() => {
     let filtered = tasks.filter(task => {
@@ -431,14 +447,55 @@ const TaskDashboard: React.FC = () => {
   }, [filteredTasks]);
 
   const handleTaskMove = (taskId: string, newStatus: TaskStatus) => {
-    setTasks(prevTasks => 
-      prevTasks.map(task => 
-        task.id === taskId 
-          ? { ...task, status: newStatus, updatedAt: new Date() }
-          : task
-      )
-    );
+    updateTaskStatusMutation.mutate({ id: taskId, status: newStatus });
   };
+
+  const handleCreateTask = (taskData: any) => {
+    createTaskMutation.mutate(taskData, {
+      onSuccess: () => {
+        setShowCreateForm(false);
+      }
+    });
+  };
+
+  // ローディング状態の処理
+  if (tasksLoading) {
+    return (
+      <DashboardContainer>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '50vh',
+          color: 'var(--text-color)'
+        }}>
+          <div>📋 タスクを読み込み中...</div>
+        </div>
+      </DashboardContainer>
+    );
+  }
+
+  // エラー状態の処理
+  if (tasksError) {
+    return (
+      <DashboardContainer>
+        <div style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          height: '50vh',
+          color: '#ff6b6b',
+          flexDirection: 'column',
+          gap: '16px'
+        }}>
+          <div>❌ タスクの読み込みに失敗しました</div>
+          <div style={{ fontSize: '0.9rem', color: 'var(--secondary-color)' }}>
+            {tasksError instanceof Error ? tasksError.message : 'Unknown error'}
+          </div>
+        </div>
+      </DashboardContainer>
+    );
+  }
 
   return (
     <DashboardContainer>
@@ -493,7 +550,7 @@ const TaskDashboard: React.FC = () => {
               onChange={(search) => setFilter({ ...filter, search })}
             />
             <ProjectSelector
-              projects={mockProjects}
+              projects={projects}
               selected={selectedProject}
               onChange={setSelectedProject}
             />
@@ -551,12 +608,9 @@ const TaskDashboard: React.FC = () => {
       <AnimatePresence>
         {showCreateForm && (
           <TaskCreateForm
-            projects={mockProjects}
+            projects={projects}
             onClose={() => setShowCreateForm(false)}
-            onSubmit={(task) => {
-              console.log('New task:', task);
-              setShowCreateForm(false);
-            }}
+            onSubmit={handleCreateTask}
           />
         )}
       </AnimatePresence>
