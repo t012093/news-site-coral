@@ -26,8 +26,15 @@ if (USE_REAL_DATABASES) {
       connectionString: DATABASE_URL,
       max: 20,
       idleTimeoutMillis: 30000,
-      connectionTimeoutMillis: 5000, // Increased timeout for Railway environment
-      ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false,
+      connectionTimeoutMillis: 10000, // Increased timeout for Railway environment
+      ssl: process.env.NODE_ENV === 'production' ? { 
+        rejectUnauthorized: false,
+        // Force IPv4 for Railway environment
+        family: 4
+      } : false,
+      // Additional connection options for Railway
+      keepAlive: true,
+      keepAliveInitialDelayMillis: 10000,
     });
   } else {
     pool = new Pool({
