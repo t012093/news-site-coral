@@ -39,6 +39,7 @@ const NODE_ENV = process.env.NODE_ENV || 'development';
 const getAllowedOrigins = () => {
   const origins = [
     process.env.FRONTEND_URL || 'http://localhost:5173',
+    'https://coral-network.com', // Production frontend domain
   ];
   
   // Add development URLs if in development mode
