@@ -4,13 +4,26 @@ Model Context Protocol (MCP) サーバーを一から作成するための完全
 
 ## 📖 目次
 
+**🚀 クイックスタート**: `npx`での簡単実行を重視
+
+```bash
+# 使用者視点 - 超簡単！
+npx @your-org/my-api-mcp-server
+
+# 開発者視点 - ビルド不要！
+npm init -y
+npm install @modelcontextprotocol/sdk axios dotenv
+# src/index.js を作成
+npm publish
+```
+
 1. [MCPサーバーとは](#mcpサーバーとは)
-2. [基本構造](#基本構造)
-3. [ステップバイステップ作成ガイド](#ステップバイステップ作成ガイド)
+2. [基本構造](#基本構造) - シンプルなJS構成
+3. [ステップバイステップ作成ガイド](#ステップバイステップ作成ガイド) - ビルド不要
 4. [実装パターン](#実装パターン)
 5. [テンプレートとサンプル](#テンプレートとサンプル)
 6. [ベストプラクティス](#ベストプラクティス)
-7. [パッケージング・公開](#パッケージング公開)
+7. [パッケージング・公開](#パッケージング公開) - npx対応
 8. [トラブルシューティング](#トラブルシューティング)
 
 ---
@@ -34,19 +47,16 @@ MCPサーバーは、AI（Claude Codeなど）がWeb API、データベース、
 
 ## 基本構造
 
-### 📁 プロジェクト構造
+### 📁 プロジェクト構造（シンプル版）
 ```
 my-mcp-server/
 ├── package.json          # パッケージ設定
-├── tsconfig.json         # TypeScript設定
 ├── src/
-│   ├── index.ts          # メインサーバー
-│   ├── cli.ts            # CLI管理
-│   ├── api.ts            # API クライアント
-│   └── types.ts          # 型定義
-├── build/                # ビルド出力
+│   ├── index.js          # メインサーバー（JS直接実行）
+│   ├── api.js            # API クライアント
+│   └── config.js         # 設定管理
 ├── README.md             # ドキュメント
-└── LICENSE               # ライセンス
+└── .env                  # 環境変数
 ```
 
 ### 🧩 コア要素
@@ -147,28 +157,24 @@ cd my-api-mcp-server
 npm init -y
 ```
 
-#### 1.2 依存関係インストール
+#### 1.2 依存関係インストール（最小構成）
 ```bash
 npm install @modelcontextprotocol/sdk axios dotenv
-npm install -D typescript @types/node
 ```
 
-#### 1.3 TypeScript設定
+#### 1.3 TypeScript設定（簡易版・オプション）
 ```json
-// tsconfig.json
+// tsconfig.json（TypeScriptを使う場合のみ - JSでも可）
 {
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
     "moduleResolution": "Node",
-    "outDir": "./build",
-    "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "build"]
+  "include": ["src/**/*"]
 }
 ```
 
@@ -333,66 +339,43 @@ API_BASE_URL=https://api.example.com
 API_KEY=your_api_key_here
 ```
 
-#### 3.2 CLIツール (src/cli.ts)
-```typescript
-#!/usr/bin/env node
-
-import { readFileSync, writeFileSync, existsSync } from 'fs';
-import { homedir } from 'os';
-import { join } from 'path';
-
-const CONFIG_FILE = join(homedir(), '.my-mcp-config.json');
-
-interface Config {
-  apiBaseUrl: string;
-  apiKey: string;
-}
-
-async function setup() {
-  console.log('🔧 Setup My API MCP Server');
-  
-  // 設定入力プロンプト
-  const config: Config = {
-    apiBaseUrl: await ask('API Base URL: '),
-    apiKey: await ask('API Key: ')
-  };
-  
-  writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
-  console.log('✅ Configuration saved!');
-}
-
-function ask(question: string): Promise<string> {
-  // readline実装 (前回のcli.tsを参考)
-}
-
-if (process.argv[2] === 'setup') {
-  setup();
-}
+#### 3.2 簡単設定（環境変数のみ）
+```bash
+# .env ファイルを作成
+API_BASE_URL=https://api.example.com
+API_KEY=your_api_key_here
 ```
 
-### Step 4: ビルドとテスト
+または実行時に指定:
+```bash
+API_BASE_URL=https://api.example.com API_KEY=your_key npx @your-org/mcp-server
+```
 
-#### 4.1 package.json設定
+### Step 4: 簡単実行設定
+
+#### 4.1 package.json設定（npx対応）
 ```json
 {
   "name": "@your-org/my-api-mcp-server",
   "version": "1.0.0",
   "type": "module",
   "bin": {
-    "my-api-mcp": "./build/index.js"
+    "my-api-mcp": "./src/index.js"
   },
   "scripts": {
-    "build": "tsc && chmod +x build/index.js",
-    "dev": "npm run build && node build/index.js",
-    "test": "npm run build"
+    "start": "node src/index.js",
+    "dev": "node src/index.js"
   }
 }
 ```
 
-#### 4.2 ビルドとテスト
+#### 4.2 直接実行（ビルド不要）
 ```bash
-npm run build
-npm run dev  # テスト実行
+# 開発時
+npm start
+
+# NPXで直接実行
+npx @your-org/my-api-mcp-server
 ```
 
 ---
@@ -771,44 +754,31 @@ export class GitHubMCPServer {
 
 ### 📦 NPMパッケージ作成
 
-#### package.json設定例
+#### package.json設定例（簡易版）
 ```json
 {
   "name": "@your-org/service-mcp-server",
   "version": "1.0.0",
   "description": "MCP server for Service API integration",
-  "main": "build/index.js",
+  "main": "src/index.js",
   "type": "module",
   "bin": {
-    "service-mcp": "./build/index.js",
-    "service-mcp-setup": "./build/cli.js"
+    "service-mcp": "./src/index.js"
   },
   "files": [
-    "build",
-    "README.md",
-    "LICENSE"
+    "src",
+    "README.md"
   ],
   "scripts": {
-    "build": "tsc && chmod +x build/index.js build/cli.js",
-    "prepare": "npm run build",
-    "test": "npm run build && npm run test:unit",
-    "test:unit": "node --test build/**/*.test.js"
+    "start": "node src/index.js"
   },
-  "keywords": ["mcp", "claude", "api", "integration", "your-service"],
-  "author": "Your Name <your-email@domain.com>",
+  "keywords": ["mcp", "claude", "api"],
+  "author": "Your Name",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/your-org/service-mcp-server.git"
-  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.6.0",
     "axios": "^1.6.0",
     "dotenv": "^16.3.1"
-  },
-  "devDependencies": {
-    "typescript": "^5.3.3",
-    "@types/node": "^20.11.24"
   }
 }
 ```
@@ -842,64 +812,22 @@ service-mcp setup
 
 ### 🚀 公開手順
 
-#### 1. パッケージ準備
+#### 簡単公開手順
 ```bash
 # バージョン更新
-npm version patch  # または minor, major
-
-# ビルドテスト
-npm run build
-npm pack
-npm install -g ./your-package-*.tgz
+npm version patch
 
 # 動作確認
-your-mcp-command --version
-```
+npm start
 
-#### 2. npm公開
-```bash
+# 公開
 npm login
 npm publish --access public
-
-# 公開確認
-npm view @your-org/service-mcp-server
 ```
 
-#### 3. 多プラットフォーム対応
-
-##### Docker対応
-```dockerfile
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY build ./build
-EXPOSE 3000
-CMD ["node", "build/http-server.js"]
-```
-
-##### GitHub Actions自動公開
-```yaml
-# .github/workflows/publish.yml
-name: Publish Package
-on:
-  release:
-    types: [published]
-
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          registry-url: 'https://registry.npmjs.org'
-      - run: npm ci
-      - run: npm run build
-      - run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+**💡 使用者は簡単にインストール・実行:**
+```bash
+npx @your-org/service-mcp-server
 ```
 
 ---
@@ -915,7 +843,6 @@ Error: Cannot find module '@modelcontextprotocol/sdk'
 
 # 解決
 npm install @modelcontextprotocol/sdk
-# またはpackage.jsonのtype: "module"を確認
 ```
 
 #### 2. 認証エラー
@@ -936,15 +863,11 @@ export API_KEY=your_actual_key
 # 症状: MCP server connection failed
 
 # 確認事項
-1. サーバーがビルドされているか
-   npm run build
+1. パッケージがインストールされているか
+   npm list @your-org/mcp-server
    
-2. 実行権限があるか
-   chmod +x build/index.js
-   
-3. パスが正しいか
-   which npx
-   npx @your-org/mcp-server --version
+2. npxで実行できるか
+   npx @your-org/mcp-server
 
 # Claudeコマンド確認
 claude mcp list
@@ -952,20 +875,12 @@ claude mcp remove server-name
 claude mcp add server-name -- npx @your-org/mcp-server
 ```
 
-#### 4. TypeScriptコンパイルエラー
-```bash
-# モジュール解決エラー
-# tsconfig.json確認
-{
-  "compilerOptions": {
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
-  }
-}
-
-# Import/Export構文統一
+#### 4. インポートエラー
+```javascript
+// ES Module形式で記述
 import { Server } from "@modelcontextprotocol/sdk/server/index.js";
+
+// package.jsonに "type": "module" が必要
 ```
 
 ### 📊 デバッグ方法
