@@ -2,7 +2,7 @@ import crypto from 'crypto';
 import { Pool } from 'pg';
 import { pool } from '@/config/database';
 import { ApiToken, CreateApiTokenRequest, CreateApiTokenResponse } from '@/types';
-import { AppError } from '@/middleware/errorHandler';
+import { CustomError } from '@/middleware/errorHandler';
 
 export class ApiTokenService {
   private static readonly TOKEN_LENGTH = 64;
@@ -71,9 +71,9 @@ export class ApiTokenService {
       };
     } catch (error: any) {
       if (error.code === '23505') {
-        throw new AppError('Token name already exists for this user', 400);
+        throw new CustomError('Token name already exists for this user', 400);
       }
-      throw new AppError('Failed to create API token', 500);
+      throw new CustomError('Failed to create API token', 500);
     }
   }
 
@@ -92,7 +92,7 @@ export class ApiTokenService {
     try {
       const result = await pool.query(query, [userId]);
       
-      return result.rows.map(row => ({
+      return result.rows.map((row: any) => ({
         id: row.id,
         userId: row.user_id,
         name: row.name,
@@ -106,7 +106,7 @@ export class ApiTokenService {
         updatedAt: row.updated_at.toISOString(),
       }));
     } catch (error) {
-      throw new AppError('Failed to retrieve API tokens', 500);
+      throw new CustomError('Failed to retrieve API tokens', 500);
     }
   }
 
@@ -124,13 +124,13 @@ export class ApiTokenService {
       const result = await pool.query(query, [tokenId, userId]);
       
       if (result.rowCount === 0) {
-        throw new AppError('API token not found or already revoked', 404);
+        throw new CustomError('API token not found or already revoked', 404);
       }
     } catch (error) {
-      if (error instanceof AppError) {
+      if (error instanceof CustomError) {
         throw error;
       }
-      throw new AppError('Failed to revoke API token', 500);
+      throw new CustomError('Failed to revoke API token', 500);
     }
   }
 
