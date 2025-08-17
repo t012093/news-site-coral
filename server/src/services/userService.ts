@@ -49,10 +49,10 @@ export class UserService {
       // Insert user
       const result = await client.query(`
         INSERT INTO users (
-          email, password_hash, username, display_name, 
+          email, password_hash, username, display_name, name,
           verification_token, verification_token_expires
         )
-        VALUES ($1, $2, $3, $4, $5, $6)
+        VALUES ($1, $2, $3, $4, $4, $5, $6)
         RETURNING id, email, username, display_name, avatar_url, bio, role, 
                   is_active, email_verified, preferences, created_at, updated_at
       `, [
