@@ -8,6 +8,8 @@ import * as yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoginData } from '../../types/auth';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 const Container = styled.div`
   min-height: 80vh;
   display: flex;
@@ -307,7 +309,7 @@ const LoginPage: React.FC = () => {
   const onEmailSubmit = async (data: { email: string }) => {
     setIsLoading(true);
     try {
-      const response = await fetch('/api/auth/send-verification-code', {
+      const response = await fetch(`${API_BASE_URL}/auth/send-verification-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -374,7 +376,7 @@ const LoginPage: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch('/api/auth/verify-code', {
+      const response = await fetch(`${API_BASE_URL}/auth/verify-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -414,7 +416,7 @@ const LoginPage: React.FC = () => {
     
     setIsLoading(true);
     try {
-      const response = await fetch('/api/auth/send-verification-code', {
+      const response = await fetch(`${API_BASE_URL}/auth/send-verification-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

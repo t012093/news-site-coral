@@ -4,6 +4,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+
 const Container = styled.div`
   background: var(--primary-color);
   border: 1px solid #2a2a2a;
@@ -273,7 +275,7 @@ const ApiTokenManager: React.FC<ApiTokenManagerProps> = ({ className }) => {
 
   const loadTokens = async () => {
     try {
-      const response = await fetch('/api/auth/api-tokens', {
+      const response = await fetch(`${API_BASE_URL}/auth/api-tokens`, {
         credentials: 'include',
       });
       
@@ -294,7 +296,7 @@ const ApiTokenManager: React.FC<ApiTokenManagerProps> = ({ className }) => {
       const expiresAt = formData.expiresAt === 'never' ? undefined :
         new Date(Date.now() + (parseInt(formData.expiresAt) * 24 * 60 * 60 * 1000));
 
-      const response = await fetch('/api/auth/api-tokens', {
+      const response = await fetch(`${API_BASE_URL}/auth/api-tokens`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -329,7 +331,7 @@ const ApiTokenManager: React.FC<ApiTokenManagerProps> = ({ className }) => {
     }
 
     try {
-      const response = await fetch(`/api/auth/api-tokens/${tokenId}`, {
+      const response = await fetch(`${API_BASE_URL}/auth/api-tokens/${tokenId}`, {
         method: 'DELETE',
         credentials: 'include',
       });
