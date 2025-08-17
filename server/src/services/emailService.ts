@@ -39,6 +39,15 @@ export class EmailService {
     const hasEmailConfig = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD;
     const hasHost = process.env.SMTP_HOST;
 
+    console.log('🔍 Email configuration check:', {
+      hasEmailUser: !!process.env.EMAIL_USER,
+      hasEmailPassword: !!process.env.EMAIL_PASSWORD,
+      hasSmtpHost: !!process.env.SMTP_HOST,
+      smtpHost: process.env.SMTP_HOST,
+      smtpPort: process.env.SMTP_PORT,
+      emailUser: process.env.EMAIL_USER ? `${process.env.EMAIL_USER.substring(0, 3)}...` : 'not set',
+    });
+
     if (!hasEmailConfig) {
       console.warn('⚠️ No email configuration found (EMAIL_USER/EMAIL_PASSWORD missing), using mock transporter');
       this.transporter = this.createMockTransporter();
@@ -118,8 +127,12 @@ export class EmailService {
     };
 
     try {
-      const fromAddress = process.env.EMAIL_USER || 'noreply@coral.localhost';
+      const fromAddress = process.env.EMAIL_USER === 'apikey' ? 
+        (process.env.EMAIL_FROM_ADDRESS || 'naoya.k@coral-network.com') : 
+        (process.env.EMAIL_USER || 'noreply@coral.localhost');
       const fromName = process.env.EMAIL_FROM_NAME || 'CORAL コミュニティ';
+      
+      console.log(`📧 Attempting to send email from: "${fromName}" <${fromAddress}> to ${email}`);
       
       await this.transporter.sendMail({
         from: `"${fromName}" <${fromAddress}>`,
@@ -129,6 +142,10 @@ export class EmailService {
       console.log(`📧 Verification code sent to ${email} for ${purpose}`);
     } catch (error) {
       console.error('❌ Email sending failed:', error);
+      console.error('❌ Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : undefined,
+      });
       // Check if this is a mock transporter error or real email error
       const isMockTransporter = !process.env.EMAIL_USER && !process.env.SMTP_HOST;
       
