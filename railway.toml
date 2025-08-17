@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "npm ci && npm run build && cd server && npm ci && npm run build"
+buildCommand = "npm ci --force && npm run build && cd server && npm ci && npm run build"
 
 [deploy]
 startCommand = "cd server && npm run start"
@@ -14,3 +14,4 @@ NODE_ENV = "production"
 PORT = "$PORT"
 CORAL_API_URL = "$CORAL_API_URL"
 CORAL_SOCKET_URL = "$CORAL_SOCKET_URL"
+NIXPACKS_NODE_VERSION = "20"
