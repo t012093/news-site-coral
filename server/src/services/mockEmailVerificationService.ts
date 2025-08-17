@@ -63,7 +63,12 @@ export class MockEmailVerificationService {
       // Send email
       await emailService.sendVerificationCode(email, code, purpose);
 
-      console.log(`📧 [MOCK] Verification code sent to ${email} for ${purpose}: ${code}`);
+      console.log(`\n🔐 =====================================================`);
+      console.log(`📧 VERIFICATION CODE FOR: ${email}`);
+      console.log(`🎯 PURPOSE: ${purpose}`);
+      console.log(`🔢 CODE: ${code}`);
+      console.log(`⏰ EXPIRES IN: ${this.CODE_EXPIRY_MINUTES} minutes`);
+      console.log(`🔐 =====================================================\n`);
 
       return {
         success: true,

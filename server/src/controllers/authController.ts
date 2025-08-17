@@ -434,6 +434,46 @@ export class AuthController {
   });
 
   /**
+   * GET /api/auth/debug-codes
+   * Debug endpoint to see verification codes (development only)
+   */
+  public static getDebugCodes = asyncHandler(async (req: Request, res: Response) => {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(404).json({
+        success: false,
+        error: { message: 'Not found' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const { email, purpose = 'register' } = req.query;
+    
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Email parameter required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    try {
+      const codes = await EmailVerificationService.getVerificationStatus(email as string, purpose as string);
+      
+      res.status(200).json({
+        success: true,
+        data: { codes },
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: { message: 'Failed to get verification codes' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+  });
+
+  /**
    * POST /api/auth/verify-code
    * Verify 6-digit code and authenticate user
    */
