@@ -1,6 +1,6 @@
 [build]
 builder = "nixpacks"
-buildCommand = "cd server && npm ci && npm run build"
+buildCommand = "npm ci && npm run build && cd server && npm ci && npm run build"
 
 [deploy]
 startCommand = "cd server && npm run start"
@@ -12,3 +12,5 @@ restartPolicyMaxRetries = 5
 [env]
 NODE_ENV = "production"
 PORT = "$PORT"
+VITE_API_URL = "$VITE_API_URL"
+VITE_SOCKET_URL = "$VITE_SOCKET_URL"
