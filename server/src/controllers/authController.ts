@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '@/services/authService';
 import { ApiTokenService } from '@/services/apiTokenService';
-import { EmailVerificationService } from '@/services/emailVerificationService';
+import { MockEmailVerificationService as EmailVerificationService } from '@/services/mockEmailVerificationService';
 import { asyncHandler } from '@/middleware/errorHandler';
 import { AuthenticatedRequest } from '@/middleware/auth';
 import { LoginData, RegisterData, CreateApiTokenRequest } from '@/types';
