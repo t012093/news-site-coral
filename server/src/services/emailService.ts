@@ -122,11 +122,15 @@ export class EmailService {
       console.log(`📧 Verification code sent to ${email} for ${purpose}`);
     } catch (error) {
       console.error('❌ Email sending failed:', error);
-      // Don't throw error for mock transporter to allow development
-      if (process.env.NODE_ENV === 'production') {
-        throw new CustomError('メール送信に失敗しました', 500);
+      // Check if this is a mock transporter error or real email error
+      const isMockTransporter = !process.env.EMAIL_USER && !process.env.SMTP_HOST;
+      
+      if (isMockTransporter) {
+        console.log('📧 [MOCK MODE] Email simulation successful');
+        // Don't throw error for mock transporter
       } else {
-        console.log('📧 [DEV MODE] Email would have been sent in production');
+        // Real email configuration error
+        throw new CustomError('メール送信に失敗しました', 500);
       }
     }
   }
