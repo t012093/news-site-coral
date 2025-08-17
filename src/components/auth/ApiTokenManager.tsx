@@ -4,7 +4,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
 
-const API_BASE_URL = import.meta.env.CORAL_API_URL || '/api';
+const API_BASE_URL = import.meta.env.CORAL_API_URL || 'https://news-site-coral-production.up.railway.app/api';
 
 const Container = styled.div`
   background: var(--primary-color);
