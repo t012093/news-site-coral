@@ -57,6 +57,34 @@ export interface JWTPayload {
   exp: number;
 }
 
+// API Token types
+export interface ApiToken {
+  id: string;
+  userId: string;
+  tokenHash: string;
+  name: string;
+  description?: string;
+  scope: string[];
+  isActive: boolean;
+  expiresAt?: string;
+  lastUsedAt?: string;
+  lastUsedIp?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CreateApiTokenRequest {
+  name: string;
+  description?: string;
+  expiresAt?: Date | string;
+  scope?: string[];
+}
+
+export interface CreateApiTokenResponse {
+  token: string;
+  tokenInfo: Omit<ApiToken, 'tokenHash'>;
+}
+
 // Task types
 export type TaskStatus = 'todo' | 'in_progress' | 'review' | 'completed' | 'blocked' | 'cancelled';
 export type TaskPriority = 'low' | 'medium' | 'high' | 'urgent';

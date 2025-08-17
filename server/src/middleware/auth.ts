@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { jwtManager } from '@/utils/jwt';
 import { createError } from '@/middleware/errorHandler';
+import { ApiTokenService } from '@/services/apiTokenService';
 import { UserRole } from '@/types';
 
 // Extend Express Request type
@@ -13,9 +14,9 @@ export interface AuthenticatedRequest extends Request {
 }
 
 /**
- * Middleware to authenticate JWT token
+ * Middleware to authenticate JWT token or API token
  */
-export const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
+export const authenticate = async (req: AuthenticatedRequest, res: Response, next: NextFunction): Promise<void> => {
   try {
     // Try to get token from Authorization header
     let token = jwtManager.extractTokenFromHeader(req.headers.authorization);
@@ -29,15 +30,31 @@ export const authenticate = (req: AuthenticatedRequest, res: Response, next: Nex
       throw createError.unauthorized('Access token required');
     }
 
-    // Verify token
-    const payload = jwtManager.verifyAccessToken(token);
-    
-    // Add user info to request
-    req.user = {
-      userId: payload.userId,
-      email: payload.email,
-      role: payload.role,
-    };
+    // Check if it's an API token (starts with 'nst_')
+    if (token.startsWith('nst_')) {
+      const apiTokenPayload = await ApiTokenService.validateApiToken(token);
+      
+      if (!apiTokenPayload) {
+        throw createError.unauthorized('Invalid or expired API token');
+      }
+
+      // Add user info to request
+      req.user = {
+        userId: apiTokenPayload.userId,
+        email: apiTokenPayload.email,
+        role: apiTokenPayload.role as UserRole,
+      };
+    } else {
+      // Verify JWT token
+      const payload = jwtManager.verifyAccessToken(token);
+      
+      // Add user info to request
+      req.user = {
+        userId: payload.userId,
+        email: payload.email,
+        role: payload.role,
+      };
+    }
 
     next();
   } catch (error) {

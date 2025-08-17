@@ -7,6 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoginData } from '../../types/auth';
+import ApiTokenManager from '../../components/auth/ApiTokenManager';
 
 const Container = styled.div`
   min-height: 80vh;
@@ -159,7 +160,7 @@ const schema = yup.object().shape({
 
 const LoginPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
+  const { login, user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -189,6 +190,31 @@ const LoginPage: React.FC = () => {
       setIsLoading(false);
     }
   };
+
+  // If user is already authenticated, show API token manager
+  if (isAuthenticated && user) {
+    return (
+      <Container>
+        <LoginCard
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Header>
+            <Title>ログイン済み</Title>
+            <Subtitle>ようこそ、{user.displayName}さん</Subtitle>
+          </Header>
+
+          <ApiTokenManager />
+
+          <Footer>
+            <FooterText>ダッシュボードに移動</FooterText>
+            <SignUpLink to="/">ホームへ戻る</SignUpLink>
+          </Footer>
+        </LoginCard>
+      </Container>
+    );
+  }
 
   return (
     <Container>

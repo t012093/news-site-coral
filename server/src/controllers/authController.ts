@@ -1,8 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '@/services/authService';
+import { ApiTokenService } from '@/services/apiTokenService';
 import { asyncHandler } from '@/middleware/errorHandler';
 import { AuthenticatedRequest } from '@/middleware/auth';
-import { LoginData, RegisterData } from '@/types';
+import { LoginData, RegisterData, CreateApiTokenRequest } from '@/types';
 
 export class AuthController {
   /**
@@ -280,6 +281,102 @@ export class AuthController {
     res.status(501).json({
       success: false,
       error: { message: 'Password reset not yet implemented' },
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  /**
+   * POST /api/auth/api-tokens
+   * Create a new API token
+   */
+  public static createApiToken = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: { message: 'Authentication required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const tokenData: CreateApiTokenRequest = req.body;
+
+    // Validate required fields
+    if (!tokenData.name || tokenData.name.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Token name is required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate token name length
+    if (tokenData.name.length > 100) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Token name must be 100 characters or less' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const result = await ApiTokenService.createApiToken(req.user.userId, tokenData);
+
+    res.status(201).json({
+      success: true,
+      data: result,
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  /**
+   * GET /api/auth/api-tokens
+   * Get user's API tokens
+   */
+  public static getApiTokens = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: { message: 'Authentication required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const tokens = await ApiTokenService.getUserApiTokens(req.user.userId);
+
+    res.status(200).json({
+      success: true,
+      data: { tokens },
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  /**
+   * DELETE /api/auth/api-tokens/:tokenId
+   * Revoke an API token
+   */
+  public static revokeApiToken = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: { message: 'Authentication required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const { tokenId } = req.params;
+
+    if (!tokenId) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Token ID is required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    await ApiTokenService.revokeApiToken(req.user.userId, tokenId);
+
+    res.status(200).json({
+      success: true,
+      data: { message: 'API token revoked successfully' },
       timestamp: new Date().toISOString(),
     });
   });

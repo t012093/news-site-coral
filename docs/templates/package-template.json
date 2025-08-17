@@ -1,0 +1,60 @@
+{
+  "name": "@your-org/your-service-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server for Your Service API integration - Claude Code integration",
+  "private": false,
+  "type": "module",
+  "main": "build/index.js",
+  "keywords": [
+    "mcp",
+    "claude",
+    "claude-code",
+    "api",
+    "integration",
+    "your-service",
+    "anthropic",
+    "productivity"
+  ],
+  "author": "Your Name <your-email@domain.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/your-org/your-service-mcp-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/your-service-mcp-server/issues"
+  },
+  "homepage": "https://github.com/your-org/your-service-mcp-server#readme",
+  "bin": {
+    "your-service-mcp": "./build/index.js",
+    "your-service-setup": "./build/cli.js"
+  },
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "dev": "npm run build && node build/index.js",
+    "dev:http": "npm run build && node build/http-server.js",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js",
+    "test": "npm run build",
+    "prepack": "npm run build",
+    "postinstall": "node -e \"console.log('\\n🎉 Your Service MCP Server installed successfully!\\n\\nTo get started:\\n1. Set your API credentials: your-service-setup\\n2. Add to Claude: claude mcp add your-service -- npx @your-org/your-service-mcp-server\\n\\nFor help: your-service-mcp --help\\n')\""
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^0.6.0",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.24",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

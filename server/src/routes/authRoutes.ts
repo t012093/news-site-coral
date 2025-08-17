@@ -19,4 +19,9 @@ router.post('/logout', authenticate, AuthController.logout);
 router.get('/me', authenticate, AuthController.getCurrentUser);
 router.get('/validate', authenticate, AuthController.validateToken);
 
+// API Token routes
+router.post('/api-tokens', authenticate, AuthController.createApiToken);
+router.get('/api-tokens', authenticate, AuthController.getApiTokens);
+router.delete('/api-tokens/:tokenId', authenticate, AuthController.revokeApiToken);
+
 export default router;
