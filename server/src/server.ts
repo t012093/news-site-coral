@@ -72,16 +72,16 @@ const io = new SocketIOServer(server, {
   },
 });
 
-// Rate limiting
+// Rate limiting - Very relaxed for testing
 const limiter = rateLimit({
-  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000'), // 15 minutes
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100'),
+  windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'), // 1 minute
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '1000'), // 1000 requests per minute
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => {
-    // Skip rate limiting for health checks
-    return req.path === '/health';
+    // Skip rate limiting for health checks and auth endpoints during testing
+    return req.path === '/health' || req.path.startsWith('/api/auth/');
   },
   keyGenerator: (req) => {
     // Use forwarded IP for Railway proxy environment

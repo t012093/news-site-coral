@@ -18,7 +18,7 @@ export interface VerificationCodeData {
 export class EmailVerificationService {
   private static readonly CODE_EXPIRY_MINUTES = 10;
   private static readonly MAX_ATTEMPTS = 3;
-  private static readonly RATE_LIMIT_MINUTES = 1; // Minimum time between code requests
+  private static readonly RATE_LIMIT_MINUTES = 0.1; // Very relaxed for testing - 6 seconds
 
   /**
    * Generate and send a 6-digit verification code
