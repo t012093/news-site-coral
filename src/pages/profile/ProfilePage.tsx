@@ -7,6 +7,7 @@ import * as yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { User } from '../../types/auth';
 import { mockEvents } from '../../lib/mockData';
+import ApiTokenManager from '../../components/auth/ApiTokenManager';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -1113,6 +1114,8 @@ const ProfilePage: React.FC = () => {
                   </SectionCard>
                 </div>
               </div>
+
+              <ApiTokenManager style={{ marginTop: '2rem' }} />
             </ContentBody>
           </>
         );

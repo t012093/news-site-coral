@@ -7,7 +7,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoginData } from '../../types/auth';
-import ApiTokenManager from '../../components/auth/ApiTokenManager';
 
 const Container = styled.div`
   min-height: 80vh;
@@ -191,29 +190,10 @@ const LoginPage: React.FC = () => {
     }
   };
 
-  // If user is already authenticated, show API token manager
+  // If user is already authenticated, redirect to profile
   if (isAuthenticated && user) {
-    return (
-      <Container>
-        <LoginCard
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <Header>
-            <Title>ログイン済み</Title>
-            <Subtitle>ようこそ、{user.displayName}さん</Subtitle>
-          </Header>
-
-          <ApiTokenManager />
-
-          <Footer>
-            <FooterText>ダッシュボードに移動</FooterText>
-            <SignUpLink to="/">ホームへ戻る</SignUpLink>
-          </Footer>
-        </LoginCard>
-      </Container>
-    );
+    navigate('/profile');
+    return null;
   }
 
   return (
