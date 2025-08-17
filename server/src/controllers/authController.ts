@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '@/services/authService';
 import { ApiTokenService } from '@/services/apiTokenService';
+import { EmailVerificationService } from '@/services/emailVerificationService';
 import { asyncHandler } from '@/middleware/errorHandler';
 import { AuthenticatedRequest } from '@/middleware/auth';
 import { LoginData, RegisterData, CreateApiTokenRequest } from '@/types';
@@ -377,6 +378,142 @@ export class AuthController {
     res.status(200).json({
       success: true,
       data: { message: 'API token revoked successfully' },
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  /**
+   * POST /api/auth/send-verification-code
+   * Send 6-digit verification code to email
+   */
+  public static sendVerificationCode = asyncHandler(async (req: Request, res: Response) => {
+    const { email, purpose = 'login' } = req.body;
+
+    // Validate required fields
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Email address is required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate email format
+    if (!AuthService.isValidEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Invalid email format' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate purpose
+    if (!['login', 'register', 'password_reset'].includes(purpose)) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Invalid purpose' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const result = await EmailVerificationService.sendVerificationCode(
+      email,
+      purpose,
+      req.ip,
+      req.get('User-Agent')
+    );
+
+    res.status(200).json({
+      success: true,
+      data: {
+        message: 'Verification code sent successfully',
+        expiresIn: result.expiresIn,
+      },
+      timestamp: new Date().toISOString(),
+    });
+  });
+
+  /**
+   * POST /api/auth/verify-code
+   * Verify 6-digit code and authenticate user
+   */
+  public static verifyEmailCode = asyncHandler(async (req: Request, res: Response) => {
+    const { email, code, purpose = 'login' } = req.body;
+
+    // Validate required fields
+    if (!email || !code) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Email and verification code are required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate code format (6 digits)
+    if (!/^\d{6}$/.test(code)) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Verification code must be 6 digits' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Verify the code
+    const verification = await EmailVerificationService.verifyCode(email, code, purpose);
+
+    if (!verification.valid) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Invalid verification code' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // For login purpose, authenticate the user
+    if (purpose === 'login') {
+      // Create login data for email-based authentication
+      const loginData: LoginData = {
+        email,
+        password: '', // Password not needed for email auth
+        rememberMe: true,
+      };
+
+      // Use email authentication instead of password
+      const authResponse = await AuthService.loginWithEmail(email);
+
+      // Set HTTP-only cookies for security
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict' as const,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+      };
+
+      res.cookie('auth_token', authResponse.token, cookieOptions);
+      res.cookie('refresh_token', authResponse.refreshToken, {
+        ...cookieOptions,
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days for refresh token
+      });
+
+      return res.status(200).json({
+        success: true,
+        data: {
+          user: authResponse.user,
+          token: authResponse.token,
+          refreshToken: authResponse.refreshToken,
+          message: 'Email authentication successful',
+        },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // For other purposes (register, password_reset), just confirm verification
+    res.status(200).json({
+      success: true,
+      data: {
+        message: 'Verification code confirmed',
+        verificationId: verification.verificationId,
+      },
       timestamp: new Date().toISOString(),
     });
   });

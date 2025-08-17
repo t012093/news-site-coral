@@ -138,6 +138,13 @@ export class MockUserService {
   }
 
   /**
+   * Get user by email (alias for findByEmail)
+   */
+  public static async getUserByEmail(email: string): Promise<User | null> {
+    return this.findByEmail(email);
+  }
+
+  /**
    * Find user by ID
    */
   public static async findById(id: string): Promise<User | null> {

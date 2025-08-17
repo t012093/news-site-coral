@@ -6,7 +6,7 @@ import { redisClient } from '@/config/database';
 
 export class AuthService {
   /**
-   * Login user
+   * Login user with password
    */
   public static async login(loginData: LoginData): Promise<AuthResponse> {
     const { email, password } = loginData;
@@ -19,6 +19,42 @@ export class AuthService {
     }
 
     const user = verification.user;
+
+    // Check if user is active
+    if (!user.isActive) {
+      throw createError.unauthorized('Account is deactivated');
+    }
+
+    // Generate JWT tokens
+    const { accessToken, refreshToken } = jwtManager.generateTokenPair({
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    });
+
+    // Store refresh token in Redis with expiration
+    await this.storeRefreshToken(user.id, refreshToken);
+
+    // Update user online status
+    await MockUserService.updateOnlineStatus(user.id, true);
+
+    return {
+      user,
+      token: accessToken,
+      refreshToken,
+    };
+  }
+
+  /**
+   * Login user with email only (for email verification authentication)
+   */
+  public static async loginWithEmail(email: string): Promise<AuthResponse> {
+    // Get user by email
+    const user = await MockUserService.getUserByEmail(email);
+    
+    if (!user) {
+      throw createError.unauthorized('User not found');
+    }
 
     // Check if user is active
     if (!user.isActive) {

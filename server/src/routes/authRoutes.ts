@@ -14,6 +14,10 @@ router.post('/refresh', AuthController.refresh);
 router.post('/forgot-password', authLimit, AuthController.forgotPassword);
 router.post('/reset-password', authLimit, AuthController.resetPassword);
 
+// Email verification routes
+router.post('/send-verification-code', authLimit, AuthController.sendVerificationCode);
+router.post('/verify-code', authLimit, AuthController.verifyEmailCode);
+
 // Protected routes
 router.post('/logout', authenticate, AuthController.logout);
 router.get('/me', authenticate, AuthController.getCurrentUser);
