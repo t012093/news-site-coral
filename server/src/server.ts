@@ -72,16 +72,16 @@ const io = new SocketIOServer(server, {
   },
 });
 
-// Rate limiting - Very relaxed for testing
+// Rate limiting - Completely disabled for testing
 const limiter = rateLimit({
   windowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '60000'), // 1 minute
-  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '1000'), // 1000 requests per minute
+  max: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '10000'), // 10000 requests per minute
   message: 'Too many requests from this IP, please try again later.',
   standardHeaders: true,
   legacyHeaders: false,
   skip: (req) => {
-    // Skip rate limiting for health checks and auth endpoints during testing
-    return req.path === '/health' || req.path.startsWith('/api/auth/');
+    // Skip ALL rate limiting during testing
+    return true;
   },
   keyGenerator: (req) => {
     // Use forwarded IP for Railway proxy environment
@@ -93,8 +93,8 @@ const limiter = rateLimit({
   }
 });
 
-// Middleware
-app.use(limiter);
+// Middleware - Rate limiting disabled
+// app.use(limiter);
 app.use(helmet({
   crossOriginResourcePolicy: { policy: 'cross-origin' },
 }));
