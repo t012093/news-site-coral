@@ -50,7 +50,7 @@ export class AuthService {
    */
   public static async loginWithEmail(email: string): Promise<AuthResponse> {
     // Get user by email
-    const user = await UserService.getUserByEmail(email);
+    const user = await UserService.findByEmail(email);
     
     if (!user) {
       throw createError.unauthorized('User not found');
