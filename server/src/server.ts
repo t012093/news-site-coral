@@ -10,6 +10,7 @@ import rateLimit from 'express-rate-limit';
 import dotenv from 'dotenv';
 
 import { testDatabaseConnection, testRedisConnection, initializeRedis, closeDatabaseConnections } from '@/config/database';
+import { runMigrations } from '@/scripts/runMigrations';
 import { initializeSocketIO } from '@/socket/socketHandler';
 import { errorHandler } from '@/middleware/errorHandler';
 import { notFoundHandler } from '@/middleware/notFoundHandler';
@@ -145,6 +146,18 @@ const initializeDatabases = async () => {
     // Test database connections (non-blocking)
     const dbConnected = await testDatabaseConnection().catch(() => false);
     const redisConnected = await testRedisConnection().catch(() => false);
+    
+    // Run migrations if database is connected
+    if (dbConnected) {
+      try {
+        console.log('🔄 Running database migrations...');
+        await runMigrations();
+        console.log('✅ Database migrations completed');
+      } catch (error) {
+        console.error('❌ Migration failed:', error instanceof Error ? error.message : 'Unknown error');
+        // Continue anyway - migrations might have been run before
+      }
+    }
     
     if (dbConnected && redisConnected) {
       console.log('✅ All database connections successful');

@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '@/services/authService';
 import { ApiTokenService } from '@/services/apiTokenService';
-import { MockEmailVerificationService as EmailVerificationService } from '@/services/mockEmailVerificationService';
+import { EmailVerificationServiceFactory } from '@/services/emailVerificationServiceFactory';
 import { asyncHandler } from '@/middleware/errorHandler';
 import { AuthenticatedRequest } from '@/middleware/auth';
 import { LoginData, RegisterData, CreateApiTokenRequest } from '@/types';
@@ -416,6 +416,7 @@ export class AuthController {
       });
     }
 
+    const EmailVerificationService = await EmailVerificationServiceFactory.getService();
     const result = await EmailVerificationService.sendVerificationCode(
       email,
       purpose,
@@ -457,6 +458,7 @@ export class AuthController {
     }
 
     try {
+      const EmailVerificationService = await EmailVerificationServiceFactory.getService();
       const codes = await EmailVerificationService.getVerificationStatus(email as string, purpose as string);
       
       res.status(200).json({
@@ -499,6 +501,7 @@ export class AuthController {
     }
 
     // Verify the code
+    const EmailVerificationService = await EmailVerificationServiceFactory.getService();
     const verification = await EmailVerificationService.verifyCode(email, code, purpose);
 
     if (!verification.valid) {

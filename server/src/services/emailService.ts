@@ -63,7 +63,7 @@ export class EmailService {
 
     try {
       this.transporter = nodemailer.createTransport(emailConfig);
-      console.log('✅ Email service initialized successfully');
+      console.log(`✅ Email service initialized successfully (${hasEmailConfig ? 'Gmail' : 'SMTP'})`);
     } catch (error) {
       console.warn('⚠️ Email service initialization failed:', error);
       // Create a mock transporter for development
