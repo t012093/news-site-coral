@@ -35,6 +35,16 @@ export class EmailService {
   }
 
   private initializeTransporter(): void {
+    // Check if email configuration is available
+    const hasEmailConfig = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD;
+    const hasSMTPConfig = process.env.SMTP_HOST;
+
+    if (!hasEmailConfig && !hasSMTPConfig) {
+      console.warn('⚠️ No email configuration found, using mock transporter');
+      this.transporter = this.createMockTransporter();
+      return;
+    }
+
     const emailConfig: EmailConfig = {
       service: process.env.EMAIL_SERVICE || 'gmail',
       auth: {
@@ -53,6 +63,7 @@ export class EmailService {
 
     try {
       this.transporter = nodemailer.createTransport(emailConfig);
+      console.log('✅ Email service initialized successfully');
     } catch (error) {
       console.warn('⚠️ Email service initialization failed:', error);
       // Create a mock transporter for development
@@ -102,15 +113,21 @@ export class EmailService {
     };
 
     try {
+      const fromAddress = process.env.EMAIL_USER || 'noreply@coral.localhost';
       await this.transporter.sendMail({
-        from: `"CORAL コミュニティ" <${process.env.EMAIL_USER}>`,
+        from: `"CORAL コミュニティ" <${fromAddress}>`,
         ...emailOptions,
       });
 
       console.log(`📧 Verification code sent to ${email} for ${purpose}`);
     } catch (error) {
       console.error('❌ Email sending failed:', error);
-      throw new CustomError('メール送信に失敗しました', 500);
+      // Don't throw error for mock transporter to allow development
+      if (process.env.NODE_ENV === 'production') {
+        throw new CustomError('メール送信に失敗しました', 500);
+      } else {
+        console.log('📧 [DEV MODE] Email would have been sent in production');
+      }
     }
   }
 
