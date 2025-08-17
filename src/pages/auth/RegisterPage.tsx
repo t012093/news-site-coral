@@ -279,7 +279,8 @@ const RegisterPage: React.FC = () => {
       setRegistrationData(data);
       
       // Send verification code
-      const response = await fetch('/api/auth/send-verification-code', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://news-site-coral-production.up.railway.app/api';
+      const response = await fetch(`${API_BASE_URL}/auth/send-verification-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -369,7 +370,8 @@ const RegisterPage: React.FC = () => {
     
     try {
       // First verify the email code
-      const verifyResponse = await fetch('/api/auth/verify-code', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://news-site-coral-production.up.railway.app/api';
+      const verifyResponse = await fetch(`${API_BASE_URL}/auth/verify-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -405,7 +407,8 @@ const RegisterPage: React.FC = () => {
     setServerError(null);
     
     try {
-      const response = await fetch('/api/auth/send-verification-code', {
+      const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://news-site-coral-production.up.railway.app/api';
+      const response = await fetch(`${API_BASE_URL}/auth/send-verification-code`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
