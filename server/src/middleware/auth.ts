@@ -17,7 +17,7 @@ export interface AuthenticatedRequest extends Request {
  * Middleware to authenticate JWT token or API token
  */
 export const authenticate = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
-  const handleAuth = async () => {
+  (async () => {
     try {
       // Try to get token from Authorization header
       let token = jwtManager.extractTokenFromHeader(req.headers.authorization);
@@ -61,9 +61,7 @@ export const authenticate = (req: AuthenticatedRequest, res: Response, next: Nex
     } catch (error) {
       next(error);
     }
-  };
-
-  handleAuth();
+  })();
 };
 
 /**
@@ -91,31 +89,47 @@ export const authorize = (...allowedRoles: UserRole[]) => {
  * Middleware for optional authentication (doesn't fail if no token)
  */
 export const optionalAuth = (req: AuthenticatedRequest, res: Response, next: NextFunction): void => {
-  try {
-    let token = jwtManager.extractTokenFromHeader(req.headers.authorization);
-    
-    if (!token && req.cookies && req.cookies.auth_token) {
-      token = req.cookies.auth_token;
-    }
-
-    if (token) {
-      try {
-        const payload = jwtManager.verifyAccessToken(token);
-        req.user = {
-          userId: payload.userId,
-          email: payload.email,
-          role: payload.role,
-        };
-      } catch (error) {
-        // Token is invalid, but we don't throw an error
-        // Just continue without user info
+  (async () => {
+    try {
+      let token = jwtManager.extractTokenFromHeader(req.headers.authorization);
+      
+      if (!token && req.cookies && req.cookies.auth_token) {
+        token = req.cookies.auth_token;
       }
-    }
 
-    next();
-  } catch (error) {
-    next(error);
-  }
+      if (token) {
+        try {
+          // Check if it's an API token (starts with 'nst_')
+          if (token.startsWith('nst_')) {
+            const apiTokenPayload = await ApiTokenService.validateApiToken(token);
+            
+            if (apiTokenPayload) {
+              req.user = {
+                userId: apiTokenPayload.userId,
+                email: apiTokenPayload.email,
+                role: apiTokenPayload.role as UserRole,
+              };
+            }
+          } else {
+            // Verify JWT token
+            const payload = jwtManager.verifyAccessToken(token);
+            req.user = {
+              userId: payload.userId,
+              email: payload.email,
+              role: payload.role,
+            };
+          }
+        } catch (error) {
+          // Token is invalid, but we don't throw an error
+          // Just continue without user info
+        }
+      }
+
+      next();
+    } catch (error) {
+      next(error);
+    }
+  })();
 };
 
 /**
