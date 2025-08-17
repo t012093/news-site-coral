@@ -3,8 +3,26 @@ import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const API_BASE_URL = import.meta.env.CORAL_API_URL || 'https://news-site-coral-production.up.railway.app/api';
+
+// Create axios instance with authentication
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+  withCredentials: true,
+});
+
+// Add auth token to requests
+apiClient.interceptors.request.use((config) => {
+  const token = Cookies.get('auth_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 
 const Container = styled.div`
   background: var(--primary-color);
@@ -275,14 +293,8 @@ const ApiTokenManager: React.FC<ApiTokenManagerProps> = ({ className }) => {
 
   const loadTokens = async () => {
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/api-tokens`, {
-        credentials: 'include',
-      });
-      
-      if (response.ok) {
-        const data = await response.json();
-        setTokens(data.data.tokens);
-      }
+      const response = await apiClient.get('/auth/api-tokens');
+      setTokens(response.data.data.tokens);
     } catch (error) {
       console.error('Failed to load API tokens:', error);
     }
@@ -296,27 +308,15 @@ const ApiTokenManager: React.FC<ApiTokenManagerProps> = ({ className }) => {
       const expiresAt = formData.expiresAt === 'never' ? undefined :
         new Date(Date.now() + (parseInt(formData.expiresAt) * 24 * 60 * 60 * 1000));
 
-      const response = await fetch(`${API_BASE_URL}/auth/api-tokens`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        credentials: 'include',
-        body: JSON.stringify({
-          name: formData.name,
-          description: formData.description || undefined,
-          expiresAt,
-        }),
+      const response = await apiClient.post('/auth/api-tokens', {
+        name: formData.name,
+        description: formData.description || undefined,
+        expiresAt,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        setNewToken(data.data.token);
-        setTokens(prev => [data.data.tokenInfo, ...prev]);
-        setFormData({ name: '', description: '', expiresAt: '90days' });
-      } else {
-        throw new Error('Failed to create token');
-      }
+      setNewToken(response.data.data.token);
+      setTokens(prev => [response.data.data.tokenInfo, ...prev]);
+      setFormData({ name: '', description: '', expiresAt: '90days' });
     } catch (error) {
       console.error('Failed to create API token:', error);
       alert('トークンの作成に失敗しました');
@@ -331,16 +331,8 @@ const ApiTokenManager: React.FC<ApiTokenManagerProps> = ({ className }) => {
     }
 
     try {
-      const response = await fetch(`${API_BASE_URL}/auth/api-tokens/${tokenId}`, {
-        method: 'DELETE',
-        credentials: 'include',
-      });
-
-      if (response.ok) {
-        setTokens(prev => prev.filter(token => token.id !== tokenId));
-      } else {
-        throw new Error('Failed to revoke token');
-      }
+      await apiClient.delete(`/auth/api-tokens/${tokenId}`);
+      setTokens(prev => prev.filter(token => token.id !== tokenId));
     } catch (error) {
       console.error('Failed to revoke API token:', error);
       alert('トークンの無効化に失敗しました');
