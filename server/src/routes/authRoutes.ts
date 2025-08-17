@@ -30,4 +30,14 @@ router.post('/api-tokens', authenticate, AuthController.createApiToken);
 router.get('/api-tokens', authenticate, AuthController.getApiTokens);
 router.delete('/api-tokens/:tokenId', authenticate, AuthController.revokeApiToken);
 
+// Debug route for testing
+router.get('/test-api-tokens', authenticate, (req, res) => {
+  res.json({ 
+    success: true, 
+    message: 'API tokens route is working', 
+    userId: (req as any).user?.userId,
+    timestamp: new Date().toISOString() 
+  });
+});
+
 export default router;
