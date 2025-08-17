@@ -476,6 +476,66 @@ export class AuthController {
   });
 
   /**
+   * POST /api/auth/test-email
+   * Test email sending (development only)
+   */
+  public static testEmail = asyncHandler(async (req: Request, res: Response) => {
+    if (process.env.NODE_ENV === 'production') {
+      return res.status(404).json({
+        success: false,
+        error: { message: 'Not found' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const { email } = req.body;
+    
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Email address required' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    try {
+      const { emailService } = require('@/services/emailService');
+      
+      // Test connection first
+      const connectionOk = await emailService.testConnection();
+      if (!connectionOk) {
+        return res.status(500).json({
+          success: false,
+          error: { message: 'Email service connection failed' },
+          timestamp: new Date().toISOString(),
+        });
+      }
+
+      // Send test email
+      const emailSent = await emailService.sendTestEmail(email);
+      if (!emailSent) {
+        return res.status(500).json({
+          success: false,
+          error: { message: 'Test email sending failed' },
+          timestamp: new Date().toISOString(),
+        });
+      }
+
+      res.status(200).json({
+        success: true,
+        data: { message: 'Test email sent successfully' },
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: { message: 'Test email failed' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+  });
+
+  /**
    * POST /api/auth/verify-code
    * Verify 6-digit code and authenticate user
    */

@@ -37,33 +37,38 @@ export class EmailService {
   private initializeTransporter(): void {
     // Check if email configuration is available
     const hasEmailConfig = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD;
-    const hasSMTPConfig = process.env.SMTP_HOST;
+    const hasHost = process.env.SMTP_HOST;
 
-    if (!hasEmailConfig && !hasSMTPConfig) {
-      console.warn('⚠️ No email configuration found, using mock transporter');
+    if (!hasEmailConfig) {
+      console.warn('⚠️ No email configuration found (EMAIL_USER/EMAIL_PASSWORD missing), using mock transporter');
       this.transporter = this.createMockTransporter();
       return;
     }
 
+    // Use SMTP configuration (preferred for production)
     const emailConfig: EmailConfig = {
-      service: process.env.EMAIL_SERVICE || 'gmail',
+      host: process.env.SMTP_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
       auth: {
-        user: process.env.EMAIL_USER || '',
-        pass: process.env.EMAIL_PASSWORD || '',
+        user: process.env.EMAIL_USER!,
+        pass: process.env.EMAIL_PASSWORD!,
       },
     };
 
-    // For development, use SMTP settings if available
-    if (process.env.SMTP_HOST) {
-      emailConfig.host = process.env.SMTP_HOST;
-      emailConfig.port = parseInt(process.env.SMTP_PORT || '587');
-      emailConfig.secure = process.env.SMTP_SECURE === 'true';
-      delete emailConfig.service;
+    // Add additional SMTP options if specified
+    if (process.env.SMTP_TLS_REJECT_UNAUTHORIZED === 'false') {
+      (emailConfig as any).tls = {
+        rejectUnauthorized: false
+      };
     }
 
+    const connectionType = hasHost ? 'Custom SMTP' : 'Gmail SMTP';
+    
     try {
       this.transporter = nodemailer.createTransport(emailConfig);
-      console.log(`✅ Email service initialized successfully (${hasEmailConfig ? 'Gmail' : 'SMTP'})`);
+      console.log(`✅ Email service initialized successfully (${connectionType})`);
+      console.log(`📧 SMTP Host: ${emailConfig.host}:${emailConfig.port} (secure: ${emailConfig.secure})`);
     } catch (error) {
       console.warn('⚠️ Email service initialization failed:', error);
       // Create a mock transporter for development
@@ -114,8 +119,10 @@ export class EmailService {
 
     try {
       const fromAddress = process.env.EMAIL_USER || 'noreply@coral.localhost';
+      const fromName = process.env.EMAIL_FROM_NAME || 'CORAL コミュニティ';
+      
       await this.transporter.sendMail({
-        from: `"CORAL コミュニティ" <${fromAddress}>`,
+        from: `"${fromName}" <${fromAddress}>`,
         ...emailOptions,
       });
 
@@ -327,9 +334,40 @@ export class EmailService {
   public async testConnection(): Promise<boolean> {
     try {
       await this.transporter.verify();
+      console.log('✅ Email service connection test successful');
       return true;
     } catch (error) {
-      console.error('Email service connection test failed:', error);
+      console.error('❌ Email service connection test failed:', error);
+      return false;
+    }
+  }
+
+  /**
+   * Send test email
+   */
+  public async sendTestEmail(to: string): Promise<boolean> {
+    try {
+      const fromAddress = process.env.EMAIL_USER || 'noreply@coral.localhost';
+      const fromName = process.env.EMAIL_FROM_NAME || 'CORAL コミュニティ';
+      
+      await this.transporter.sendMail({
+        from: `"${fromName}" <${fromAddress}>`,
+        to,
+        subject: 'CORAL メール送信テスト',
+        text: 'このメールはCORALシステムのメール送信機能のテストです。',
+        html: `
+          <h2>📧 メール送信テスト成功</h2>
+          <p>このメールはCORALシステムのメール送信機能のテストです。</p>
+          <p>メール設定が正しく動作しています。</p>
+          <hr>
+          <p><small>送信時刻: ${new Date().toLocaleString('ja-JP')}</small></p>
+        `,
+      });
+
+      console.log(`✅ Test email sent to ${to}`);
+      return true;
+    } catch (error) {
+      console.error('❌ Test email sending failed:', error);
       return false;
     }
   }
