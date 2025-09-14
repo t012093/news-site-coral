@@ -5,6 +5,14 @@ import SEOHelmet from '../components/SEOHelmet';
 
 const Container = styled.div`
   padding: 2rem 0;
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem 0;
+  }
 `;
 
 const PageHeader = styled.header`
@@ -14,11 +22,33 @@ const PageHeader = styled.header`
   color: white;
   border-radius: 12px;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 3rem;
+    padding: 3rem 1.5rem;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 2rem;
+    padding: 2rem 1rem;
+    border-radius: 6px;
+  }
 `;
 
 const PageTitle = styled.h1`
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
+  
+  @media (max-width: 768px) {
+    font-size: 3rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const PageDescription = styled.p`
@@ -26,6 +56,16 @@ const PageDescription = styled.p`
   max-width: 600px;
   margin: 0 auto;
   opacity: 0.9;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    max-width: 90%;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    max-width: 95%;
+  }
 `;
 
 const MainGrid = styled.div`
@@ -36,10 +76,18 @@ const MainGrid = styled.div`
 
   @media (max-width: 1024px) {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
   }
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+    margin-bottom: 2rem;
   }
 `;
 
@@ -53,14 +101,26 @@ const ArticleCard = styled(motion.article)`
 
 const ArticleImage = styled.img`
   width: 100%;
-  height: 250px;
+  aspect-ratio: 16/9;
   object-fit: cover;
+  
+  @media (max-width: 480px) {
+    aspect-ratio: 4/3;
+  }
 `;
 
 const ArticleContent = styled.div`
   padding: 1.5rem;
   background: var(--primary-color);
   color: var(--text-color);
+  
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const ArticleTag = styled.span`
@@ -71,12 +131,35 @@ const ArticleTag = styled.span`
   font-size: 0.9rem;
   display: inline-block;
   margin-bottom: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    margin-bottom: 0.6rem;
+  }
 `;
 
 const ArticleTitle = styled.h2`
   font-size: 1.5rem;
   margin-bottom: 1rem;
   line-height: 1.3;
+  
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
 `;
 
 const ArticleExcerpt = styled.p`
@@ -84,6 +167,17 @@ const ArticleExcerpt = styled.p`
   line-height: 1.6;
   margin-bottom: 1.5rem;
   font-size: 1rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    margin-bottom: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
 `;
 
 const ArticleMeta = styled.div`
@@ -92,6 +186,18 @@ const ArticleMeta = styled.div`
   align-items: center;
   color: var(--secondary-color);
   font-size: 0.9rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    gap: 0.3rem;
+  }
 `;
 
 const ReadMore = styled(motion.span)`
@@ -107,12 +213,30 @@ const ReadMore = styled(motion.span)`
 
 const FeaturedSection = styled.section`
   margin-bottom: 4rem;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 const SectionTitle = styled.h2`
   font-size: 2rem;
   margin-bottom: 2rem;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+  }
 `;
 
 const FeaturedGrid = styled.div`
@@ -122,6 +246,11 @@ const FeaturedGrid = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
   }
 `;
 
@@ -131,6 +260,16 @@ const FeaturedCard = styled(motion.article)`
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
+  
+  @media (max-width: 768px) {
+    height: 350px;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 300px;
+    border-radius: 6px;
+  }
 `;
 
 const FeaturedBackground = styled.div`
@@ -156,6 +295,14 @@ const FeaturedContent = styled.div`
   padding: 2rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   color: white;
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const TechPage = () => {

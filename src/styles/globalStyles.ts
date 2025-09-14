@@ -16,6 +16,11 @@ export const globalStyles = css`
     padding: 0;
     box-sizing: border-box;
   }
+  
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
   body {
     font-family: var(--font-primary);
@@ -23,10 +28,19 @@ export const globalStyles = css`
     background-color: var(--background-color);
     line-height: 1.6;
     min-height: 100vh;
+    overflow-x: hidden;
+    width: 100%;
   }
   
   html {
     background-color: var(--background-color);
+    overflow-x: hidden;
+    width: 100%;
+  }
+  
+  #root {
+    width: 100%;
+    overflow-x: hidden;
   }
 
   h1, h2, h3, h4, h5, h6 {

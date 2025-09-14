@@ -58,6 +58,16 @@ const MainContent = styled.main`
   width: 100%;
   overflow-x: hidden;
   background-color: var(--background-color);
+  
+  @media (max-width: 768px) {
+    padding: 10px;
+    max-width: 100%;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 5px;
+    max-width: 100vw;
+  }
 `;
 
 const PageTransition = styled(motion.div)`

@@ -120,6 +120,22 @@ const MainGrid = styled.div`
   grid-template-columns: repeat(12, 1fr);
   gap: 2rem;
   margin-bottom: 4rem;
+  
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-bottom: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
 `;
 
 const FeaturedArticle = styled(motion.article)<{ gridArea: string }>`
@@ -129,6 +145,20 @@ const FeaturedArticle = styled(motion.article)<{ gridArea: string }>`
   border-radius: 12px;
   overflow: hidden;
   cursor: pointer;
+  
+  @media (max-width: 1024px) {
+    height: 400px;
+  }
+  
+  @media (max-width: 768px) {
+    height: 350px;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 300px;
+    border-radius: 6px;
+  }
 `;
 
 const ArticleBackground = styled.div`
@@ -154,6 +184,14 @@ const ArticleContent = styled.div`
   padding: 2rem;
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
   color: white;
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const ArticleTag = styled.span`
@@ -170,6 +208,17 @@ const ArticleTitle = styled.h2`
   font-size: 1.8rem;
   margin-bottom: 1rem;
   line-height: 1.3;
+  
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.2;
+  }
 `;
 
 const ArticleMeta = styled.div`
@@ -177,6 +226,35 @@ const ArticleMeta = styled.div`
   gap: 2rem;
   font-size: 0.9rem;
   opacity: 0.8;
+  
+  @media (max-width: 768px) {
+    gap: 1rem;
+    font-size: 0.8rem;
+    flex-direction: column;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+    font-size: 0.75rem;
+  }
+`;
+
+const FeaturedLinkWrapper = styled(Link)`
+  text-decoration: none;
+  grid-area: 1 / 1 / 2 / 8;
+  display: block;
+  
+  @media (max-width: 768px) {
+    grid-area: auto;
+  }
+`;
+
+const SecondFeaturedWrapper = styled.div`
+  grid-area: 1 / 8 / 2 / 13;
+  
+  @media (max-width: 768px) {
+    grid-area: auto;
+  }
 `;
 
 const SectionTitle = styled.h2`
@@ -220,22 +298,25 @@ const TrendingSection = styled.section`
 
 const TrendingGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   
   @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 1.5rem;
   }
   
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: 1fr;
     gap: 1.2rem;
   }
   
-  @media (max-width: 600px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 480px) {
     gap: 1rem;
+  }
+  
+  @media (max-width: 360px) {
+    gap: 0.8rem;
   }
 `;
 
@@ -254,12 +335,16 @@ const TrendingCard = styled(motion.article)`
 
 const TrendingImage = styled.img`
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16/9;
   object-fit: cover;
   transition: transform 0.3s ease;
 
   ${TrendingCard}:hover & {
     transform: scale(1.05);
+  }
+  
+  @media (max-width: 480px) {
+    aspect-ratio: 4/3;
   }
 `;
 
@@ -569,7 +654,7 @@ const HomePage = () => {
       </TopicsExplorerSection>
 
       <MainGrid>
-        <Link to="/tech/gibberlink" style={{ textDecoration: 'none', gridArea: '1 / 1 / 2 / 8', display: 'block' }}>
+        <FeaturedLinkWrapper to="/tech/gibberlink">
           <FeaturedArticle
             whileHover={{ y: -5 }}
             transition={{ duration: 0.2 }}
@@ -590,13 +675,14 @@ const HomePage = () => {
               </ArticleMeta>
             </ArticleContent>
           </FeaturedArticle>
-        </Link>
+        </FeaturedLinkWrapper>
 
-        <FeaturedArticle
-          gridArea="1 / 8 / 2 / 13"
-          whileHover={{ y: -5 }}
-          transition={{ duration: 0.2 }}
-        >
+        <SecondFeaturedWrapper>
+          <FeaturedArticle
+            gridArea="auto"
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.2 }}
+          >
           <ArticleBackground
             style={{
               backgroundImage: 'url(/images/cat.png)',
@@ -612,6 +698,7 @@ const HomePage = () => {
             </ArticleMeta>
           </ArticleContent>
         </FeaturedArticle>
+        </SecondFeaturedWrapper>
       </MainGrid>
 
       <TrendingSection>

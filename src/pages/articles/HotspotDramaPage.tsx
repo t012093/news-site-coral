@@ -31,6 +31,18 @@ const HeroSection = styled.div`
       rgba(0, 0, 0, 0.7) 100%
     );
   }
+  
+  @media (max-width: 768px) {
+    height: 50vh;
+    min-height: 400px;
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 480px) {
+    height: 40vh;
+    min-height: 300px;
+    margin-bottom: 2rem;
+  }
 `;
 
 const HeroContent = styled.div`
@@ -42,6 +54,16 @@ const HeroContent = styled.div`
   max-width: 800px;
   color: white;
   text-align: center;
+  
+  @media (max-width: 768px) {
+    bottom: 3rem;
+    width: 95%;
+  }
+  
+  @media (max-width: 480px) {
+    bottom: 2rem;
+    width: 95%;
+  }
 `;
 
 const ArticleHeader = styled.header`
@@ -55,6 +77,20 @@ const ArticleTitle = styled(motion.h1)`
   line-height: 1.2;
   font-weight: 700;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 1024px) {
+    font-size: 3rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    line-height: 1.1;
+  }
 `;
 
 const ArticleMeta = styled.div`
@@ -64,6 +100,17 @@ const ArticleMeta = styled.div`
   gap: 1.5rem;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 2rem;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.8rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const ArticleTag = styled(motion.span)`
@@ -74,11 +121,29 @@ const ArticleTag = styled(motion.span)`
   font-size: 1rem;
   font-weight: 500;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+    padding: 0.4rem 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+  }
 `;
 
 const ArticleDate = styled.span`
   font-size: 1rem;
   opacity: 0.9;
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ContentLayout = styled.div`
@@ -89,15 +154,34 @@ const ContentLayout = styled.div`
   padding: 0 2rem;
   max-width: 1400px;
 
+  @media (max-width: 1200px) {
+    gap: 4rem;
+  }
+
   @media (max-width: 1024px) {
     grid-template-columns: 1fr;
     padding: 0 2rem;
+    gap: 3rem;
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0 1.5rem;
+    gap: 2rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+    gap: 1.5rem;
   }
 `;
 
 const MainContent = styled.div`
   max-width: 800px;
   margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 const ArticleContent = styled(motion.div)`
@@ -125,6 +209,41 @@ const ArticleContent = styled(motion.div)`
     margin: 2rem auto;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     display: block;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    
+    h2 {
+      font-size: 1.8rem;
+      margin: 2rem 0 1rem;
+    }
+    
+    p {
+      margin-bottom: 1.5rem;
+    }
+    
+    img {
+      margin: 1.5rem auto;
+      border-radius: 8px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    
+    h2 {
+      font-size: 1.5rem;
+      margin: 1.5rem 0 0.8rem;
+    }
+    
+    p {
+      margin-bottom: 1.2rem;
+    }
+    
+    img {
+      margin: 1rem auto;
+    }
   }
 
   .image-grid {

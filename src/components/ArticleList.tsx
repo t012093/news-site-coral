@@ -5,7 +5,7 @@ import { Article } from '../types/wordpress';
 
 const Grid = styled.div<{ columns?: number }>`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
 
@@ -15,14 +15,40 @@ const Grid = styled.div<{ columns?: number }>`
 
   @media (max-width: 767px) {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 360px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
   }
 `;
 
 const LoadingGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   margin-bottom: 2rem;
+  
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  
+  @media (max-width: 360px) {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
 `;
 
 const LoadingCard = styled(motion.div)`

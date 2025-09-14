@@ -12,6 +12,14 @@ const Nav = styled.nav`
   top: 0;
   z-index: 1000;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  @media (max-width: 768px) {
+    padding: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem 0.5rem;
+  }
 `;
 
 const NavContainer = styled.div`
@@ -20,6 +28,15 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  @media (max-width: 768px) {
+    max-width: 100%;
+    padding: 0 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 0.5rem;
+  }
 `;
 
 const Logo = styled(Link)`
@@ -232,54 +249,63 @@ const Navigation = () => {
           <NavLink 
             to="/about"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             About
           </NavLink>
           <NavLink 
             to="/music"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Music
           </NavLink>
           <NavLink 
             to="/tech"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Tech
           </NavLink>
           <NavLink 
             to="/spiritual"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Spiritual
           </NavLink>
           <NavLink 
             to="/health"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Health
           </NavLink>
           <NavLink 
             to="/arts"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Arts
           </NavLink>
           <NavLink 
             to="/politics"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Politics
           </NavLink>
           <NavLink 
             to="/events"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Events
           </NavLink>
           <NavLink 
             to="/projects"
             whileHover={linkHoverAnimation}
+            onClick={() => setMobileMenuOpen(false)}
           >
             Projects
           </NavLink>

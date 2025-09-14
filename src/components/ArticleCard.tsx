@@ -23,12 +23,20 @@ const Card = styled(motion.article)`
 
 const CardImage = styled.img`
   width: 100%;
-  height: 200px;
+  aspect-ratio: 16/9;
   object-fit: cover;
   transition: transform 0.3s ease;
 
   ${Card}:hover & {
     transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    aspect-ratio: 16/9;
+  }
+  
+  @media (max-width: 480px) {
+    aspect-ratio: 4/3;
   }
 `;
 
@@ -39,6 +47,14 @@ const CardContent = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
+  
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 const CategoryTag = styled.span`
@@ -50,6 +66,18 @@ const CategoryTag = styled.span`
   display: inline-block;
   margin-bottom: 1rem;
   width: fit-content;
+  
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+    padding: 0.3rem 0.8rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    margin-bottom: 0.6rem;
+  }
 `;
 
 const CardTitle = styled.h3`
@@ -58,6 +86,17 @@ const CardTitle = styled.h3`
   line-height: 1.4;
   flex: 1;
   color: var(--text-color);
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    line-height: 1.2;
+    margin-bottom: 0.4rem;
+  }
 `;
 
 const CardExcerpt = styled.p`
@@ -70,6 +109,18 @@ const CardExcerpt = styled.p`
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+    -webkit-line-clamp: 2;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.4;
+  }
 `;
 
 const CardMeta = styled.div`
@@ -80,6 +131,18 @@ const CardMeta = styled.div`
   color: var(--text-color);
   opacity: 0.7;
   margin-top: auto;
+  
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.7rem;
+    gap: 0.2rem;
+  }
 `;
 
 const AuthorInfo = styled.div`
