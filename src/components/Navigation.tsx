@@ -29,6 +29,25 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 0 2rem;
+  min-width: 0; /* Flexbox overflow prevention */
+  
+  @media (max-width: 1200px) {
+    max-width: 100%;
+    padding: 0 1.5rem;
+  }
+  
+  @media (max-width: 1024px) {
+    padding: 0 1rem;
+  }
+  
+  @media (max-width: 900px) {
+    padding: 0 0.8rem;
+  }
+  
+  @media (max-width: 850px) {
+    padding: 0 0.6rem;
+  }
   
   @media (max-width: 768px) {
     max-width: 100%;
@@ -48,9 +67,22 @@ const Logo = styled(Link)`
   text-decoration: none;
   transition: color 0.3s ease;
   white-space: nowrap;
+  flex-shrink: 0; /* Prevent shrinking */
 
   &:hover {
     color: inherit;
+  }
+  
+  @media (max-width: 1024px) {
+    font-size: 1.9rem;
+  }
+  
+  @media (max-width: 900px) {
+    font-size: 1.8rem;
+  }
+  
+  @media (max-width: 850px) {
+    font-size: 1.7rem;
   }
   
   @media (max-width: 768px) {
@@ -95,8 +127,42 @@ const NavLinks = styled.div<{ isOpen?: boolean }>`
   display: flex;
   gap: 2rem;
   align-items: center;
+  flex: 1;
+  justify-content: center;
+  max-width: calc(100% - 400px); /* Reserve space for logo and auth */
+  overflow: hidden;
 
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
+    gap: 1.5rem;
+    max-width: calc(100% - 350px);
+  }
+
+  @media (max-width: 1024px) {
+    gap: 1.2rem;
+    max-width: calc(100% - 320px);
+  }
+
+  @media (max-width: 950px) {
+    gap: 1rem;
+    max-width: calc(100% - 300px);
+  }
+
+  @media (max-width: 900px) {
+    gap: 0.8rem;
+    max-width: calc(100% - 280px);
+  }
+
+  @media (max-width: 850px) {
+    gap: 0.6rem;
+    max-width: calc(100% - 260px);
+  }
+
+  @media (max-width: 800px) {
+    gap: 0.4rem;
+    max-width: calc(100% - 240px);
+  }
+
+  @media (max-width: 1024px) {
     display: ${props => props.isOpen ? 'flex' : 'none'};
     position: fixed;
     top: 70px;
@@ -108,6 +174,8 @@ const NavLinks = styled.div<{ isOpen?: boolean }>`
     border-bottom: 1px solid #2a2a2a;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     gap: 1.5rem;
+    z-index: 999;
+    max-width: none;
   }
 `;
 
@@ -115,9 +183,30 @@ const AuthSection = styled.div`
   display: flex;
   align-items: center;
   gap: 0.8rem;
+  flex-shrink: 0; /* Prevent shrinking */
+  
+  @media (max-width: 1024px) {
+    gap: 0.7rem;
+  }
+  
+  @media (max-width: 950px) {
+    gap: 0.6rem;
+  }
+  
+  @media (max-width: 900px) {
+    gap: 0.5rem;
+  }
+  
+  @media (max-width: 850px) {
+    gap: 0.4rem;
+  }
+  
+  @media (max-width: 1024px) {
+    gap: 0.6rem;
+  }
   
   @media (max-width: 768px) {
-    gap: 0.6rem;
+    gap: 0.5rem;
   }
   
   @media (max-width: 480px) {
@@ -157,6 +246,32 @@ const AuthButton = styled.button`
     background: var(--accent-color);
     color: white;
     transform: scale(1.02);
+  }
+  
+  @media (max-width: 1024px) {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+  }
+  
+  @media (max-width: 950px) {
+    padding: 0.3rem 0.65rem;
+    font-size: 0.79rem;
+  }
+  
+  @media (max-width: 900px) {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.78rem;
+  }
+  
+  @media (max-width: 850px) {
+    padding: 0.25rem 0.55rem;
+    font-size: 0.77rem;
+  }
+  
+  @media (max-width: 1024px) {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.78rem;
+    border-radius: 4px;
   }
   
   @media (max-width: 768px) {
@@ -240,6 +355,7 @@ const NavLink = styled(Link)`
   padding: 0.5rem 0;
   position: relative;
   transition: all 0.3s ease;
+  white-space: nowrap;
 
   &::after {
     content: '';
@@ -258,18 +374,64 @@ const NavLink = styled(Link)`
   
   &:hover {
     transform: scale(1.02);
+    color: rgba(255, 255, 255, 1);
   }
   
-  @media (max-width: 768px) {
+  @media (max-width: 1200px) {
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 1024px) {
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+  }
+  
+  @media (max-width: 950px) {
+    font-size: 0.87rem;
+    letter-spacing: 0.025em;
+  }
+  
+  @media (max-width: 900px) {
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  
+  @media (max-width: 850px) {
+    font-size: 0.82rem;
+    letter-spacing: 0.015em;
+  }
+  
+  @media (max-width: 800px) {
+    font-size: 0.8rem;
+    letter-spacing: 0.01em;
+  }
+  
+  @media (max-width: 1024px) {
     font-size: 1.1rem;
     padding: 1rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     width: 100%;
     text-align: center;
+    letter-spacing: 0.05em;
     
     &:last-child {
       border-bottom: none;
     }
+    
+    &:hover {
+      transform: none;
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    padding: 0.8rem 0;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+    padding: 0.7rem 0;
   }
 `;
 
@@ -280,9 +442,18 @@ const MobileMenuButton = styled.button`
   font-size: 1.5rem;
   cursor: pointer;
   color: white;
+  transition: transform 0.2s ease;
 
-  @media (max-width: 768px) {
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  @media (max-width: 1024px) {
     display: block;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.3rem;
   }
 `;
 

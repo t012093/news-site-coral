@@ -452,6 +452,20 @@ const Satellite = styled(Link)`
   }
 `;
 
+const EventsSatellite = styled(Satellite)`
+  @media (max-width: 768px) {
+    top: 80px !important;
+    right: -50px !important;
+    left: auto !important;
+  }
+  
+  @media (max-width: 480px) {
+    top: 75px !important;
+    right: -40px !important;
+    left: auto !important;
+  }
+`;
+
 
 // Weekly Highlights用のスタイル
 const WeeklySection = styled.section`
@@ -640,9 +654,9 @@ const HomePage = () => {
           <Satellite to="/politics" style={{ top: -45, right: -95 }}>
             Politics
           </Satellite>
-          <Satellite to="/events" style={{ top: 80, right: -70 }}>
+          <EventsSatellite to="/events" style={{ top: 80, right: -50 }}>
             Events
-          </Satellite>
+          </EventsSatellite>
         </PlanetContainer>
       </TopicsExplorerSection>
 
@@ -726,33 +740,33 @@ const HomePage = () => {
     <WeeklySection>
       <SectionTitle>Weekly Highlights</SectionTitle>
       <CarouselContainer>
-        <PerformantMotion
-          as={WeeklyCard}
-          {...optimizedAnimations.hover}
+        <WeeklyCard
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
         >
           <WeeklyTitle>AIと倫理：今週の重要な議論</WeeklyTitle>
           <WeeklyContent>
             AI開発における倫理的な課題と、その解決に向けた取り組みについての詳細なレポート。
           </WeeklyContent>
-        </PerformantMotion>
-        <PerformantMotion
-          as={WeeklyCard}
-          {...optimizedAnimations.hover}
+        </WeeklyCard>
+        <WeeklyCard
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
         >
           <WeeklyTitle>未来の働き方：リモートワークの新展開</WeeklyTitle>
           <WeeklyContent>
             最新のテクノロジーがもたらす、働き方改革とオフィスカルチャーの変革について。
           </WeeklyContent>
-        </PerformantMotion>
-        <PerformantMotion
-          as={WeeklyCard}
-          {...optimizedAnimations.hover}
+        </WeeklyCard>
+        <WeeklyCard
+          whileHover={{ scale: 1.02 }}
+          transition={{ duration: 0.2 }}
         >
           <WeeklyTitle>デジタルアートの新時代</WeeklyTitle>
           <WeeklyContent>
             NFTとブロックチェーン技術が、アート業界にもたらす革新的な変化とは。
           </WeeklyContent>
-        </PerformantMotion>
+        </WeeklyCard>
       </CarouselContainer>
     </WeeklySection>
     </Container>
