@@ -223,11 +223,39 @@ export class MockUserService {
   }
 
   /**
+   * Update user password
+   */
+  public static async updatePassword(email: string, newPassword: string): Promise<void> {
+    initializeMockUsers();
+
+    // Validate password strength
+    const passwordValidation = PasswordManager.validatePasswordStrength(newPassword);
+    if (!passwordValidation.isValid) {
+      throw createError.badRequest(`Password validation failed: ${passwordValidation.errors.join(', ')}`);
+    }
+
+    // Find user
+    const userIndex = users.findIndex(u => u.email === email && u.isActive);
+    if (userIndex === -1) {
+      throw createError.notFound('User not found');
+    }
+
+    // Hash new password
+    const passwordHash = await PasswordManager.hashPassword(newPassword);
+
+    // Update password
+    users[userIndex].password_hash = passwordHash;
+    users[userIndex].updatedAt = new Date().toISOString();
+
+    console.log(`✅ Mock: Password updated for user ${email}`);
+  }
+
+  /**
    * Update user online status
    */
   public static async updateOnlineStatus(id: string, isOnline: boolean): Promise<void> {
     initializeMockUsers();
-    
+
     const userIndex = users.findIndex(u => u.id === id);
     if (userIndex !== -1) {
       // Mock implementation - we don't track online status in memory store

@@ -1,8 +1,13 @@
 import { LoginData, RegisterData, AuthResponse, User } from '@/types';
 import { UserService } from '@/services/userService';
+import { MockUserService } from '@/services/mockUserService';
 import { jwtManager } from '@/utils/jwt';
 import { createError } from '@/middleware/errorHandler';
 import { redisClient } from '@/config/database';
+
+// Use mock service when real databases are not configured
+const USE_REAL_DATABASES = process.env.USE_REAL_DATABASES === 'true';
+const userService = USE_REAL_DATABASES ? UserService : MockUserService;
 
 export class AuthService {
   /**
@@ -12,7 +17,7 @@ export class AuthService {
     const { email, password } = loginData;
 
     // Verify password
-    const verification = await UserService.verifyPassword(email, password);
+    const verification = await userService.verifyPassword(email, password);
     
     if (!verification.isValid || !verification.user) {
       throw createError.unauthorized('Invalid email or password');
@@ -36,7 +41,7 @@ export class AuthService {
     await this.storeRefreshToken(user.id, refreshToken);
 
     // Update user online status
-    await UserService.updateOnlineStatus(user.id, true);
+    await userService.updateOnlineStatus(user.id, true);
 
     return {
       user,
@@ -50,7 +55,7 @@ export class AuthService {
    */
   public static async loginWithEmail(email: string): Promise<AuthResponse> {
     // Get user by email
-    const user = await UserService.findByEmail(email);
+    const user = await userService.findByEmail(email);
     
     if (!user) {
       throw createError.unauthorized('User not found');
@@ -72,7 +77,7 @@ export class AuthService {
     await this.storeRefreshToken(user.id, refreshToken);
 
     // Update user online status
-    await UserService.updateOnlineStatus(user.id, true);
+    await userService.updateOnlineStatus(user.id, true);
 
     return {
       user,
@@ -91,7 +96,7 @@ export class AuthService {
     }
 
     // Create user
-    const user = await UserService.createUser(registerData);
+    const user = await userService.createUser(registerData);
 
     // Generate JWT tokens
     const { accessToken, refreshToken } = jwtManager.generateTokenPair({
@@ -104,7 +109,7 @@ export class AuthService {
     await this.storeRefreshToken(user.id, refreshToken);
 
     // Update user online status
-    await UserService.updateOnlineStatus(user.id, true);
+    await userService.updateOnlineStatus(user.id, true);
 
     return {
       user,
@@ -128,7 +133,7 @@ export class AuthService {
       }
 
       // Get user info
-      const user = await UserService.findById(decoded.userId);
+      const user = await userService.findById(decoded.userId);
       if (!user || !user.isActive) {
         throw createError.unauthorized('User not found or inactive');
       }
@@ -161,7 +166,7 @@ export class AuthService {
    */
   public static async logout(userId: string, refreshToken?: string): Promise<void> {
     // Update user online status
-    await UserService.updateOnlineStatus(userId, false);
+    await userService.updateOnlineStatus(userId, false);
 
     // Remove refresh token from Redis
     if (refreshToken) {
@@ -173,7 +178,7 @@ export class AuthService {
    * Get current user
    */
   public static async getCurrentUser(userId: string): Promise<User> {
-    const user = await UserService.findById(userId);
+    const user = await userService.findById(userId);
     
     if (!user) {
       throw createError.notFound('User not found');
@@ -256,7 +261,7 @@ export class AuthService {
       return result === 'true';
     } catch (error) {
       // Fallback to database if Redis is not available
-      const user = await UserService.findById(userId);
+      const user = await userService.findById(userId);
       return user?.isActive || false;
     }
   }
@@ -278,7 +283,7 @@ export class AuthService {
     }
 
     // Also update in database
-    await UserService.updateOnlineStatus(userId, isOnline);
+    await userService.updateOnlineStatus(userId, isOnline);
   }
 
   /**
@@ -286,7 +291,7 @@ export class AuthService {
    */
   public static async requestPasswordReset(email: string): Promise<{ success: boolean; message: string }> {
     // Check if user exists
-    const user = await UserService.findByEmail(email);
+    const user = await userService.findByEmail(email);
 
     // Always return success to prevent email enumeration attacks
     if (!user) {
@@ -348,7 +353,7 @@ export class AuthService {
     }
 
     // Check if user exists
-    const user = await UserService.findByEmail(email);
+    const user = await userService.findByEmail(email);
     if (!user) {
       throw createError.notFound('User not found');
     }
@@ -368,7 +373,7 @@ export class AuthService {
     }
 
     // Update the password
-    await UserService.updatePassword(email, newPassword);
+    await userService.updatePassword(email, newPassword);
 
     console.log(`Password successfully reset for user: ${email}`);
     return {
