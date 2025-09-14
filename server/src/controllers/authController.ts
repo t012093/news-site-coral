@@ -241,7 +241,7 @@ export class AuthController {
 
   /**
    * POST /api/auth/forgot-password
-   * Request password reset (placeholder)
+   * Request password reset - send verification code to email
    */
   public static forgotPassword = asyncHandler(async (req: Request, res: Response) => {
     const { email } = req.body;
@@ -254,34 +254,62 @@ export class AuthController {
       });
     }
 
-    // TODO: Implement password reset functionality
-    // For now, just return success to prevent email enumeration
+    const result = await AuthService.requestPasswordReset(email);
+
     res.status(200).json({
-      success: true,
-      data: { message: 'If the email exists, a password reset link has been sent.' },
+      success: result.success,
+      data: { message: result.message },
       timestamp: new Date().toISOString(),
     });
   });
 
   /**
    * POST /api/auth/reset-password
-   * Reset password (placeholder)
+   * Reset password using verification code
    */
   public static resetPassword = asyncHandler(async (req: Request, res: Response) => {
-    const { token, newPassword } = req.body;
+    const { email, verificationCode, newPassword } = req.body;
 
-    if (!token || !newPassword) {
+    if (!email || !verificationCode || !newPassword) {
       return res.status(400).json({
         success: false,
-        error: { message: 'Token and new password are required' },
+        error: { message: 'Email, verification code, and new password are required' },
         timestamp: new Date().toISOString(),
       });
     }
 
-    // TODO: Implement password reset functionality
-    res.status(501).json({
-      success: false,
-      error: { message: 'Password reset not yet implemented' },
+    // Validate email format
+    if (!AuthService.isValidEmail(email)) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Invalid email format' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate verification code format
+    if (!/^\d{6}$/.test(verificationCode)) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'Verification code must be 6 digits' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    // Validate password length
+    if (newPassword.length < 6) {
+      return res.status(400).json({
+        success: false,
+        error: { message: 'New password must be at least 6 characters long' },
+        timestamp: new Date().toISOString(),
+      });
+    }
+
+    const result = await AuthService.resetPassword(email, verificationCode, newPassword);
+
+    res.status(200).json({
+      success: result.success,
+      data: { message: result.message },
       timestamp: new Date().toISOString(),
     });
   });

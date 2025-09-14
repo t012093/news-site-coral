@@ -32,6 +32,8 @@ const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
 // Auth pages
 const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
 const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
+const ForgotPasswordPage = lazy(() => import('./pages/auth/ForgotPasswordPage'));
+const ResetPasswordPage = lazy(() => import('./pages/auth/ResetPasswordPage'));
 const ProfilePage = lazy(() => import('./pages/profile/ProfilePage'));
 
 // Heavy feature pages
@@ -238,6 +240,8 @@ function App() {
               {/* 認証関連のルート */}
               <Route path="/login" element={<PageWrapper><LoginPage /></PageWrapper>} />
               <Route path="/register" element={<PageWrapper><RegisterPage /></PageWrapper>} />
+              <Route path="/forgot-password" element={<PageWrapper><ForgotPasswordPage /></PageWrapper>} />
+              <Route path="/reset-password" element={<PageWrapper><ResetPasswordPage /></PageWrapper>} />
               
               {/* 保護されたルート */}
               <Route path="/profile" element={

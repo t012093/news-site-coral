@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useAuth } from '../../contexts/AuthContext';
-import { LoginData } from '../../types/auth';
 
 const API_BASE_URL = import.meta.env.CORAL_API_URL || 'https://news-site-coral-production.up.railway.app/api';
 
@@ -18,7 +16,7 @@ const Container = styled.div`
   padding: 2rem;
 `;
 
-const LoginCard = styled(motion.div)`
+const Card = styled(motion.div)`
   background: var(--primary-color);
   padding: 3rem;
   border-radius: 12px;
@@ -42,6 +40,7 @@ const Title = styled.h1`
 const Subtitle = styled.p`
   color: var(--secondary-color);
   font-size: 0.9rem;
+  line-height: 1.5;
 `;
 
 const Form = styled.form`
@@ -87,23 +86,7 @@ const ErrorMessage = styled.span`
   font-size: 0.8rem;
 `;
 
-const CheckboxGroup = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-`;
-
-const Checkbox = styled.input`
-  accent-color: var(--accent-color);
-`;
-
-const CheckboxLabel = styled.label`
-  color: var(--secondary-color);
-  font-size: 0.9rem;
-  cursor: pointer;
-`;
-
-const LoginButton = styled(motion.button)`
+const SubmitButton = styled(motion.button)`
   padding: 0.75rem 1rem;
   background: var(--accent-color);
   color: white;
@@ -131,29 +114,10 @@ const Footer = styled.div`
   border-top: 1px solid #2a2a2a;
 `;
 
-const FooterText = styled.p`
-  color: var(--secondary-color);
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-`;
-
-const SignUpLink = styled(Link)`
-  color: var(--accent-color);
-  text-decoration: none;
-  font-weight: 500;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const ForgotPasswordLink = styled(Link)`
+const BackLink = styled(Link)`
   color: var(--secondary-color);
   text-decoration: none;
   font-size: 0.9rem;
-  text-align: center;
-  display: block;
-  margin-top: 1rem;
 
   &:hover {
     color: var(--accent-color);
@@ -161,69 +125,133 @@ const ForgotPasswordLink = styled(Link)`
   }
 `;
 
+const SuccessMessage = styled.div`
+  background: #d1fae5;
+  border: 1px solid #10b981;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  color: #065f46;
+  text-align: center;
+`;
+
 const schema = yup.object().shape({
   email: yup
     .string()
     .email('有効なメールアドレスを入力してください')
     .required('メールアドレスは必須です'),
-  password: yup
-    .string()
-    .min(6, 'パスワードは6文字以上で入力してください')
-    .required('パスワードは必須です'),
-  rememberMe: yup.boolean().optional(),
 });
 
-const LoginPage: React.FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const { login, user, isAuthenticated } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
+interface ForgotPasswordData {
+  email: string;
+}
 
-  const from = (location.state as any)?.from || '/';
+const ForgotPasswordPage: React.FC = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState('');
+  const navigate = useNavigate();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginData>({
+    setError,
+  } = useForm<ForgotPasswordData>({
     resolver: yupResolver(schema),
     defaultValues: {
       email: '',
-      password: '',
-      rememberMe: false,
-    } as LoginData,
+    },
   });
 
-  const onSubmit = async (data: LoginData) => {
+  const onSubmit = async (data: ForgotPasswordData) => {
     setIsLoading(true);
     try {
-      await login(data);
-      navigate(from);
+      const response = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: data.email,
+        }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.error?.message || 'リクエストの送信に失敗しました');
+      }
+
+      setSubmittedEmail(data.email);
+      setIsSubmitted(true);
     } catch (error) {
-      // エラーハンドリングはAuthContextで行われる
+      console.error('Forgot password error:', error);
+      setError('email', {
+        type: 'manual',
+        message: error instanceof Error ? error.message : 'エラーが発生しました',
+      });
     } finally {
       setIsLoading(false);
     }
   };
 
+  const handleGoToReset = () => {
+    navigate(`/reset-password?email=${encodeURIComponent(submittedEmail)}`);
+  };
 
-  // If user is already authenticated, redirect to profile
-  if (isAuthenticated && user) {
-    navigate('/profile');
-    return null;
+  if (isSubmitted) {
+    return (
+      <Container>
+        <Card
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Header>
+            <Title>メール送信完了</Title>
+            <Subtitle>認証コードをお送りしました</Subtitle>
+          </Header>
+
+          <SuccessMessage>
+            <p style={{ margin: 0, marginBottom: '0.5rem' }}>
+              <strong>{submittedEmail}</strong> に認証コードを送信しました。
+            </p>
+            <p style={{ margin: 0, fontSize: '0.9rem' }}>
+              メールをご確認の上、認証コードを入力してパスワードを再設定してください。
+            </p>
+          </SuccessMessage>
+
+          <SubmitButton
+            type="button"
+            onClick={handleGoToReset}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            パスワード再設定に進む
+          </SubmitButton>
+
+          <Footer>
+            <BackLink to="/login">ログインページに戻る</BackLink>
+          </Footer>
+        </Card>
+      </Container>
+    );
   }
-
 
   return (
     <Container>
-      <LoginCard
+      <Card
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
         <Header>
-          <Title>ログイン</Title>
-          <Subtitle>CORALコミュニティへようこそ</Subtitle>
+          <Title>パスワードを忘れた方</Title>
+          <Subtitle>
+            登録されたメールアドレスを入力してください。
+            パスワード再設定用の認証コードをお送りします。
+          </Subtitle>
         </Header>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
@@ -238,45 +266,22 @@ const LoginPage: React.FC = () => {
             {errors.email && <ErrorMessage>{errors.email.message}</ErrorMessage>}
           </FormGroup>
 
-          <FormGroup>
-            <Label>パスワード</Label>
-            <Input
-              type="password"
-              placeholder="••••••••"
-              hasError={!!errors.password}
-              {...register('password')}
-            />
-            {errors.password && <ErrorMessage>{errors.password.message}</ErrorMessage>}
-          </FormGroup>
-
-          <CheckboxGroup>
-            <Checkbox type="checkbox" id="rememberMe" {...register('rememberMe')} />
-            <CheckboxLabel htmlFor="rememberMe">
-              ログイン状態を保持する
-            </CheckboxLabel>
-          </CheckboxGroup>
-
-          <LoginButton
+          <SubmitButton
             type="submit"
             disabled={isLoading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {isLoading ? 'ログイン中...' : 'ログイン'}
-          </LoginButton>
-
-          <ForgotPasswordLink to="/forgot-password">
-            パスワードをお忘れの方はこちら
-          </ForgotPasswordLink>
+            {isLoading ? '送信中...' : '認証コードを送信'}
+          </SubmitButton>
         </Form>
 
         <Footer>
-          <FooterText>アカウントをお持ちでない方</FooterText>
-          <SignUpLink to="/register">新規登録はこちら</SignUpLink>
+          <BackLink to="/login">ログインページに戻る</BackLink>
         </Footer>
-      </LoginCard>
+      </Card>
     </Container>
   );
 };
 
-export default LoginPage;
+export default ForgotPasswordPage;

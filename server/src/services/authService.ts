@@ -266,7 +266,7 @@ export class AuthService {
    */
   public static async setUserOnlineStatus(userId: string, isOnline: boolean): Promise<void> {
     const key = `user_online:${userId}`;
-    
+
     try {
       if (isOnline) {
         await redisClient.setEx(key, 300, 'true'); // 5 minutes expiry
@@ -276,8 +276,104 @@ export class AuthService {
     } catch (error) {
       console.error('Failed to update online status in Redis:', error);
     }
-    
+
     // Also update in database
     await UserService.updateOnlineStatus(userId, isOnline);
+  }
+
+  /**
+   * Request password reset - send verification code to email
+   */
+  public static async requestPasswordReset(email: string): Promise<{ success: boolean; message: string }> {
+    // Check if user exists
+    const user = await UserService.findByEmail(email);
+
+    // Always return success to prevent email enumeration attacks
+    if (!user) {
+      console.log(`Password reset requested for non-existent email: ${email}`);
+      return {
+        success: true,
+        message: 'If the email exists, a password reset code has been sent.',
+      };
+    }
+
+    // Use existing email verification service to send password reset code
+    const { EmailVerificationServiceFactory } = require('@/services/emailVerificationServiceFactory');
+    const EmailVerificationService = await EmailVerificationServiceFactory.getService();
+
+    try {
+      await EmailVerificationService.sendVerificationCode(
+        email,
+        'password_reset',
+        '127.0.0.1', // Default IP
+        'Password Reset Request'
+      );
+
+      console.log(`Password reset code sent to: ${email}`);
+      return {
+        success: true,
+        message: 'A password reset code has been sent to your email address.',
+      };
+    } catch (error) {
+      console.error('Failed to send password reset code:', error);
+      // Still return success to prevent leaking information
+      return {
+        success: true,
+        message: 'If the email exists, a password reset code has been sent.',
+      };
+    }
+  }
+
+  /**
+   * Reset password using verification code
+   */
+  public static async resetPassword(
+    email: string,
+    verificationCode: string,
+    newPassword: string
+  ): Promise<{ success: boolean; message: string }> {
+    // Validate inputs
+    if (!email || !verificationCode || !newPassword) {
+      throw createError.badRequest('Email, verification code, and new password are required');
+    }
+
+    // Validate email format
+    if (!this.isValidEmail(email)) {
+      throw createError.badRequest('Invalid email format');
+    }
+
+    // Validate verification code format (6 digits)
+    if (!/^\d{6}$/.test(verificationCode)) {
+      throw createError.badRequest('Verification code must be 6 digits');
+    }
+
+    // Check if user exists
+    const user = await UserService.findByEmail(email);
+    if (!user) {
+      throw createError.notFound('User not found');
+    }
+
+    // Verify the reset code
+    const { EmailVerificationServiceFactory } = require('@/services/emailVerificationServiceFactory');
+    const EmailVerificationService = await EmailVerificationServiceFactory.getService();
+
+    const verification = await EmailVerificationService.verifyCode(
+      email,
+      verificationCode,
+      'password_reset'
+    );
+
+    if (!verification.valid) {
+      throw createError.badRequest('Invalid or expired verification code');
+    }
+
+    // Update the password
+    await UserService.updatePassword(email, newPassword);
+
+    console.log(`Password successfully reset for user: ${email}`);
+    return {
+      success: true,
+      message: 'Password has been successfully reset.',
+    };
   }
 }

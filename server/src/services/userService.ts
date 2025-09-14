@@ -224,10 +224,55 @@ export class UserService {
    */
   public static async updateOnlineStatus(id: string, isOnline: boolean): Promise<void> {
     await pool.query(`
-      UPDATE users 
+      UPDATE users
       SET is_online = $1, last_seen = CURRENT_TIMESTAMP
       WHERE id = $2
     `, [isOnline, id]);
+  }
+
+  /**
+   * Update user password
+   */
+  public static async updatePassword(email: string, newPassword: string): Promise<void> {
+    const client = await pool.connect();
+
+    try {
+      await client.query('BEGIN');
+
+      // Validate password strength
+      const passwordValidation = PasswordManager.validatePasswordStrength(newPassword);
+      if (!passwordValidation.isValid) {
+        throw createError.badRequest(`Password validation failed: ${passwordValidation.errors.join(', ')}`);
+      }
+
+      // Check if user exists
+      const userCheck = await client.query(
+        'SELECT id FROM users WHERE email = $1 AND is_active = true',
+        [email]
+      );
+
+      if (userCheck.rows.length === 0) {
+        throw createError.notFound('User not found');
+      }
+
+      // Hash new password
+      const passwordHash = await PasswordManager.hashPassword(newPassword);
+
+      // Update password
+      await client.query(`
+        UPDATE users
+        SET password_hash = $1, updated_at = CURRENT_TIMESTAMP
+        WHERE email = $2 AND is_active = true
+      `, [passwordHash, email]);
+
+      await client.query('COMMIT');
+
+    } catch (error) {
+      await client.query('ROLLBACK');
+      throw error;
+    } finally {
+      client.release();
+    }
   }
 
   /**
