@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 import { ja } from 'date-fns/locale';
 import { Article } from '../types/wordpress';
+import OptimizedImage from './OptimizedImage';
 
 const Card = styled(motion.article)`
   background: var(--primary-color);
@@ -21,22 +22,12 @@ const Card = styled(motion.article)`
   }
 `;
 
-const CardImage = styled.img`
+const ImageContainer = styled.div`
   width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-
-  ${Card}:hover & {
+  overflow: hidden;
+  
+  ${Card}:hover & > div {
     transform: scale(1.05);
-  }
-  
-  @media (max-width: 768px) {
-    aspect-ratio: 16/9;
-  }
-  
-  @media (max-width: 480px) {
-    aspect-ratio: 4/3;
   }
 `;
 
@@ -170,7 +161,7 @@ export const ArticleCard = ({ article, size = 'medium' }: ArticleCardProps) => {
   // 画像URLの取得（サイズに応じて）
   const getImageUrl = () => {
     if (!article.featuredImage) {
-      return '/images/coral.png'; // デフォルト画像
+      return '/images/coral.webp'; // デフォルト画像（WebP優先）
     }
     
     switch (size) {
@@ -199,14 +190,20 @@ export const ArticleCard = ({ article, size = 'medium' }: ArticleCardProps) => {
         transition={{ duration: 0.2 }}
         layout
       >
-        <CardImage
-          src={getImageUrl()}
-          alt={article.featuredImage?.alt || article.title}
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.src = '/images/coral.png';
-          }}
-        />
+        <ImageContainer>
+          <OptimizedImage
+            src={getImageUrl()}
+            alt={article.featuredImage?.alt || article.title}
+            aspectRatio="16/9"
+            lazy={true}
+            style={{
+              transition: 'transform 0.3s ease'
+            }}
+            onError={() => {
+              // Fallback handled by OptimizedImage component
+            }}
+          />
+        </ImageContainer>
         <CardContent>
           {primaryCategory && (
             <CategoryTag>{primaryCategory.name}</CategoryTag>

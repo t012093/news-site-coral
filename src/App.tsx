@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { useEffect, Suspense, lazy } from 'react';
 import { Global } from '@emotion/react';
 import { Toaster } from 'react-hot-toast';
 import { globalStyles } from './styles/globalStyles';
@@ -10,38 +10,52 @@ import { HelmetProvider } from 'react-helmet-async';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/auth/ProtectedRoute';
-import HomePage from './pages/HomePage';
-import MusicPage from './pages/MusicPage';
-import SubcultureMusicPage from './pages/articles/SubcultureMusicPage';
-import BarbapapaMusicPage from './pages/articles/BarbapapaMusicPage';
-import AIWritingArticle from './pages/articles/AIWritingArticle';
-import AIReasoningBreakthroughArticle from './pages/articles/AIReasoningBreakthroughArticle';
-import AISleepScienceRevolutionArticle from './pages/articles/AISleepScienceRevolutionArticle';
-import GiftOfIgnorancePage from './pages/articles/GiftOfIgnorancePage';
-import HotspotDramaPage from './pages/articles/HotspotDramaPage';
-import GibberLinkAIArticle from './pages/articles/GibberLinkAIArticle';
-import StripePayPayDeNAArticle from './pages/articles/StripePayPayDeNAArticle';
-import OffensiveDefensiveVacationArticle from './pages/articles/OffensiveDefensiveVacationArticle';
-import HippocampusMemoryArticle from './pages/articles/HippocampusMemoryArticle';
-import TechPage from './pages/TechPage';
-import SpiritualPage from './pages/SpiritualPage';
-import HealthPage from './pages/HealthPage';
-import ArtsPage from './pages/ArtsPage';
-import PoliticsPage from './pages/PoliticsPage';
-import EventsPage from './pages/EventsPage';
-import EventDetailPage from './pages/EventDetailPage';
-import ProjectsPage from './pages/ProjectsPage';
-import InternationalArtCollabPage from './pages/projects/InternationalArtCollabPage';
-import InternationalPlatformDevPage from './pages/projects/InternationalPlatformDevPage';
-import LoginPage from './pages/auth/LoginPage';
-import RegisterPage from './pages/auth/RegisterPage';
-import ProfilePage from './pages/profile/ProfilePage';
-import { ArticlePage } from './pages/ArticlePage';
+import LoadingSpinner from './components/LoadingSpinner';
 import { WordPressStatusIndicator } from './components/WordPressStatusIndicator';
-import ShiftDashboard from './pages/ShiftDashboard';
-import TaskDashboard from './pages/TaskDashboard';
-import MessagePage from './pages/MessagePage';
+import { usePerformanceMonitor } from './hooks/usePerformanceMonitor';
+
+// Critical pages - loaded immediately
+import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
+
+// Lazy-loaded pages - split into separate chunks
+const MusicPage = lazy(() => import('./pages/MusicPage'));
+const TechPage = lazy(() => import('./pages/TechPage'));
+const SpiritualPage = lazy(() => import('./pages/SpiritualPage'));
+const HealthPage = lazy(() => import('./pages/HealthPage'));
+const ArtsPage = lazy(() => import('./pages/ArtsPage'));
+const PoliticsPage = lazy(() => import('./pages/PoliticsPage'));
+const EventsPage = lazy(() => import('./pages/EventsPage'));
+const EventDetailPage = lazy(() => import('./pages/EventDetailPage'));
+const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
+
+// Auth pages
+const LoginPage = lazy(() => import('./pages/auth/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/auth/RegisterPage'));
+const ProfilePage = lazy(() => import('./pages/profile/ProfilePage'));
+
+// Heavy feature pages
+const InternationalArtCollabPage = lazy(() => import('./pages/projects/InternationalArtCollabPage'));
+const InternationalPlatformDevPage = lazy(() => import('./pages/projects/InternationalPlatformDevPage'));
+const ShiftDashboard = lazy(() => import('./pages/ShiftDashboard'));
+const TaskDashboard = lazy(() => import('./pages/TaskDashboard'));
+const MessagePage = lazy(() => import('./pages/MessagePage'));
+
+// Article pages - grouped by category
+const SubcultureMusicPage = lazy(() => import('./pages/articles/SubcultureMusicPage'));
+const BarbapapaMusicPage = lazy(() => import('./pages/articles/BarbapapaMusicPage'));
+const AIWritingArticle = lazy(() => import('./pages/articles/AIWritingArticle'));
+const AIReasoningBreakthroughArticle = lazy(() => import('./pages/articles/AIReasoningBreakthroughArticle'));
+const AISleepScienceRevolutionArticle = lazy(() => import('./pages/articles/AISleepScienceRevolutionArticle'));
+const GiftOfIgnorancePage = lazy(() => import('./pages/articles/GiftOfIgnorancePage'));
+const HotspotDramaPage = lazy(() => import('./pages/articles/HotspotDramaPage'));
+const GibberLinkAIArticle = lazy(() => import('./pages/articles/GibberLinkAIArticle'));
+const StripePayPayDeNAArticle = lazy(() => import('./pages/articles/StripePayPayDeNAArticle'));
+const OffensiveDefensiveVacationArticle = lazy(() => import('./pages/articles/OffensiveDefensiveVacationArticle'));
+const HippocampusMemoryArticle = lazy(() => import('./pages/articles/HippocampusMemoryArticle'));
+
+// Dynamic pages
+const ArticlePage = lazy(() => import('./pages/ArticlePage').then(module => ({ default: module.ArticlePage })));
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -132,6 +146,9 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
 };
 
 function App() {
+  // Enable performance monitoring in development
+  usePerformanceMonitor(import.meta.env.DEV);
+
   return (
     <HelmetProvider>
       <Router>
@@ -163,7 +180,8 @@ function App() {
           <ScrollToTop />
           <Navigation />
           <MainContent>
-            <Routes>
+            <Suspense fallback={<LoadingSpinner />}>
+              <Routes>
               <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
               <Route path="/about" element={<PageWrapper><AboutPage /></PageWrapper>} />
               <Route path="/music" element={<PageWrapper><MusicPage /></PageWrapper>} />
@@ -229,7 +247,8 @@ function App() {
                   </ProtectedRoute>
                 </PageWrapper>
               } />
-            </Routes>
+              </Routes>
+            </Suspense>
           </MainContent>
           <Footer />
           {import.meta.env.DEV && <WordPressStatusIndicator />}

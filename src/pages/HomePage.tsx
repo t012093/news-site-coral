@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useRecentPosts, useWordPressStatus } from '../hooks/useWordPress';
 import { ArticleList } from '../components/ArticleList';
+import OptimizedImage from '../components/OptimizedImage';
+import { PerformantMotion, optimizedAnimations, usePerformantAnimation } from '../components/PerformantMotion';
 
 const Container = styled.div`
   padding: 2rem 1rem;
@@ -51,10 +53,13 @@ const HeroBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80');
-  background-size: cover;
-  background-position: center;
   filter: brightness(0.7);
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `;
 
 const HeroContent = styled.div`
@@ -167,12 +172,17 @@ const ArticleBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
-  background-size: cover;
-  background-position: center;
   transition: transform 0.3s ease;
+  overflow: hidden;
 
   ${FeaturedArticle}:hover & {
     transform: scale(1.05);
+  }
+  
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 `;
 
@@ -333,18 +343,12 @@ const TrendingCard = styled(motion.article)`
   }
 `;
 
-const TrendingImage = styled.img`
+const TrendingImageContainer = styled.div`
   width: 100%;
-  aspect-ratio: 16/9;
-  object-fit: cover;
-  transition: transform 0.3s ease;
-
-  ${TrendingCard}:hover & {
-    transform: scale(1.05);
-  }
+  overflow: hidden;
   
-  @media (max-width: 480px) {
-    aspect-ratio: 4/3;
+  ${TrendingCard}:hover & > div {
+    transform: scale(1.05);
   }
 `;
 
@@ -405,7 +409,7 @@ const PlanetContainer = styled.div`
   }
 `;
 
-const Planet = styled(motion.div)`
+const Planet = styled.div`
   width: 100%;
   height: 100%;
   background: linear-gradient(135deg, var(--accent-color),rgba(138, 116, 217, 0.76));
@@ -413,7 +417,7 @@ const Planet = styled(motion.div)`
   box-shadow: 0 0 30px rgba(156, 124, 244, 0.7);
 `;
 
-const Satellite = styled(motion(Link))`
+const Satellite = styled(Link)`
   position: absolute;
   width: 60px;
   height: 60px;
@@ -427,11 +431,12 @@ const Satellite = styled(motion(Link))`
   cursor: pointer;
   transition: all 0.3s ease;
   font-size: 0.8rem;
+  text-decoration: none;
 
   &:hover {
     border-color: var(--accent-color);
     box-shadow: 0 0 20px var(--accent-color);
-    transform: scale(1.1);
+    transform: scale(1.05);
   }
   
   @media (max-width: 768px) {
@@ -446,6 +451,7 @@ const Satellite = styled(motion(Link))`
     font-size: 0.6rem;
   }
 `;
+
 
 // Weekly Highlights用のスタイル
 const WeeklySection = styled.section`
@@ -546,6 +552,30 @@ const WeeklyContent = styled.p`
 const HomePage = () => {
   const { data: recentPosts, isLoading, error } = useRecentPosts(6);
   const { data: wpStatus } = useWordPressStatus();
+  
+  // Use performant animations based on user preferences and device capabilities
+  const planetAnimation = usePerformantAnimation(
+    {
+      animate: { 
+        rotate: 360,
+        scale: [1, 1.03, 1],
+      },
+      transition: { 
+        rotate: { duration: 40, repeat: Infinity, ease: "linear" },
+        scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }
+      }
+    },
+    optimizedAnimations.lightRotation
+  );
+  
+  const heroAnimation = usePerformantAnimation(
+    {
+      initial: { opacity: 0, y: 20 },
+      animate: { opacity: 1, y: 0 },
+      transition: { duration: 0.8 }
+    },
+    optimizedAnimations.slideUp
+  );
 
   return (
     <>
@@ -559,95 +589,58 @@ const HomePage = () => {
       </Helmet>
       <Container>
       <HeroSection>
-        <HeroBackground />
+        <HeroBackground>
+          <OptimizedImage
+            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
+            alt="Future technology background"
+            lazy={false}
+            style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+          />
+        </HeroBackground>
         <HeroContent>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+          <PerformantMotion
+            {...heroAnimation}
           >
             <HeroTitle>Discover The Future</HeroTitle>
             <HeroSubtitle>
               テクノロジー、音楽、スピリチュアル、健康、アート、そして政治。知的欲求が未来を創る。
             </HeroSubtitle>
-          </motion.div>
+          </PerformantMotion>
         </HeroContent>
       </HeroSection>
 
       <TopicsExplorerSection>
         <SectionTitle>Topics Explorer</SectionTitle>
         <PlanetContainer>
-          <Planet
-            animate={{ 
-              rotate: 360,
-              scale: [1, 1.03, 1],
+          <motion.div
+            style={{
+              width: '100%',
+              height: '100%',
+              background: 'linear-gradient(135deg, var(--accent-color),rgba(138, 116, 217, 0.76))',
+              borderRadius: '50%',
+              boxShadow: '0 0 30px rgba(156, 124, 244, 0.7)'
             }}
-            transition={{ 
-              rotate: { duration: 40, repeat: Infinity, ease: "linear" },
-              scale: { duration: 6, repeat: Infinity, ease: "easeInOut" }
-            }}
+            {...planetAnimation}
           />
-          <Satellite
-            to="/tech"
-            style={{ top: 60, left: -95 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 4, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/tech" style={{ top: 60, left: -95 }}>
             Tech
           </Satellite>
-          <Satellite
-            to="/music"
-            style={{ top: -45, left: -95 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 5, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/music" style={{ top: -45, left: -95 }}>
             Music
           </Satellite>
-          <Satellite
-            to="/health"
-            style={{ top: 45, right: -95 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 4.6, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/health" style={{ top: 45, right: -95 }}>
             Health
           </Satellite>
-          <Satellite
-            to="/arts"
-            style={{ top: 95, left: 0 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 5.4, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/arts" style={{ top: 95, left: 0 }}>
             Arts
           </Satellite>
-          <Satellite
-            to="/spiritual"
-            style={{ top: -95, left: 0 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 4.4, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/spiritual" style={{ top: -95, left: 0 }}>
             Spiritual
           </Satellite>
-          <Satellite
-            to="/politics"
-            style={{ top: -45, right: -95 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 5.2, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/politics" style={{ top: -45, right: -95 }}>
             Politics
           </Satellite>
-          <Satellite
-            to="/events"
-            style={{ top: 60, right: -95 }}
-            whileHover={{ y: -5, scale: 1.1 }}
-            animate={{ y: [-2, 2, -2] }}
-            transition={{ y: { duration: 4.8, repeat: Infinity, ease: "easeInOut" } }}
-          >
+          <Satellite to="/events" style={{ top: 80, right: -70 }}>
             Events
           </Satellite>
         </PlanetContainer>
@@ -656,15 +649,17 @@ const HomePage = () => {
       <MainGrid>
         <FeaturedLinkWrapper to="/tech/gibberlink">
           <FeaturedArticle
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
             gridArea="auto"
           >
-            <ArticleBackground
-              style={{
-                backgroundImage: 'url(/images/wabe.png)',
-              }}
-            />
+            <ArticleBackground>
+              <OptimizedImage
+                src="/images/wabe.png"
+                alt="AI技術記事のイメージ"
+                lazy={true}
+              />
+            </ArticleBackground>
             <ArticleContent>
               <ArticleTag>AI技術</ArticleTag>
               <ArticleTitle>
@@ -680,14 +675,16 @@ const HomePage = () => {
         <SecondFeaturedWrapper>
           <FeaturedArticle
             gridArea="auto"
-            whileHover={{ y: -5 }}
+            whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
           >
-          <ArticleBackground
-            style={{
-              backgroundImage: 'url(/images/cat.png)',
-            }}
-          />
+          <ArticleBackground>
+            <OptimizedImage
+              src="/images/cat.png"
+              alt="スピリチュアル記事のイメージ"
+              lazy={true}
+            />
+          </ArticleBackground>
           <ArticleContent>
             <ArticleTag>スピリチュアル</ArticleTag>
             <ArticleTitle>
@@ -729,33 +726,33 @@ const HomePage = () => {
     <WeeklySection>
       <SectionTitle>Weekly Highlights</SectionTitle>
       <CarouselContainer>
-        <WeeklyCard
-          whileHover={{ rotateY: 5, rotateX: 5 }}
-          transition={{ type: "spring", stiffness: 300 }}
+        <PerformantMotion
+          as={WeeklyCard}
+          {...optimizedAnimations.hover}
         >
           <WeeklyTitle>AIと倫理：今週の重要な議論</WeeklyTitle>
           <WeeklyContent>
             AI開発における倫理的な課題と、その解決に向けた取り組みについての詳細なレポート。
           </WeeklyContent>
-        </WeeklyCard>
-        <WeeklyCard
-          whileHover={{ rotateY: 5, rotateX: 5 }}
-          transition={{ type: "spring", stiffness: 300 }}
+        </PerformantMotion>
+        <PerformantMotion
+          as={WeeklyCard}
+          {...optimizedAnimations.hover}
         >
           <WeeklyTitle>未来の働き方：リモートワークの新展開</WeeklyTitle>
           <WeeklyContent>
             最新のテクノロジーがもたらす、働き方改革とオフィスカルチャーの変革について。
           </WeeklyContent>
-        </WeeklyCard>
-        <WeeklyCard
-          whileHover={{ rotateY: 5, rotateX: 5 }}
-          transition={{ type: "spring", stiffness: 300 }}
+        </PerformantMotion>
+        <PerformantMotion
+          as={WeeklyCard}
+          {...optimizedAnimations.hover}
         >
           <WeeklyTitle>デジタルアートの新時代</WeeklyTitle>
           <WeeklyContent>
             NFTとブロックチェーン技術が、アート業界にもたらす革新的な変化とは。
           </WeeklyContent>
-        </WeeklyCard>
+        </PerformantMotion>
       </CarouselContainer>
     </WeeklySection>
     </Container>

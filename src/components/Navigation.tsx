@@ -4,6 +4,7 @@ import styled from '@emotion/styled';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '../contexts/AuthContext';
 import MessageIcon from './message/MessageIcon';
+import { PerformantMotion, optimizedAnimations } from './PerformantMotion';
 
 const Nav = styled.nav`
   background-color: var(--background-color);
@@ -46,9 +47,47 @@ const Logo = styled(Link)`
   color: white;
   text-decoration: none;
   transition: color 0.3s ease;
+  white-space: nowrap;
 
   &:hover {
-    color:  inherit;
+    color: inherit;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  
+  @media (max-width: 360px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const LogoText = styled.span`
+  @media (max-width: 640px) {
+    .full { display: none; }
+    .short { display: inline; }
+  }
+  
+  @media (min-width: 641px) {
+    .full { display: inline; }
+    .short { display: none; }
+  }
+  
+  @media (max-width: 380px) {
+    .short { display: none; }
+    .icon { display: inline; }
+  }
+  
+  @media (min-width: 381px) {
+    .icon { display: none; }
   }
 `;
 
@@ -75,7 +114,15 @@ const NavLinks = styled.div<{ isOpen?: boolean }>`
 const AuthSection = styled.div`
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.8rem;
+  
+  @media (max-width: 768px) {
+    gap: 0.6rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 0.5rem;
+  }
 `;
 
 const UserInfo = styled.div`
@@ -94,19 +141,33 @@ const Avatar = styled.img`
   object-fit: cover;
 `;
 
-const AuthButton = styled(motion.button)`
+const AuthButton = styled.button`
   background: transparent;
   border: 1px solid var(--accent-color);
   color: var(--accent-color);
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  font-size: 0.9rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 5px;
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.3s ease;
+  white-space: nowrap;
 
   &:hover {
     background: var(--accent-color);
     color: white;
+    transform: scale(1.02);
+  }
+  
+  @media (max-width: 768px) {
+    padding: 0.35rem 0.7rem;
+    font-size: 0.8rem;
+    border-radius: 4px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.3rem 0.6rem;
+    font-size: 0.75rem;
   }
 `;
 
@@ -169,7 +230,7 @@ const DropdownButton = styled.button`
   }
 `;
 
-const NavLink = styled(motion(Link))`
+const NavLink = styled(Link)`
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 1rem;
@@ -178,6 +239,7 @@ const NavLink = styled(motion(Link))`
   letter-spacing: 0.05em;
   padding: 0.5rem 0;
   position: relative;
+  transition: all 0.3s ease;
 
   &::after {
     content: '';
@@ -192,6 +254,10 @@ const NavLink = styled(motion(Link))`
 
   &:hover::after {
     width: 100%;
+  }
+  
+  &:hover {
+    transform: scale(1.02);
   }
   
   @media (max-width: 768px) {
@@ -226,10 +292,6 @@ const Navigation = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  const linkHoverAnimation = {
-    scale: 1.05,
-    transition: { duration: 0.2 }
-  };
 
   const handleLogout = () => {
     logout();
@@ -241,72 +303,39 @@ const Navigation = () => {
   return (
     <Nav>
       <NavContainer>
-        <Logo to="/">Coral Magazine</Logo>
-        <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
-          {mobileMenuOpen ? '✕' : '☰'}
-        </MobileMenuButton>
+        <Logo to="/">
+          <LogoText>
+            <span className="full">Coral Magazine</span>
+            <span className="short">Coral</span>
+            <span className="icon">🪸</span>
+          </LogoText>
+        </Logo>
         <NavLinks isOpen={mobileMenuOpen}>
-          <NavLink 
-            to="/about"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/about" onClick={() => setMobileMenuOpen(false)}>
             About
           </NavLink>
-          <NavLink 
-            to="/music"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/music" onClick={() => setMobileMenuOpen(false)}>
             Music
           </NavLink>
-          <NavLink 
-            to="/tech"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/tech" onClick={() => setMobileMenuOpen(false)}>
             Tech
           </NavLink>
-          <NavLink 
-            to="/spiritual"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/spiritual" onClick={() => setMobileMenuOpen(false)}>
             Spiritual
           </NavLink>
-          <NavLink 
-            to="/health"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/health" onClick={() => setMobileMenuOpen(false)}>
             Health
           </NavLink>
-          <NavLink 
-            to="/arts"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/arts" onClick={() => setMobileMenuOpen(false)}>
             Arts
           </NavLink>
-          <NavLink 
-            to="/politics"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/politics" onClick={() => setMobileMenuOpen(false)}>
             Politics
           </NavLink>
-          <NavLink 
-            to="/events"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/events" onClick={() => setMobileMenuOpen(false)}>
             Events
           </NavLink>
-          <NavLink 
-            to="/projects"
-            whileHover={linkHoverAnimation}
-            onClick={() => setMobileMenuOpen(false)}
-          >
+          <NavLink to="/projects" onClick={() => setMobileMenuOpen(false)}>
             Projects
           </NavLink>
         </NavLinks>
@@ -351,23 +380,18 @@ const Navigation = () => {
               </>
             ) : (
               <>
-                <AuthButton
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate('/register')}
-                >
+                <AuthButton onClick={() => navigate('/register')}>
                   新規登録
                 </AuthButton>
-                <LoginButton
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => navigate('/login')}
-                >
+                <LoginButton onClick={() => navigate('/login')}>
                   ログイン
                 </LoginButton>
               </>
             )}
         </AuthSection>
+        <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? '✕' : '☰'}
+        </MobileMenuButton>
       </NavContainer>
     </Nav>
   );
