@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { useRecentPosts, useWordPressStatus } from '../hooks/useWordPress';
 import { ArticleList } from '../components/ArticleList';
 
@@ -260,7 +261,16 @@ const HomePage = () => {
   const { data: wpStatus } = useWordPressStatus();
 
   return (
-    <Container>
+    <>
+      <Helmet>
+        <title>Coral Magazine - Open Coral Network | NPO法人の情報発信メディア</title>
+        <meta name="description" content="Coral Magazineは、Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディアです。テクノロジー、アート、音楽、スピリチュアル、健康など幅広いトピックを扱い、新しい価値観と知識を発信しています。" />
+        <meta property="og:title" content="Coral Magazine - Open Coral Network" />
+        <meta property="og:description" content="Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディア" />
+        <meta property="og:url" content="https://cora-network.com/" />
+        <link rel="canonical" href="https://cora-network.com/" />
+      </Helmet>
+      <Container>
       <HeroSection>
         <HeroBackground />
         <HeroContent>
@@ -460,6 +470,7 @@ const HomePage = () => {
       </CarouselContainer>
     </WeeklySection>
     </Container>
+    </>
   );
 };
 

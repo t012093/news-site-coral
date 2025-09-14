@@ -96,9 +96,10 @@ const Footer = () => {
     <FooterContainer>
       <FooterContent>
         <FooterSection>
-          <h3>About CORAL</h3>
+          <h3>About Coral Magazine</h3>
           <p style={{ color: '#b3b3b3', marginBottom: '1rem' }}>
-            Exploring the intersection of technology, spirituality, and culture through compelling storytelling.
+            Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディア。
+            テクノロジー、アート、スピリチュアル、文化の交差点を探求します。
           </p>
           <SocialLinks>
             <SocialIcon 
@@ -153,7 +154,7 @@ const Footer = () => {
       </FooterContent>
 
       <Copyright>
-        © {currentYear} CORAL Magazine. All rights reserved.
+        © {currentYear} Coral Magazine - Open Coral Network | NPO法人 Open Coral Network. All rights reserved.
       </Copyright>
     </FooterContainer>
   );

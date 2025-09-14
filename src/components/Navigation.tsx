@@ -201,8 +201,14 @@ const Navigation = () => {
   return (
     <Nav>
       <NavContainer>
-        <Logo to="/">CORAL</Logo>
+        <Logo to="/">Coral Magazine</Logo>
         <NavLinks>
+          <NavLink 
+            to="/about"
+            whileHover={linkHoverAnimation}
+          >
+            About
+          </NavLink>
           <NavLink 
             to="/music"
             whileHover={linkHoverAnimation}

@@ -6,6 +6,7 @@ import { Toaster } from 'react-hot-toast';
 import { globalStyles } from './styles/globalStyles';
 import { motion, AnimatePresence } from 'framer-motion';
 import { AuthProvider } from './contexts/AuthContext';
+import { HelmetProvider } from 'react-helmet-async';
 import Navigation from './components/Navigation';
 import Footer from './components/Footer';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -40,6 +41,7 @@ import { WordPressStatusIndicator } from './components/WordPressStatusIndicator'
 import ShiftDashboard from './pages/ShiftDashboard';
 import TaskDashboard from './pages/TaskDashboard';
 import MessagePage from './pages/MessagePage';
+import AboutPage from './pages/AboutPage';
 
 const AppContainer = styled.div`
   min-height: 100vh;
@@ -119,10 +121,11 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   return (
-    <Router>
-      <AuthProvider>
-        <Global styles={globalStyles} />
-        <Toaster
+    <HelmetProvider>
+      <Router>
+        <AuthProvider>
+          <Global styles={globalStyles} />
+          <Toaster
           position="top-right"
           toastOptions={{
             style: {
@@ -150,6 +153,7 @@ function App() {
           <MainContent>
             <Routes>
               <Route path="/" element={<PageWrapper><HomePage /></PageWrapper>} />
+              <Route path="/about" element={<PageWrapper><AboutPage /></PageWrapper>} />
               <Route path="/music" element={<PageWrapper><MusicPage /></PageWrapper>} />
               <Route path="/music/subculture" element={<PageWrapper><SubcultureMusicPage /></PageWrapper>} />
               <Route path="/music/barbapapa" element={<PageWrapper><BarbapapaMusicPage /></PageWrapper>} />
@@ -220,6 +224,7 @@ function App() {
         </AppContainer>
       </AuthProvider>
     </Router>
+    </HelmetProvider>
   );
 }
 

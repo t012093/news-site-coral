@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import SEOHelmet from '../components/SEOHelmet';
 
 const Container = styled.div`
   padding: 2rem 0;
@@ -159,7 +160,14 @@ const FeaturedContent = styled.div`
 
 const TechPage = () => {
   return (
-    <Container>
+    <>
+      <SEOHelmet
+        title="テクノロジー"
+        description="最新のテクノロジー、AI、ブロックチェーン、イノベーションに関する記事をお届けします。Open Coral Networkが発信するテック情報。"
+        url="https://cora-network.com/tech"
+        keywords="テクノロジー, AI, ブロックチェーン, イノベーション, Open Coral Network"
+      />
+      <Container>
       <PageHeader>
         <PageTitle>Technology</PageTitle>
         <PageDescription>
@@ -337,6 +345,7 @@ const TechPage = () => {
         </Link>
       </MainGrid>
     </Container>
+    </>
   );
 };
 

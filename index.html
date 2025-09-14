@@ -1,13 +1,92 @@
 <!doctype html>
-<html lang="en">
+<html lang="ja">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/png" href="/src/assets/logo.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CORAL Magazine</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Coral Magazine - Open Coral Network | NPO法人の情報発信メディア</title>
+    <meta name="title" content="Coral Magazine - Open Coral Network | NPO法人の情報発信メディア" />
+    <meta name="description" content="Coral Magazineは、Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディアです。テクノロジー、アート、音楽、スピリチュアル、健康など幅広いトピックを扱い、新しい価値観と知識を発信しています。" />
+    <meta name="keywords" content="Coral Magazine, Open Coral Network, NPO法人, オープンコーラルネットワーク, 情報メディア, テクノロジー, アート, 音楽, スピリチュアル, 健康, 社会活動" />
+    <meta name="author" content="Open Coral Network" />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Japanese" />
+    <link rel="canonical" href="https://cora-network.com/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cora-network.com/" />
+    <meta property="og:title" content="Coral Magazine - Open Coral Network | NPO法人の情報発信メディア" />
+    <meta property="og:description" content="Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディア。テクノロジー、アート、音楽など幅広いトピックを扱います。" />
+    <meta property="og:image" content="https://cora-network.com/images/coral6.png" />
+    <meta property="og:site_name" content="Coral Magazine" />
+    <meta property="og:locale" content="ja_JP" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://cora-network.com/" />
+    <meta property="twitter:title" content="Coral Magazine - Open Coral Network" />
+    <meta property="twitter:description" content="Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディア" />
+    <meta property="twitter:image" content="https://cora-network.com/images/coral6.png" />
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Structured Data (JSON-LD) for Organization -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Open Coral Network",
+      "alternateName": ["NPO法人 Open Coral Network", "オープンコーラルネットワーク"],
+      "url": "https://cora-network.com",
+      "logo": "https://cora-network.com/images/logo.png",
+      "description": "Open Coral NetworkおよびNPO法人Open Coral Networkは、テクノロジー、アート、社会活動を通じて新しい価値を創造し、持続可能な社会の実現を目指す非営利団体です。",
+      "sameAs": [
+        "https://twitter.com/opencoralnet",
+        "https://facebook.com/opencoralnetwork",
+        "https://instagram.com/opencoralnetwork"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "General Inquiries",
+        "email": "info@cora-network.com",
+        "availableLanguage": ["Japanese", "English"]
+      },
+      "foundingDate": "2023",
+      "founder": {
+        "@type": "Person",
+        "name": "Open Coral Network Team"
+      }
+    }
+    </script>
+    
+    <!-- Structured Data (JSON-LD) for WebSite -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Coral Magazine",
+      "alternateName": "コーラルマガジン",
+      "url": "https://cora-network.com",
+      "description": "Coral MagazineはOpen Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディアです。",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Open Coral Network"
+      },
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://cora-network.com/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      },
+      "inLanguage": "ja"
+    }
+    </script>
   </body>
 </html>
