@@ -22,6 +22,11 @@ export const globalStyles = css`
     color: var(--text-color);
     background-color: var(--background-color);
     line-height: 1.6;
+    min-height: 100vh;
+  }
+  
+  html {
+    background-color: var(--background-color);
   }
 
   h1, h2, h3, h4, h5, h6 {

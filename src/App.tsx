@@ -47,6 +47,7 @@ const AppContainer = styled.div`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  background-color: var(--background-color);
 `;
 
 const MainContent = styled.main`
@@ -56,6 +57,7 @@ const MainContent = styled.main`
   margin: 0 auto;
   width: 100%;
   overflow-x: hidden;
+  background-color: var(--background-color);
 `;
 
 const PageTransition = styled(motion.div)`

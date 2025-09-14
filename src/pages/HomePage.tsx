@@ -6,7 +6,11 @@ import { useRecentPosts, useWordPressStatus } from '../hooks/useWordPress';
 import { ArticleList } from '../components/ArticleList';
 
 const Container = styled.div`
-  padding: 2rem 0;
+  padding: 2rem 1rem;
+  
+  @media (max-width: 768px) {
+    padding: 1rem 0.5rem;
+  }
 `;
 
 const HeroSection = styled.section`
@@ -21,6 +25,24 @@ const HeroSection = styled.section`
   margin-bottom: 4rem;
   overflow: hidden;
   border-radius: 12px;
+  
+  @media (max-width: 1024px) {
+    height: 70vh;
+    min-height: 500px;
+  }
+  
+  @media (max-width: 768px) {
+    height: 60vh;
+    min-height: 400px;
+    margin-bottom: 3rem;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    height: 50vh;
+    min-height: 350px;
+    margin-bottom: 2rem;
+  }
 `;
 
 const HeroBackground = styled.div`
@@ -40,6 +62,15 @@ const HeroContent = styled.div`
   z-index: 1;
   max-width: 800px;
   padding: 0 2rem;
+  
+  @media (max-width: 768px) {
+    max-width: 90%;
+    padding: 0 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0 1rem;
+  }
 `;
 
 const HeroTitle = styled.h1`
@@ -47,12 +78,41 @@ const HeroTitle = styled.h1`
   margin-bottom: 1.5rem;
   font-weight: 700;
   line-height: 1.2;
+  
+  @media (max-width: 1024px) {
+    font-size: 3.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2.2rem;
+    line-height: 1.1;
+  }
 `;
 
 const HeroSubtitle = styled.p`
   font-size: 1.5rem;
   margin-bottom: 2rem;
   opacity: 0.9;
+  
+  @media (max-width: 1024px) {
+    font-size: 1.3rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const MainGrid = styled.div`
@@ -126,16 +186,57 @@ const SectionTitle = styled.h2`
   color: var(--text-color);
   position: relative;
   left: -2rem;
+  
+  @media (max-width: 1024px) {
+    font-size: 1.8rem;
+    margin: 2rem 0 3rem 4rem;
+    left: -1rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.6rem;
+    margin: 1.5rem 0 2rem 0;
+    left: 0;
+    text-align: center;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.4rem;
+    margin: 1rem 0 1.5rem 0;
+  }
 `;
 
 const TrendingSection = styled.section`
   margin-bottom: 4rem;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 2rem;
+  }
 `;
 
 const TrendingGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+  }
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
 const TrendingCard = styled(motion.article)`
@@ -166,6 +267,14 @@ const TrendingContent = styled.div`
   padding: 1.5rem;
   background: var(--primary-color);
   color: var(--text-color);
+  
+  @media (max-width: 768px) {
+    padding: 1.2rem;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+  }
 `;
 
 // Topics Explorer用のスタイル
@@ -176,6 +285,20 @@ const TopicsExplorerSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
+  
+  @media (max-width: 1024px) {
+    min-height: 400px;
+  }
+  
+  @media (max-width: 768px) {
+    min-height: 350px;
+    margin-bottom: 3rem;
+  }
+  
+  @media (max-width: 480px) {
+    min-height: 300px;
+    margin-bottom: 2rem;
+  }
 `;
 
 const PlanetContainer = styled.div`
@@ -183,6 +306,18 @@ const PlanetContainer = styled.div`
   width: 150px;
   height: 150px;
   margin-top: 2rem;
+  
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    margin-top: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 100px;
+    height: 100px;
+    margin-top: 1rem;
+  }
 `;
 
 const Planet = styled(motion.div)`
@@ -206,11 +341,24 @@ const Satellite = styled(motion(Link))`
   color: var(--text-color);
   cursor: pointer;
   transition: all 0.3s ease;
+  font-size: 0.8rem;
 
   &:hover {
     border-color: var(--accent-color);
     box-shadow: 0 0 20px var(--accent-color);
     transform: scale(1.1);
+  }
+  
+  @media (max-width: 768px) {
+    width: 50px;
+    height: 50px;
+    font-size: 0.7rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 40px;
+    height: 40px;
+    font-size: 0.6rem;
   }
 `;
 
@@ -220,6 +368,16 @@ const WeeklySection = styled.section`
   position: relative;
   overflow: hidden;
   padding: 2rem 0;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 3rem;
+    padding: 1.5rem 0;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+  }
 `;
 
 const CarouselContainer = styled.div`
@@ -227,6 +385,16 @@ const CarouselContainer = styled.div`
   gap: 2rem;
   justify-content: center;
   perspective: 1000px;
+  
+  @media (max-width: 768px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    gap: 1rem;
+  }
 `;
 
 const WeeklyCard = styled(motion.div)`
@@ -242,18 +410,52 @@ const WeeklyCard = styled(motion.div)`
     border-color: var(--accent-color);
     box-shadow: 0 0 30px rgba(156, 124, 244, 0.2);
   }
+  
+  @media (max-width: 1024px) {
+    width: 280px;
+    padding: 1.8rem;
+  }
+  
+  @media (max-width: 768px) {
+    width: 90%;
+    max-width: 400px;
+    padding: 1.5rem;
+  }
+  
+  @media (max-width: 480px) {
+    width: 95%;
+    padding: 1.2rem;
+  }
 `;
 
 const WeeklyTitle = styled.h3`
   color: var(--text-color);
   margin-bottom: 1rem;
   font-size: 1.2rem;
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 const WeeklyContent = styled.p`
   color: var(--text-color);
   opacity: 0.8;
   font-size: 0.9rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.85rem;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const HomePage = () => {

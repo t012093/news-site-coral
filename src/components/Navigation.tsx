@@ -35,13 +35,23 @@ const Logo = styled(Link)`
   }
 `;
 
-const NavLinks = styled.div`
+const NavLinks = styled.div<{ isOpen?: boolean }>`
   display: flex;
   gap: 2rem;
   align-items: center;
 
   @media (max-width: 768px) {
-    display: none;
+    display: ${props => props.isOpen ? 'flex' : 'none'};
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--background-color);
+    flex-direction: column;
+    padding: 2rem;
+    border-bottom: 1px solid #2a2a2a;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    gap: 1.5rem;
   }
 `;
 
@@ -166,6 +176,18 @@ const NavLink = styled(motion(Link))`
   &:hover::after {
     width: 100%;
   }
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 100%;
+    text-align: center;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
 `;
 
 const MobileMenuButton = styled.button`
@@ -185,6 +207,7 @@ const Navigation = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const linkHoverAnimation = {
     scale: 1.05,
@@ -202,7 +225,10 @@ const Navigation = () => {
     <Nav>
       <NavContainer>
         <Logo to="/">Coral Magazine</Logo>
-        <NavLinks>
+        <MobileMenuButton onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+          {mobileMenuOpen ? '✕' : '☰'}
+        </MobileMenuButton>
+        <NavLinks isOpen={mobileMenuOpen}>
           <NavLink 
             to="/about"
             whileHover={linkHoverAnimation}
@@ -257,8 +283,9 @@ const Navigation = () => {
           >
             Projects
           </NavLink>
-          
-          <AuthSection>
+        </NavLinks>
+        
+        <AuthSection>
             {isAuthenticated && user ? (
               <>
                 <MessageIcon unreadCount={2} />
@@ -314,9 +341,7 @@ const Navigation = () => {
                 </LoginButton>
               </>
             )}
-          </AuthSection>
-        </NavLinks>
-        <MobileMenuButton>☰</MobileMenuButton>
+        </AuthSection>
       </NavContainer>
     </Nav>
   );

@@ -3,9 +3,13 @@ import { motion } from 'framer-motion';
 import SEOHelmet from '../components/SEOHelmet';
 
 const Container = styled.div`
-  padding: 2rem 0;
+  padding: 2rem 1rem;
   max-width: 1200px;
   margin: 0 auto;
+  
+  @media (max-width: 768px) {
+    padding: 1rem 0.5rem;
+  }
 `;
 
 const HeroSection = styled.section`
@@ -15,15 +19,42 @@ const HeroSection = styled.section`
   color: white;
   border-radius: 16px;
   margin-bottom: 4rem;
+  
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+    margin-bottom: 3rem;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 3rem 1rem;
+    margin-bottom: 2rem;
+  }
+`;
+
+const HeroContent = styled.div`
+  position: relative;
+  z-index: 1;
 `;
 
 const HeroTitle = styled(motion.h1)`
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
   font-weight: 700;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 1024px) {
+    font-size: 3rem;
+  }
   
   @media (max-width: 768px) {
     font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    line-height: 1.2;
   }
 `;
 
@@ -33,11 +64,41 @@ const HeroSubtitle = styled(motion.p)`
   margin: 0 auto;
   line-height: 1.8;
   opacity: 0.95;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 1024px) {
+    font-size: 1.2rem;
+    max-width: 700px;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+    max-width: 90%;
+    line-height: 1.6;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    br {
+      display: none;
+    }
+  }
 `;
+
 
 const Section = styled.section`
   margin-bottom: 5rem;
   padding: 0 2rem;
+  
+  @media (max-width: 768px) {
+    margin-bottom: 3rem;
+    padding: 0 1rem;
+  }
+  
+  @media (max-width: 480px) {
+    margin-bottom: 2rem;
+    padding: 0 0.5rem;
+  }
 `;
 
 const SectionTitle = styled(motion.h2)`
@@ -56,6 +117,26 @@ const SectionTitle = styled(motion.h2)`
     margin: 1rem auto;
     border-radius: 2px;
   }
+  
+  @media (max-width: 1024px) {
+    font-size: 2.2rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    
+    &:after {
+      width: 60px;
+      height: 3px;
+      margin: 0.8rem auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
 `;
 
 const SectionContent = styled(motion.div)`
@@ -64,6 +145,21 @@ const SectionContent = styled(motion.div)`
   line-height: 1.8;
   color: var(--text-color);
   font-size: 1.1rem;
+  
+  @media (max-width: 1024px) {
+    max-width: 90%;
+    font-size: 1.05rem;
+  }
+  
+  @media (max-width: 768px) {
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
 `;
 
 const MissionGrid = styled.div`
@@ -71,36 +167,103 @@ const MissionGrid = styled.div`
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 `;
 
-const MissionCard = styled(motion.div)`
+const MissionCard = styled(motion.div)<{ bgImage?: string }>`
+  position: relative;
   background: var(--primary-color);
   padding: 2rem;
   border-radius: 12px;
   border: 1px solid #2a2a2a;
   transition: all 0.3s ease;
+  overflow: hidden;
+  
+  ${props => props.bgImage && `
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 150px;
+      background: url('${props.bgImage}') center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
+  `}
+  
+  > * {
+    position: relative;
+    z-index: 1;
+  }
   
   &:hover {
     transform: translateY(-5px);
     box-shadow: 0 10px 30px rgba(156, 124, 244, 0.2);
     border-color: var(--accent-color);
   }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+    border-radius: 8px;
+    
+    &:hover {
+      transform: translateY(-2px);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1.2rem;
+  }
 `;
 
 const MissionIcon = styled.div`
-  font-size: 3rem;
-  margin-bottom: 1rem;
+  display: none;
 `;
 
 const MissionTitle = styled.h3`
   font-size: 1.5rem;
   margin-bottom: 1rem;
   color: var(--text-color);
+  
+  @media (max-width: 768px) {
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1.2rem;
+  }
 `;
 
 const MissionDescription = styled.p`
   color: var(--secondary-color);
   line-height: 1.6;
+  
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const TeamGrid = styled.div`
@@ -108,34 +271,78 @@ const TeamGrid = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 2rem;
   margin-top: 3rem;
+  
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-top: 2rem;
+  }
+  
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+  
+  @media (max-width: 400px) {
+    grid-template-columns: 1fr;
+  }
 `;
 
 const TeamMember = styled(motion.div)`
   text-align: center;
 `;
 
-const MemberAvatar = styled.div`
+const MemberAvatar = styled.img`
   width: 150px;
   height: 150px;
   margin: 0 auto 1rem;
   border-radius: 50%;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  color: white;
+  object-fit: cover;
+  border: 3px solid var(--accent-color);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 768px) {
+    width: 120px;
+    height: 120px;
+    border-width: 2px;
+  }
+  
+  @media (max-width: 480px) {
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const MemberName = styled.h4`
   font-size: 1.2rem;
   margin-bottom: 0.5rem;
   color: var(--text-color);
+  
+  @media (max-width: 768px) {
+    font-size: 1.1rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
 `;
 
 const MemberRole = styled.p`
   color: var(--secondary-color);
   font-size: 0.95rem;
+  
+  @media (max-width: 768px) {
+    font-size: 0.9rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.85rem;
+  }
 `;
 
 const TimelineContainer = styled.div`
@@ -153,8 +360,16 @@ const TimelineContainer = styled.div`
     transform: translateX(-50%);
     
     @media (max-width: 768px) {
-      left: 30px;
+      left: 20px;
     }
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1.5rem 0;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem 0;
   }
 `;
 
@@ -166,7 +381,11 @@ const TimelineItem = styled(motion.div)<{ align: 'left' | 'right' }>`
   
   @media (max-width: 768px) {
     justify-content: flex-start;
-    padding-left: 60px;
+    padding-left: 50px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 0.8rem 0 0.8rem 40px;
   }
 `;
 
@@ -190,12 +409,24 @@ const TimelineContent = styled.div<{ align: 'left' | 'right' }>`
     border-radius: 50%;
     
     @media (max-width: 768px) {
-      left: -38px;
+      left: -28px;
     }
   }
   
   @media (max-width: 768px) {
     width: 100%;
+    padding: 1.2rem;
+    border-radius: 8px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 1rem;
+    
+    &:before {
+      left: -23px;
+      width: 12px;
+      height: 12px;
+    }
   }
 `;
 
@@ -223,6 +454,18 @@ const ContactSection = styled.section`
   text-align: center;
   margin-top: 4rem;
   border: 1px solid #2a2a2a;
+  
+  @media (max-width: 768px) {
+    padding: 2.5rem 1.5rem;
+    margin-top: 3rem;
+    border-radius: 12px;
+  }
+  
+  @media (max-width: 480px) {
+    padding: 2rem 1rem;
+    margin-top: 2rem;
+    border-radius: 8px;
+  }
 `;
 
 const ContactInfo = styled.div`
@@ -231,6 +474,17 @@ const ContactInfo = styled.div`
   gap: 3rem;
   margin-top: 2rem;
   flex-wrap: wrap;
+  
+  @media (max-width: 768px) {
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 `;
 
 const ContactItem = styled.div`
@@ -238,6 +492,14 @@ const ContactItem = styled.div`
   align-items: center;
   gap: 0.5rem;
   color: var(--text-color);
+  
+  @media (max-width: 768px) {
+    font-size: 0.95rem;
+  }
+  
+  @media (max-width: 480px) {
+    font-size: 0.9rem;
+  }
 `;
 
 const AboutPage = () => {
@@ -285,7 +547,7 @@ const AboutPage = () => {
             </p>
             
             <MissionGrid>
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/city.png">
                 <MissionIcon>🌐</MissionIcon>
                 <MissionTitle>グローバルな視点</MissionTitle>
                 <MissionDescription>
@@ -294,7 +556,7 @@ const AboutPage = () => {
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/ai.png">
                 <MissionIcon>💡</MissionIcon>
                 <MissionTitle>イノベーションの推進</MissionTitle>
                 <MissionDescription>
@@ -303,7 +565,7 @@ const AboutPage = () => {
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/hato.png">
                 <MissionIcon>🤝</MissionIcon>
                 <MissionTitle>コミュニティの構築</MissionTitle>
                 <MissionDescription>
@@ -319,7 +581,7 @@ const AboutPage = () => {
           <SectionTitle {...fadeInUp}>活動内容</SectionTitle>
           <SectionContent {...fadeInUp}>
             <MissionGrid>
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/coral2.png">
                 <MissionIcon>📚</MissionIcon>
                 <MissionTitle>情報発信</MissionTitle>
                 <MissionDescription>
@@ -328,16 +590,16 @@ const AboutPage = () => {
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/pixel2.png">
                 <MissionIcon>🎨</MissionIcon>
-                <MissionTitle>アートプロジェクト</MissionTitle>
+                <MissionTitle>アートワーク</MissionTitle>
                 <MissionDescription>
                   デジタルアートと伝統文化を融合させた
-                  国際的なコラボレーションプロジェクトを企画・運営しています。
+                  国際的なコラボレーション作品を企画・制作しています。
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/labo.png">
                 <MissionIcon>🔬</MissionIcon>
                 <MissionTitle>研究開発</MissionTitle>
                 <MissionDescription>
@@ -346,30 +608,30 @@ const AboutPage = () => {
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/toudai.png">
                 <MissionIcon>🎓</MissionIcon>
-                <MissionTitle>教育プログラム</MissionTitle>
+                <MissionTitle>ワークショップ</MissionTitle>
                 <MissionDescription>
                   次世代のイノベーターを育成するための
-                  ワークショップやセミナーを定期的に開催しています。
+                  実践的なワークショップやセミナーを定期的に開催しています。
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/tokyo.png">
                 <MissionIcon>🌱</MissionIcon>
-                <MissionTitle>社会貢献活動</MissionTitle>
+                <MissionTitle>ソーシャルインパクト</MissionTitle>
                 <MissionDescription>
                   環境保護、教育支援、地域活性化など、
-                  持続可能な社会の実現に向けた活動を展開しています。
+                  持続可能な社会の実現に向けたインパクトを創出しています。
                 </MissionDescription>
               </MissionCard>
               
-              <MissionCard whileHover={{ scale: 1.02 }}>
+              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/chat.png">
                 <MissionIcon>🤖</MissionIcon>
-                <MissionTitle>技術コンサルティング</MissionTitle>
+                <MissionTitle>プロジェクト</MissionTitle>
                 <MissionDescription>
-                  NPOや社会企業に対して、デジタル化支援や
-                  技術導入のコンサルティングサービスを提供しています。
+                  NPOや社会企業と協力して、社会課題解決に向けた
+                  革新的なプロジェクトを企画・立案・実行しています。
                 </MissionDescription>
               </MissionCard>
             </MissionGrid>
@@ -380,25 +642,25 @@ const AboutPage = () => {
           <SectionTitle {...fadeInUp}>チームメンバー</SectionTitle>
           <TeamGrid>
             <TeamMember whileHover={{ scale: 1.05 }}>
-              <MemberAvatar>👤</MemberAvatar>
+              <MemberAvatar src="/images/man.png" alt="代表理事" />
               <MemberName>代表理事</MemberName>
               <MemberRole>戦略立案・組織運営</MemberRole>
             </TeamMember>
             
             <TeamMember whileHover={{ scale: 1.05 }}>
-              <MemberAvatar>👩‍💻</MemberAvatar>
+              <MemberAvatar src="/images/she5.png" alt="技術責任者" />
               <MemberName>技術責任者</MemberName>
               <MemberRole>技術開発・システム設計</MemberRole>
             </TeamMember>
             
             <TeamMember whileHover={{ scale: 1.05 }}>
-              <MemberAvatar>🎨</MemberAvatar>
+              <MemberAvatar src="/images/she2.png" alt="クリエイティブディレクター" />
               <MemberName>クリエイティブディレクター</MemberName>
               <MemberRole>デザイン・コンテンツ制作</MemberRole>
             </TeamMember>
             
             <TeamMember whileHover={{ scale: 1.05 }}>
-              <MemberAvatar>📝</MemberAvatar>
+              <MemberAvatar src="/images/man4.png" alt="編集長" />
               <MemberName>編集長</MemberName>
               <MemberRole>Coral Magazine運営</MemberRole>
             </TeamMember>
