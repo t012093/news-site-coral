@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import SEOHelmet from '../components/SEOHelmet';
 import { Helmet } from 'react-helmet-async';
 import { useRecentPosts, useWordPressStatus } from '../hooks/useWordPress';
 import { ArticleList } from '../components/ArticleList';
@@ -593,13 +594,53 @@ const HomePage = () => {
 
   return (
     <>
+      <SEOHelmet
+        title="NPO法人 Open Coral Network"
+        description="情報とプロジェクトで人がつながる。信頼できるコミュニティと、新しいコミュニティ型メディア『Coral Magazine』を運営するNPO法人 Open Coral Networkの公式サイト。テクノロジーとアートの力で社会を前進させます。"
+        url="https://cora-network.com/"
+        keywords="NPO法人, Open Coral Network, オープンコーラルネットワーク, Coral Magazine, コミュニティ, プロジェクト, 情報メディア, テクノロジー, アート"
+      />
+      {/* Organization & Website JSON-LD for richer entity understanding */}
       <Helmet>
-        <title>Coral Magazine - Open Coral Network | NPO法人の情報発信メディア</title>
-        <meta name="description" content="Coral Magazineは、Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディアです。テクノロジー、アート、音楽、スピリチュアル、健康など幅広いトピックを扱い、新しい価値観と知識を発信しています。" />
-        <meta property="og:title" content="Coral Magazine - Open Coral Network" />
-        <meta property="og:description" content="Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディア" />
-        <meta property="og:url" content="https://cora-network.com/" />
-        <link rel="canonical" href="https://cora-network.com/" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'NonprofitOrganization',
+            name: 'NPO法人 Open Coral Network',
+            alternateName: 'オープンコーラルネットワーク',
+            url: 'https://coral-network.com',
+            logo: 'https://cora-network.com/images/coral6.png',
+            foundingDate: '2025-07',
+            description:
+              '情報とプロジェクトで人がつながる、信頼できるコミュニティとコミュニティ型メディア「Coral Magazine」を運営するNPO法人。テクノロジーとアートで社会課題解決に取り組みます。',
+            sameAs: [
+              'https://twitter.com/opencoralnet'
+            ],
+            address: {
+              '@type': 'PostalAddress',
+              addressCountry: 'JP'
+            },
+            contactPoint: {
+              '@type': 'ContactPoint',
+              contactType: 'customer support',
+              email: 'info@cora-network.com',
+              availableLanguage: ['ja']
+            }
+          })}
+        </script>
+        <script type="application/ld+json">
+          {JSON.stringify({
+            '@context': 'https://schema.org',
+            '@type': 'WebSite',
+            url: 'https://coral-network.com/',
+            name: 'Coral Magazine - Open Coral Network',
+            potentialAction: {
+              '@type': 'SearchAction',
+              target: 'https://coral-network.com/?s={search_term_string}',
+              'query-input': 'required name=search_term_string'
+            }
+          })}
+        </script>
       </Helmet>
       <Container>
       <HeroSection>

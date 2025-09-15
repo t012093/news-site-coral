@@ -98,7 +98,7 @@ const Footer = () => {
         <FooterSection>
           <h3>About Coral Magazine</h3>
           <p style={{ color: '#b3b3b3', marginBottom: '1rem' }}>
-            Open Coral NetworkおよびNPO法人Open Coral Networkが運営する総合情報メディア。
+            NPO法人Open Coral Networkが運営する総合情報メディア。
             テクノロジー、アート、スピリチュアル、文化の交差点を探求します。
           </p>
           <SocialLinks>

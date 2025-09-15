@@ -647,10 +647,10 @@ const AboutPage = () => {
   return (
     <>
       <SEOHelmet
-        title="About - Open Coral Network"
-        description="Open Coral NetworkおよびNPO法人Open Coral Networkは、テクノロジー、アート、社会活動を通じて新しい価値を創造し、持続可能な社会の実現を目指す非営利団体です。"
+        title="NPO法人 Open Coral Networkについて"
+        description="Open Coral Networkは、情報とプロジェクトで人がつながる、信頼できるコミュニティと新しいコミュニティ型メディア『Coral Magazine』を運営。テクノロジーとアートの力で、社会に前向きな変化を生み出します。"
         url="https://cora-network.com/about"
-        keywords="Open Coral Network, NPO法人, オープンコーラルネットワーク, 非営利団体, 社会活動, テクノロジー, アート"
+        keywords="NPO法人, Open Coral Network, オープンコーラルネットワーク, Coral Magazine, コミュニティ, プロジェクト, 情報メディア, テクノロジー, アート"
       />
       
       <Container>
