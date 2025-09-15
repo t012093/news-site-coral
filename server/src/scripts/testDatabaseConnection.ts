@@ -1,5 +1,5 @@
 #!/usr/bin/env tsx
-import { testDatabaseConnection, testRedisConnection, closeDatabaseConnections } from '@/config/database';
+import { testDatabaseConnection, testRedisConnection, closeDatabaseConnections, pool } from '@/config/database';
 import { emailService } from '@/services/emailService';
 
 async function testConnections() {
@@ -40,8 +40,6 @@ async function testConnections() {
   if (dbConnected) {
     console.log('\n🔍 Testing database queries...');
     try {
-      const { pool } = await import('@/config/database');
-
       // Test basic query
       const result = await pool.query('SELECT NOW() as current_time, VERSION() as version');
       console.log('✅ Database query successful');
