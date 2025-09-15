@@ -13,6 +13,10 @@ export class EmailVerificationServiceFactory {
    * Test if PostgreSQL is available
    */
   private static async testPostgreSQLConnection(): Promise<boolean> {
+    // Allow forcing mock via env for easier ops
+    if (process.env.USE_MOCK_EMAIL_VERIFICATION === 'true') {
+      return false;
+    }
     try {
       await pool.query('SELECT 1');
       return true;

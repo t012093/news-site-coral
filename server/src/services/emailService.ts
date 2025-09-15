@@ -35,6 +35,12 @@ export class EmailService {
   }
 
   private initializeTransporter(): void {
+    // Allow forcing mock transporter via env for safe fallback
+    if (process.env.EMAIL_FORCE_MOCK === 'true') {
+      console.warn('⚠️ EMAIL_FORCE_MOCK=true — using mock email transporter');
+      this.transporter = this.createMockTransporter();
+      return;
+    }
     // Check if email configuration is available
     const hasEmailConfig = process.env.EMAIL_USER && process.env.EMAIL_PASSWORD;
     const hasHost = process.env.SMTP_HOST;
@@ -58,7 +64,8 @@ export class EmailService {
     const emailConfig: EmailConfig = {
       host: process.env.SMTP_HOST || 'smtp.gmail.com',
       port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
+      // Support both SMTP_SECURE and legacy misspelled SMTP_SECUR
+      secure: (process.env.SMTP_SECURE ?? process.env.SMTP_SECUR) === 'true', // true for 465, false for other ports
       auth: {
         user: process.env.EMAIL_USER!,
         pass: process.env.EMAIL_PASSWORD!,
@@ -75,7 +82,12 @@ export class EmailService {
     const connectionType = hasHost ? 'Custom SMTP' : 'Gmail SMTP';
     
     try {
-      this.transporter = nodemailer.createTransport(emailConfig);
+      this.transporter = nodemailer.createTransport({
+        ...emailConfig,
+        connectionTimeout: 10000,
+        greetingTimeout: 10000,
+        socketTimeout: 15000,
+      } as any);
       console.log(`✅ Email service initialized successfully (${connectionType})`);
       console.log(`📧 SMTP Host: ${emailConfig.host}:${emailConfig.port} (secure: ${emailConfig.secure})`);
     } catch (error) {

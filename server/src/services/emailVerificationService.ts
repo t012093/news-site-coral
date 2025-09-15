@@ -60,8 +60,12 @@ export class EmailVerificationService {
 
       const result = await pool.query(query, values);
 
-      // Send email
-      await emailService.sendVerificationCode(email, code, purpose);
+      // Send email (do not block response; log failures asynchronously)
+      emailService
+        .sendVerificationCode(email, code, purpose)
+        .catch(err => {
+          console.error('❌ Async email sending failed:', err instanceof Error ? err.message : err);
+        });
 
       console.log(`📧 Verification code sent to ${email} for ${purpose}`);
 

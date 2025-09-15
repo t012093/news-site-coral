@@ -8,7 +8,7 @@ import * as yup from 'yup';
 import { useAuth } from '../../contexts/AuthContext';
 import { LoginData } from '../../types/auth';
 
-const API_BASE_URL = import.meta.env.CORAL_API_URL || 'https://news-site-coral-production.up.railway.app/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://news-site-coral-production.up.railway.app/api';
 
 const Container = styled.div`
   min-height: 80vh;

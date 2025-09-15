@@ -60,8 +60,12 @@ export class MockEmailVerificationService {
       // Store in memory
       verificationCodes.push(verificationData);
 
-      // Send email
-      await emailService.sendVerificationCode(email, code, purpose);
+      // Send email (non-blocking)
+      emailService
+        .sendVerificationCode(email, code, purpose)
+        .catch(err => {
+          console.error('❌ Async mock email sending failed:', err instanceof Error ? err.message : err);
+        });
 
       console.log(`\n🔐 =====================================================`);
       console.log(`📧 VERIFICATION CODE FOR: ${email}`);
