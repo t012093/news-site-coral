@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import SEOHelmet from '../components/SEOHelmet';
 
 const Container = styled.div`
@@ -101,20 +102,28 @@ const Section = styled.section`
   }
 `;
 
+// Subtle alternated background band to break monotony
+const SectionBand = styled(Section)`
+  background: linear-gradient(180deg, rgba(156,124,244,0.07), transparent 60%);
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  border-radius: 16px;
+`;
+
 const SectionTitle = styled(motion.h2)`
-  font-size: 2.5rem;
+  font-size: 2.6rem;
   color: var(--text-color);
-  margin-bottom: 2rem;
+  margin-bottom: 2.25rem;
   text-align: center;
   position: relative;
   
   &:after {
     content: '';
     display: block;
-    width: 80px;
-    height: 4px;
-    background: var(--accent-color);
-    margin: 1rem auto;
+    width: 72px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-color), transparent);
+    margin: 0.9rem auto 0;
     border-radius: 2px;
   }
   
@@ -140,60 +149,171 @@ const SectionTitle = styled(motion.h2)`
 `;
 
 const SectionContent = styled(motion.div)`
-  max-width: 900px;
+  max-width: 940px;
   margin: 0 auto;
-  line-height: 1.8;
+  line-height: 1.9;
   color: var(--text-color);
-  font-size: 1.1rem;
+  font-size: 1.125rem;
   
   @media (max-width: 1024px) {
-    max-width: 90%;
-    font-size: 1.05rem;
+    max-width: 92%;
+    font-size: 1.06rem;
   }
   
   @media (max-width: 768px) {
     font-size: 1rem;
-    line-height: 1.7;
+    line-height: 1.75;
   }
   
   @media (max-width: 480px) {
-    font-size: 0.95rem;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    line-height: 1.65;
   }
 `;
 
-const MissionGrid = styled.div`
+// Balanced activities grid (uniform cards)
+const ActivitiesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-  
-  @media (max-width: 1024px) {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
+  @media (max-width: 1199px) and (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
   @media (max-width: 768px) {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.2rem;
-    margin-top: 2rem;
-  }
-  
-  @media (max-width: 600px) {
     grid-template-columns: 1fr;
     gap: 1rem;
   }
 `;
 
-const MissionCard = styled(motion.div)<{ bgImage?: string }>`
+const ActivityCard = styled(motion.article)`
+  background: var(--primary-color);
+  border: 1px solid #2a2a2a;
+  border-radius: 14px;
+  padding: 1.25rem 1.25rem 1rem;
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+  transition: transform 120ms ease, border-color 120ms ease;
+  &:hover { transform: translateY(-2px); border-color: var(--accent-color); }
+`;
+
+const ActivityHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+`;
+
+const ActivityTitle = styled.h4`
+  margin: 0;
+  color: var(--text-color);
+  font-size: 1.1rem;
+`;
+
+const ActivityMeta = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+`;
+
+const ActivityBody = styled.div`
+  margin-top: 0.35rem;
+`;
+
+const ActivityFooter = styled.div`
+  margin-top: auto;
+`;
+
+const TagGroup = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+`;
+
+const Tag = styled.span`
+  display: inline-block;
+  font-size: 0.75rem;
+  line-height: 1;
+  padding: 0.35rem 0.5rem;
+  border-radius: 999px;
+  color: var(--text-color);
+  background: rgba(156, 124, 244, 0.15);
+  border: 1px solid rgba(156, 124, 244, 0.35);
+`;
+
+const BulletList = styled.ul`
+  margin: 0.25rem 0 0.75rem;
+  padding-left: 1.1rem;
+  color: var(--secondary-color);
+  font-size: 0.95rem;
+  li { margin: 0.15rem 0; }
+`;
+
+const CTAGroup = styled.div`
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 0.25rem;
+`;
+
+const CTALink = styled(Link)`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.7rem;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--accent-color);
+  border: 1px solid rgba(255,255,255,0.12);
+  text-decoration: none;
+  transition: transform 0.15s ease;
+  &:hover { transform: translateY(-1px); }
+`;
+
+const MissionGrid = styled.div`
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2rem;
+
+  @media (min-width: 1025px) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+  @media (max-width: 1024px) and (min-width: 769px) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+    margin-top: 1.5rem;
+  }
+`;
+
+const MissionCard = styled(motion.div)<{ bgImage?: string; variant?: 'wide' | 'tall' | 'featured' }>`
   position: relative;
   background: var(--primary-color);
-  padding: 2rem;
+  padding: 1.75rem;
   border-radius: 12px;
   border: 1px solid #2a2a2a;
   transition: all 0.3s ease;
   overflow: hidden;
+  min-height: 220px;
   
+  /* Decorative accent border for featured cards */
+  ${props => props.variant === 'featured' && `
+    border: 1px solid transparent;
+    background-image: linear-gradient(var(--primary-color), var(--primary-color)),
+      radial-gradient(100% 100% at 0% 0%, rgba(156,124,244,0.5), rgba(156,124,244,0.1));
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+  `}
+
   ${props => props.bgImage && `
     &::before {
       content: '';
@@ -214,9 +334,15 @@ const MissionCard = styled(motion.div)<{ bgImage?: string }>`
   }
   
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     box-shadow: 0 10px 30px rgba(156, 124, 244, 0.2);
     border-color: var(--accent-color);
+  }
+
+  /* Staggered layout variants for desktop */
+  @media (min-width: 1025px) {
+    ${props => props.variant === 'wide' && `grid-column: span 2;`}
+    ${props => props.variant === 'tall' && `grid-row: span 2;`}
   }
   
   @media (max-width: 768px) {
@@ -234,7 +360,16 @@ const MissionCard = styled(motion.div)<{ bgImage?: string }>`
 `;
 
 const MissionIcon = styled.div`
-  display: none;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: radial-gradient(100% 100% at 0% 0%, rgba(156,124,244,0.35), rgba(156,124,244,0.15));
+  border: 1px solid rgba(156,124,244,0.35);
+  margin-bottom: 0.75rem;
+  font-size: 1.1rem;
 `;
 
 const MissionTitle = styled.h3`
@@ -577,66 +712,136 @@ const AboutPage = () => {
           </SectionContent>
         </Section>
 
-        <Section>
+        <SectionBand>
           <SectionTitle {...fadeInUp}>活動内容</SectionTitle>
-          <SectionContent {...fadeInUp}>
-            <MissionGrid>
-              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/coral2.png">
-                <MissionIcon>📚</MissionIcon>
-                <MissionTitle>情報発信</MissionTitle>
-                <MissionDescription>
-                  Coral Magazineを通じて、テクノロジー、アート、文化に関する
-                  質の高い情報を発信し、知識の共有と啓発活動を行っています。
-                </MissionDescription>
-              </MissionCard>
-              
-              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/pixel2.png">
-                <MissionIcon>🎨</MissionIcon>
-                <MissionTitle>アートワーク</MissionTitle>
-                <MissionDescription>
-                  デジタルアートと伝統文化を融合させた
-                  国際的なコラボレーション作品を企画・制作しています。
-                </MissionDescription>
-              </MissionCard>
-              
-              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/labo.png">
-                <MissionIcon>🔬</MissionIcon>
-                <MissionTitle>研究開発</MissionTitle>
-                <MissionDescription>
-                  AI、ブロックチェーン、IoTなどの先端技術を活用した
-                  社会課題解決のための研究開発を推進しています。
-                </MissionDescription>
-              </MissionCard>
-              
-              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/toudai.png">
-                <MissionIcon>🎓</MissionIcon>
-                <MissionTitle>ワークショップ</MissionTitle>
-                <MissionDescription>
-                  次世代のイノベーターを育成するための
-                  実践的なワークショップやセミナーを定期的に開催しています。
-                </MissionDescription>
-              </MissionCard>
-              
-              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/tokyo.png">
-                <MissionIcon>🌱</MissionIcon>
-                <MissionTitle>ソーシャルインパクト</MissionTitle>
-                <MissionDescription>
-                  環境保護、教育支援、地域活性化など、
-                  持続可能な社会の実現に向けたインパクトを創出しています。
-                </MissionDescription>
-              </MissionCard>
-              
-              <MissionCard whileHover={{ scale: 1.02 }} bgImage="/images/chat.png">
-                <MissionIcon>🤖</MissionIcon>
-                <MissionTitle>プロジェクト</MissionTitle>
-                <MissionDescription>
-                  NPOや社会企業と協力して、社会課題解決に向けた
-                  革新的なプロジェクトを企画・立案・実行しています。
-                </MissionDescription>
-              </MissionCard>
-            </MissionGrid>
-          </SectionContent>
-        </Section>
+          <ActivitiesGrid>
+            <ActivityCard whileHover={{ scale: 1.005 }}>
+              <ActivityHeader>
+                <ActivityTitle>情報発信</ActivityTitle>
+                <ActivityMeta><MissionIcon>📚</MissionIcon></ActivityMeta>
+              </ActivityHeader>
+              <TagGroup>
+                <Tag>メディア</Tag><Tag>コンテンツ</Tag>
+              </TagGroup>
+              <ActivityBody>
+                <p>テクノロジー・アート・文化の今を、独自目線で深掘り。</p>
+                <BulletList>
+                  <li>特集記事・インタビュー・レポート</li>
+                  <li>月次テーマと連動した連載企画</li>
+                  <li>コミュニティ投稿の編集・掲載</li>
+                </BulletList>
+              </ActivityBody>
+              <ActivityFooter>
+                <CTAGroup><CTALink to="/tech">特集を読む →</CTALink></CTAGroup>
+              </ActivityFooter>
+            </ActivityCard>
+
+            <ActivityCard whileHover={{ scale: 1.005 }}>
+              <ActivityHeader>
+                <ActivityTitle>アートワーク</ActivityTitle>
+                <ActivityMeta><MissionIcon>🎨</MissionIcon></ActivityMeta>
+              </ActivityHeader>
+              <TagGroup>
+                <Tag>アート</Tag><Tag>コラボ</Tag>
+              </TagGroup>
+              <ActivityBody>
+                <p>デジタル×伝統の表現を国際的にプロデュース。</p>
+                <BulletList>
+                  <li>海外作家との共同制作</li>
+                  <li>展示/オンラインギャラリー</li>
+                  <li>クリエイティブワークショップ</li>
+                </BulletList>
+              </ActivityBody>
+              <ActivityFooter>
+                <CTAGroup><CTALink to="/projects/international-art-collaboration">実績を見る →</CTALink></CTAGroup>
+              </ActivityFooter>
+            </ActivityCard>
+
+            <ActivityCard whileHover={{ scale: 1.005 }}>
+              <ActivityHeader>
+                <ActivityTitle>研究開発</ActivityTitle>
+                <ActivityMeta><MissionIcon>🔬</MissionIcon></ActivityMeta>
+              </ActivityHeader>
+              <TagGroup>
+                <Tag>R&D</Tag><Tag>技術</Tag>
+              </TagGroup>
+              <ActivityBody>
+                <p>AI/ブロックチェーン/IoTで社会課題を解く。</p>
+                <BulletList>
+                  <li>プロトタイプ/PoCの設計・検証</li>
+                  <li>オープンソース連携と技術公開</li>
+                  <li>産学官との共同リサーチ</li>
+                </BulletList>
+              </ActivityBody>
+              <ActivityFooter>
+                <CTAGroup><CTALink to="/projects/international-platform-development">R&Dを見る →</CTALink></CTAGroup>
+              </ActivityFooter>
+            </ActivityCard>
+
+            <ActivityCard whileHover={{ scale: 1.005 }}>
+              <ActivityHeader>
+                <ActivityTitle>ワークショップ</ActivityTitle>
+                <ActivityMeta><MissionIcon>🎓</MissionIcon></ActivityMeta>
+              </ActivityHeader>
+              <TagGroup>
+                <Tag>イベント</Tag><Tag>学習</Tag>
+              </TagGroup>
+              <ActivityBody>
+                <p>実践重視で学ぶ、少人数/交流型のプログラム。</p>
+                <BulletList>
+                  <li>ハンズオン/メンタリング</li>
+                  <li>基礎〜応用の段階的カリキュラム</li>
+                  <li>成果発表・コミュニティ連携</li>
+                </BulletList>
+              </ActivityBody>
+              <ActivityFooter>
+                <CTAGroup><CTALink to="/events">開催予定を見る →</CTALink></CTAGroup>
+              </ActivityFooter>
+            </ActivityCard>
+
+            <ActivityCard whileHover={{ scale: 1.005 }}>
+              <ActivityHeader>
+                <ActivityTitle>ソーシャルインパクト</ActivityTitle>
+                <ActivityMeta><MissionIcon>🌱</MissionIcon></ActivityMeta>
+              </ActivityHeader>
+              <TagGroup>
+                <Tag>社会</Tag><Tag>サステナビリティ</Tag>
+              </TagGroup>
+              <ActivityBody>
+                <p>環境/教育/地域に資する実装と普及啓発。</p>
+                <BulletList>
+                  <li>教育・リテラシー支援</li>
+                  <li>環境配慮の運営/制作</li>
+                  <li>地域連携のプロジェクト創発</li>
+                </BulletList>
+              </ActivityBody>
+              <ActivityFooter>
+                <CTAGroup><CTALink to="/projects">取り組みを見る →</CTALink></CTAGroup>
+              </ActivityFooter>
+            </ActivityCard>
+
+            <ActivityCard whileHover={{ scale: 1.005 }}>
+              <ActivityHeader>
+                <ActivityTitle>プロジェクト</ActivityTitle>
+                <ActivityMeta><MissionIcon>🤖</MissionIcon></ActivityMeta>
+              </ActivityHeader>
+              <TagGroup>
+                <Tag>連携</Tag><Tag>実証</Tag>
+              </TagGroup>
+              <ActivityBody>
+                <p>NPO/企業/研究機関と共創し、社会実装へ。</p>
+                <BulletList>
+                  <li>課題定義〜実証までの伴走</li>
+                  <li>資金/人材/技術のコーディネート</li>
+                  <li>成果公開・スケール展開</li>
+                </BulletList>
+              </ActivityBody>
+              <ActivityFooter>
+                <CTAGroup><CTALink to="/projects">すべてのプロジェクト →</CTALink></CTAGroup>
+              </ActivityFooter>
+            </ActivityCard>
+          </ActivitiesGrid>
+        </SectionBand>
 
         <Section>
           <SectionTitle {...fadeInUp}>チームメンバー</SectionTitle>
@@ -672,50 +877,80 @@ const AboutPage = () => {
           <TimelineContainer>
             <TimelineItem align="left" {...fadeInUp}>
               <TimelineContent align="left">
-                <TimelineDate>2023年1月</TimelineDate>
-                <TimelineTitle>Open Coral Network設立</TimelineTitle>
+                <TimelineDate>2024年9月</TimelineDate>
+                <TimelineTitle>活動開始</TimelineTitle>
                 <TimelineDescription>
-                  テクノロジーとアートの融合を目指す有志により設立
+                  コミュニティ活動を本格スタート。テクノロジーとアートの両輪で企画を始動
                 </TimelineDescription>
               </TimelineContent>
             </TimelineItem>
-            
+
             <TimelineItem align="right" {...fadeInUp}>
               <TimelineContent align="right">
-                <TimelineDate>2023年6月</TimelineDate>
-                <TimelineTitle>NPO法人認証取得</TimelineTitle>
+                <TimelineDate>2024年10月</TimelineDate>
+                <TimelineTitle>ボランティア募集</TimelineTitle>
                 <TimelineDescription>
-                  特定非営利活動法人として正式に認証を取得
+                  編集・開発・デザインなど幅広いロールで募集を開始
                 </TimelineDescription>
               </TimelineContent>
             </TimelineItem>
-            
+
             <TimelineItem align="left" {...fadeInUp}>
               <TimelineContent align="left">
-                <TimelineDate>2023年9月</TimelineDate>
+                <TimelineDate>2024年12月</TimelineDate>
+                <TimelineTitle>サイトオープン</TimelineTitle>
+                <TimelineDescription>
+                  Webサイトを公開し、情報発信と参加導線を整備
+                </TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+
+            <TimelineItem align="right" {...fadeInUp}>
+              <TimelineContent align="right">
+                <TimelineDate>2025年3月</TimelineDate>
+                <TimelineTitle>ハッカソン開催</TimelineTitle>
+                <TimelineDescription>
+                  社会課題解決をテーマにしたオープンな開発イベントを開催
+                </TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+
+            <TimelineItem align="left" {...fadeInUp}>
+              <TimelineContent align="left">
+                <TimelineDate>2025年5月</TimelineDate>
+                <TimelineTitle>オンライン国際交流</TimelineTitle>
+                <TimelineDescription>
+                  海外コミュニティとのオンライン交流を実施し、国際連携を強化
+                </TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+
+            <TimelineItem align="right" {...fadeInUp}>
+              <TimelineContent align="right">
+                <TimelineDate>2025年7月</TimelineDate>
+                <TimelineTitle>NPO設立</TimelineTitle>
+                <TimelineDescription>
+                  特定非営利活動法人として法人化し、活動基盤を強化
+                </TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+
+            <TimelineItem align="left" {...fadeInUp}>
+              <TimelineContent align="left">
+                <TimelineDate>2025年8月</TimelineDate>
+                <TimelineTitle>アート支援プロジェクト始動</TimelineTitle>
+                <TimelineDescription>
+                  クリエイター支援の仕組みづくりを開始。トークンエコノミーの計画・設計を進行
+                </TimelineDescription>
+              </TimelineContent>
+            </TimelineItem>
+
+            <TimelineItem align="right" {...fadeInUp}>
+              <TimelineContent align="right">
+                <TimelineDate>2025年9月</TimelineDate>
                 <TimelineTitle>Coral Magazine創刊</TimelineTitle>
                 <TimelineDescription>
-                  総合情報メディア「Coral Magazine」の運営を開始
-                </TimelineDescription>
-              </TimelineContent>
-            </TimelineItem>
-            
-            <TimelineItem align="right" {...fadeInUp}>
-              <TimelineContent align="right">
-                <TimelineDate>2024年3月</TimelineDate>
-                <TimelineTitle>国際アートコラボレーション開始</TimelineTitle>
-                <TimelineDescription>
-                  海外アーティストとの共同プロジェクトを発足
-                </TimelineDescription>
-              </TimelineContent>
-            </TimelineItem>
-            
-            <TimelineItem align="left" {...fadeInUp}>
-              <TimelineContent align="left">
-                <TimelineDate>2024年11月</TimelineDate>
-                <TimelineTitle>技術研究ラボ設立</TimelineTitle>
-                <TimelineDescription>
-                  AI・ブロックチェーン研究開発部門を新設
+                  総合情報メディアを正式ローンチ。特集・連載・コラボ記事を継続発信
                 </TimelineDescription>
               </TimelineContent>
             </TimelineItem>
